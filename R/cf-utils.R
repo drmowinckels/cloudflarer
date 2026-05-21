@@ -27,17 +27,16 @@ cf_records_to_df <- function(records) {
   all_names <- unique(unlist(lapply(records, names), use.names = FALSE))
   cols <- lapply(all_names, function(field) {
     vals <- lapply(records, function(r) r[[field]])
-    simplify_column(vals)
+    col <- simplify_column(vals)
+    if (is.list(col)) I(col) else col
   })
   names(cols) <- all_names
-  out <- data.frame(row.names = seq_along(records))
-  for (field in all_names) {
-    if (is.list(cols[[field]])) {
-      out[[field]] <- I(cols[[field]])
-    } else {
-      out[[field]] <- cols[[field]]
-    }
-  }
+  out <- data.frame(
+    cols,
+    row.names = seq_along(records),
+    check.names = FALSE,
+    stringsAsFactors = FALSE
+  )
   as_cf_tibble(out)
 }
 
