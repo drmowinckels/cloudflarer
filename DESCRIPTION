@@ -11,8 +11,7 @@ Description: An R interface to the Cloudflare REST API
     and a generic request function so users can call any endpoint that is
     not yet covered by a dedicated wrapper.
 License: MIT + file LICENSE
-URL: https://github.com/drmowinckels/cloudflarer,
-    https://drmowinckels.github.io/cloudflarer/
+URL: https://github.com/drmowinckels/cloudflarer, https://drmowinckels.github.io/cloudflarer/, http://drmowinckels.io/cloudflarer/
 BugReports: https://github.com/drmowinckels/cloudflarer/issues
 Depends:
     R (>= 4.1.0)
@@ -22,6 +21,7 @@ Imports:
     rlang
 Suggests:
     covr,
+    httpuv,
     knitr,
     rmarkdown,
     spelling,
