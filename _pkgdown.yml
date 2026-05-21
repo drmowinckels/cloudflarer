@@ -29,9 +29,11 @@ reference:
   - title: Zones and zone settings
     contents:
       - contains("zone")
+      - -cf_zone_overview
+      - -cf_zone_requests
   - title: DNS records
     contents:
-      - ends_with("dns_record")
+      - contains("dns_record")
   - title: Page Rules
     contents:
       - contains("page_rule")
@@ -41,10 +43,7 @@ reference:
     desc: |
       Modern unified rule management (custom rules, transforms, managed firewall, redirects, cache rules, rate limits).
     contents:
-      - cf_list_rulesets
-      - cf_get_ruleset
-      - cf_list_account_rulesets
-      - cf_get_account_ruleset
+      - contains("ruleset")
   - title: Cache
     contents: cf_purge_cache
   - title: Workers
@@ -65,15 +64,10 @@ reference:
       - cf_get_r2_bucket
   - title: Turnstile (CAPTCHA replacement)
     contents:
-      - cf_list_turnstile_widgets
-      - cf_get_turnstile_widget
-      - cf_create_turnstile_widget
-      - cf_delete_turnstile_widget
+      - contains("turnstile")
   - title: Email Routing
     contents:
-      - cf_get_email_routing_settings
-      - cf_list_email_routing_rules
-      - cf_list_email_routing_addresses
+      - contains("email_routing")
   - title: Tunnels (Zero Trust / cloudflared)
     contents:
       - cf_list_tunnels
@@ -81,10 +75,7 @@ reference:
       - cf_list_tunnel_connections
   - title: Web Analytics (RUM)
     contents:
-      - cf_list_rum_sites
-      - cf_get_rum_site
-      - cf_rum_page_views
-      - cf_rum_top
+      - contains("rum_")
   - title: GraphQL Analytics convenience
     desc: |
       Tidy data.frame wrappers built on top of cf_graphql().
