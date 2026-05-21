@@ -1,0 +1,34 @@
+http_interactions:
+  - request:
+      method: POST
+      uri: https://api.cloudflare.com/client/v4/graphql
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {
+            "data": {
+              "viewer": {
+                "zones": [
+                  {
+                    "httpRequests1dGroups": [
+                      {
+                        "dimensions": {"date": "2026-05-19"},
+                        "sum": {"requests": 1000, "bytes": 50000000, "pageViews": 200, "threats": 5},
+                        "uniq": {"uniques": 150}
+                      },
+                      {
+                        "dimensions": {"date": "2026-05-20"},
+                        "sum": {"requests": 4027, "bytes": 174200000, "pageViews": 719, "threats": 141},
+                        "uniq": {"uniques": 808}
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+    recorded_at: 2026-05-21 00:00:00
+recorded_with: VCR-vcr/2.1.0

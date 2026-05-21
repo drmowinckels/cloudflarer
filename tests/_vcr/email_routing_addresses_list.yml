@@ -1,0 +1,42 @@
+http_interactions:
+  - request:
+      method: GET
+      uri: https://api.cloudflare.com/client/v4/accounts/acc-1/email/routing/addresses?per_page=50&page=1
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {
+            "success": true,
+            "errors": [],
+            "messages": [],
+            "result": [
+              {
+                "id": "addr-1",
+                "tag": "tag-1",
+                "email": "me@gmail.com",
+                "verified": "2026-01-01T00:00:00Z",
+                "created": "2026-01-01T00:00:00Z",
+                "modified": "2026-01-01T00:00:00Z"
+              },
+              {
+                "id": "addr-2",
+                "tag": "tag-2",
+                "email": "backup@gmail.com",
+                "verified": "2026-02-01T00:00:00Z",
+                "created": "2026-02-01T00:00:00Z",
+                "modified": "2026-02-01T00:00:00Z"
+              }
+            ],
+            "result_info": {
+              "page": 1,
+              "per_page": 50,
+              "count": 2,
+              "total_count": 2,
+              "total_pages": 1
+            }
+          }
+    recorded_at: 2026-05-21 00:00:00
+recorded_with: VCR-vcr/2.1.0

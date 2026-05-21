@@ -1,0 +1,28 @@
+http_interactions:
+  - request:
+      method: GET
+      uri: https://api.cloudflare.com/client/v4/accounts/acc-1/storage/kv/namespaces?per_page=50&page=1
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {
+            "success": true,
+            "errors": [],
+            "messages": [],
+            "result": [
+              {"id": "ns-1", "title": "sessions", "supports_url_encoding": true},
+              {"id": "ns-2", "title": "feature-flags", "supports_url_encoding": true}
+            ],
+            "result_info": {
+              "page": 1,
+              "per_page": 50,
+              "count": 2,
+              "total_count": 2,
+              "total_pages": 1
+            }
+          }
+    recorded_at: 2026-05-21 00:00:00
+recorded_with: VCR-vcr/2.1.0

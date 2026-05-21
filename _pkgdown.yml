@@ -1,0 +1,153 @@
+url: https://drmowinckels.github.io/cloudflarer/
+
+template:
+  bootstrap: 5
+
+reference:
+  - title: Authentication
+    desc: Configure and verify Cloudflare credentials (API token or Global API Key).
+    contents:
+      - cf_auth_mode
+      - cf_has_auth
+      - cf_token
+      - cf_email
+      - cf_api_key
+      - cf_verify
+      - cf_token_verify
+      - cf_sitrep
+
+  - title: Generic requests
+    desc: >
+      Low-level helpers used by every wrapper. Use these directly to
+      call endpoints the package does not yet provide a function for.
+    contents:
+      - cf_request
+      - cf_request_collect
+      - cf_graphql
+
+  - title: User
+    contents:
+      - cf_user
+
+  - title: Accounts
+    contents:
+      - starts_with("cf_list_accounts")
+      - cf_get_account
+
+  - title: Zones and zone settings
+    contents:
+      - cf_list_zones
+      - cf_get_zone
+      - cf_get_zone_settings
+      - cf_get_zone_setting
+
+  - title: DNS records
+    contents:
+      - cf_list_dns_records
+      - cf_get_dns_record
+      - cf_create_dns_record
+      - cf_update_dns_record
+      - cf_delete_dns_record
+
+  - title: Page Rules
+    contents:
+      - cf_list_page_rules
+      - cf_get_page_rule
+      - cf_create_page_rule
+      - cf_update_page_rule
+      - cf_delete_page_rule
+      - cf_page_rule_target
+      - cf_page_rule_action
+
+  - title: Firewall rules
+    contents:
+      - cf_list_firewall_rules
+
+  - title: Rulesets
+    desc: >
+      Modern unified rule management (custom rules, transforms,
+      managed firewall, redirects, cache rules, rate limits).
+    contents:
+      - cf_list_rulesets
+      - cf_get_ruleset
+      - cf_list_account_rulesets
+      - cf_get_account_ruleset
+
+  - title: Cache
+    contents:
+      - cf_purge_cache
+
+  - title: Workers
+    contents:
+      - cf_list_workers_scripts
+      - cf_get_workers_script
+      - cf_workers_invocations
+      - cf_list_kv_namespaces
+      - cf_get_kv_namespace
+
+  - title: Pages
+    contents:
+      - cf_list_pages_projects
+      - cf_get_pages_project
+      - cf_list_pages_deployments
+
+  - title: R2
+    contents:
+      - cf_list_r2_buckets
+      - cf_get_r2_bucket
+
+  - title: Turnstile (CAPTCHA replacement)
+    contents:
+      - cf_list_turnstile_widgets
+      - cf_get_turnstile_widget
+      - cf_create_turnstile_widget
+      - cf_delete_turnstile_widget
+
+  - title: Email Routing
+    contents:
+      - cf_get_email_routing_settings
+      - cf_list_email_routing_rules
+      - cf_list_email_routing_addresses
+
+  - title: Tunnels (Zero Trust / cloudflared)
+    contents:
+      - cf_list_tunnels
+      - cf_get_tunnel
+      - cf_list_tunnel_connections
+
+  - title: Web Analytics (RUM)
+    contents:
+      - cf_list_rum_sites
+      - cf_get_rum_site
+      - cf_rum_page_views
+      - cf_rum_top
+
+  - title: GraphQL Analytics convenience
+    desc: >
+      Tidy data.frame wrappers built on top of cf_graphql().
+    contents:
+      - cf_zone_overview
+      - cf_zone_requests
+      - cf_cache_ratio
+      - cf_dns_queries
+      - cf_firewall_events_by_day
+      - cf_firewall_events_top
+
+  - title: Helpers
+    contents:
+      - cf_records_to_df
+
+navbar:
+  structure:
+    left: [intro, reference, articles, news]
+    right: [search, github]
+  components:
+    articles:
+      text: Articles
+      menu:
+        - text: Cheatsheet
+          href: articles/cheatsheet.html
+        - text: Authentication
+          href: articles/authentication.html
+        - text: Website analytics
+          href: articles/analytics.html

@@ -1,0 +1,27 @@
+http_interactions:
+  - request:
+      method: GET
+      uri: https://api.cloudflare.com/client/v4/zones
+    response:
+      status: 400
+      headers:
+        content-type: application/json
+        api-version: "2026-05-20"
+      body:
+        string: |
+          {
+            "success": false,
+            "errors": [
+              {
+                "code": 6003,
+                "message": "Invalid request headers",
+                "error_chain": [
+                  {"code": 6111, "message": "Invalid format for Authorization header"}
+                ]
+              }
+            ],
+            "messages": [],
+            "result": null
+          }
+    recorded_at: 2026-05-20 18:07:49
+recorded_with: VCR-vcr/2.1.0

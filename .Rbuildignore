@@ -1,0 +1,15 @@
+^cloudflarer\.Rproj$
+^\.Rproj\.user$
+^LICENSE\.md$
+^README\.Rmd$
+^README\.html$
+^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^codecov\.yml$
+^cran-comments\.md$
+^CRAN-SUBMISSION$
+^\.lintr$
+^\.vscode$
+^tests/spelling\.R$

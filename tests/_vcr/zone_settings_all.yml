@@ -1,0 +1,22 @@
+http_interactions:
+  - request:
+      method: GET
+      uri: https://api.cloudflare.com/client/v4/zones/zone-1/settings
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {
+            "success": true,
+            "errors": [],
+            "messages": [],
+            "result": [
+              {"id": "ssl", "value": "flexible", "modified_on": "2026-01-01T00:00:00Z", "editable": true},
+              {"id": "cache_level", "value": "aggressive", "modified_on": "2026-01-01T00:00:00Z", "editable": true},
+              {"id": "always_use_https", "value": "on", "modified_on": "2026-01-01T00:00:00Z", "editable": true}
+            ]
+          }
+    recorded_at: 2026-05-21 00:00:00
+recorded_with: VCR-vcr/2.1.0

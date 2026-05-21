@@ -1,0 +1,50 @@
+http_interactions:
+  - request:
+      method: GET
+      uri: https://api.cloudflare.com/client/v4/zones/zone-1/firewall/rules?per_page=50&page=1
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {
+            "success": true,
+            "errors": [],
+            "messages": [],
+            "result": [
+              {
+                "id": "fw-1",
+                "paused": false,
+                "description": "Block known bad bots",
+                "action": "block",
+                "priority": 1,
+                "filter": {
+                  "id": "f-1",
+                  "expression": "(cf.client.bot)",
+                  "paused": false
+                }
+              },
+              {
+                "id": "fw-2",
+                "paused": true,
+                "description": "Challenge non-NO traffic",
+                "action": "challenge",
+                "priority": 2,
+                "filter": {
+                  "id": "f-2",
+                  "expression": "(ip.geoip.country ne \"NO\")",
+                  "paused": false
+                }
+              }
+            ],
+            "result_info": {
+              "page": 1,
+              "per_page": 50,
+              "count": 2,
+              "total_count": 2,
+              "total_pages": 1
+            }
+          }
+    recorded_at: 2026-05-21 00:00:00
+recorded_with: VCR-vcr/2.1.0

@@ -1,0 +1,45 @@
+http_interactions:
+  - request:
+      method: GET
+      uri: https://api.cloudflare.com/client/v4/zones/zone-1/pagerules
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {
+            "success": true,
+            "errors": [],
+            "messages": [],
+            "result": [
+              {
+                "id": "rule-1",
+                "status": "active",
+                "priority": 1,
+                "targets": [
+                  {"target": "url", "constraint": {"operator": "matches", "value": "*example.com/blog/*"}}
+                ],
+                "actions": [
+                  {"id": "cache_level", "value": "cache_everything"}
+                ],
+                "created_on": "2026-01-01T00:00:00Z",
+                "modified_on": "2026-04-01T00:00:00Z"
+              },
+              {
+                "id": "rule-2",
+                "status": "disabled",
+                "priority": 2,
+                "targets": [
+                  {"target": "url", "constraint": {"operator": "matches", "value": "*example.com/admin/*"}}
+                ],
+                "actions": [
+                  {"id": "security_level", "value": "high"}
+                ],
+                "created_on": "2026-02-01T00:00:00Z",
+                "modified_on": "2026-02-01T00:00:00Z"
+              }
+            ]
+          }
+    recorded_at: 2026-05-21 00:00:00
+recorded_with: VCR-vcr/2.1.0

@@ -1,0 +1,118 @@
+#' List Cloudflare Tunnels
+#'
+#' Returns the cloudflared tunnels (Zero Trust) configured in the
+#' supplied account.
+#'
+#' @param account_id Character. Cloudflare account identifier.
+#' @param is_deleted Logical. When `TRUE`, include deleted
+#'   tunnels.
+#' @param per_page,max_pages Pagination controls, see
+#'   [cf_request_collect()].
+#' @param as_df Logical. When `TRUE` (the default), returns a
+#'   data.frame via [cf_records_to_df()].
+#' @inheritParams cf_token
+#' @inheritParams cf_email
+#' @inheritParams cf_api_key
+#'
+#' @return A data.frame of tunnel records (or list when
+#'   `as_df = FALSE`).
+#' @export
+#' @family tunnels
+#' @examples
+#' \dontrun{
+#' cf_list_tunnels("abc123")
+#' }
+cf_list_tunnels <- function(
+  account_id,
+  is_deleted = FALSE,
+  per_page = 50,
+  max_pages = Inf,
+  as_df = TRUE,
+  token = NULL,
+  email = NULL,
+  api_key = NULL
+) {
+  records <- cf_request_collect(
+    paste0("accounts/", account_id, "/cfd_tunnel"),
+    query = list(is_deleted = tolower(as.character(is_deleted))),
+    per_page = per_page,
+    max_pages = max_pages,
+    token = token,
+    email = email,
+    api_key = api_key
+  )
+  if (as_df) cf_records_to_df(records) else records
+}
+
+#' Get a single Cloudflare Tunnel
+#'
+#' @param account_id Character. Cloudflare account identifier.
+#' @param tunnel_id Character. Tunnel identifier.
+#' @inheritParams cf_token
+#' @inheritParams cf_email
+#' @inheritParams cf_api_key
+#'
+#' @return A named list describing the tunnel.
+#' @export
+#' @family tunnels
+#' @examples
+#' \dontrun{
+#' cf_get_tunnel("abc123", "tunnel-1")
+#' }
+cf_get_tunnel <- function(
+  account_id,
+  tunnel_id,
+  token = NULL,
+  email = NULL,
+  api_key = NULL
+) {
+  cf_request(
+    paste0("accounts/", account_id, "/cfd_tunnel/", tunnel_id),
+    token = token,
+    email = email,
+    api_key = api_key
+  )
+}
+
+#' List active connections for a Cloudflare Tunnel
+#'
+#' Returns the currently-connected `cloudflared` instances for the
+#' tunnel.
+#'
+#' @inheritParams cf_get_tunnel
+#' @param as_df Logical. When `TRUE` (the default), returns a
+#'   data.frame via [cf_records_to_df()].
+#' @inheritParams cf_token
+#' @inheritParams cf_email
+#' @inheritParams cf_api_key
+#'
+#' @return A data.frame of connection records (or list when
+#'   `as_df = FALSE`).
+#' @export
+#' @family tunnels
+#' @examples
+#' \dontrun{
+#' cf_list_tunnel_connections("abc123", "tunnel-1")
+#' }
+cf_list_tunnel_connections <- function(
+  account_id,
+  tunnel_id,
+  as_df = TRUE,
+  token = NULL,
+  email = NULL,
+  api_key = NULL
+) {
+  records <- cf_request(
+    paste0(
+      "accounts/",
+      account_id,
+      "/cfd_tunnel/",
+      tunnel_id,
+      "/connections"
+    ),
+    token = token,
+    email = email,
+    api_key = api_key
+  )
+  if (as_df) cf_records_to_df(records) else records
+}

@@ -1,0 +1,24 @@
+http_interactions:
+  - request:
+      method: POST
+      uri: https://api.cloudflare.com/client/v4/graphql
+      body:
+        string: '{"query":"{ viewer { accounts { id name } } }","variables":{}}'
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {
+            "data": {
+              "viewer": {
+                "accounts": [
+                  {"id": "acc-1", "name": "Acme"},
+                  {"id": "acc-2", "name": "Globex"}
+                ]
+              }
+            }
+          }
+    recorded_at: 2026-05-20 18:07:49
+recorded_with: VCR-vcr/2.1.0

@@ -1,0 +1,50 @@
+http_interactions:
+  - request:
+      method: GET
+      uri: https://api.cloudflare.com/client/v4/zones/zone-1/email/routing/rules?per_page=50&page=1
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {
+            "success": true,
+            "errors": [],
+            "messages": [],
+            "result": [
+              {
+                "id": "rule-1",
+                "tag": "tag-1",
+                "name": "Send hello@ to gmail",
+                "enabled": true,
+                "priority": 0,
+                "matchers": [
+                  {"type": "literal", "field": "to", "value": "hello@example.com"}
+                ],
+                "actions": [
+                  {"type": "forward", "value": ["me@gmail.com"]}
+                ]
+              },
+              {
+                "id": "rule-2",
+                "tag": "tag-2",
+                "name": "Catch-all to backup",
+                "enabled": true,
+                "priority": 100,
+                "matchers": [{"type": "all"}],
+                "actions": [
+                  {"type": "forward", "value": ["backup@gmail.com"]}
+                ]
+              }
+            ],
+            "result_info": {
+              "page": 1,
+              "per_page": 50,
+              "count": 2,
+              "total_count": 2,
+              "total_pages": 1
+            }
+          }
+    recorded_at: 2026-05-21 00:00:00
+recorded_with: VCR-vcr/2.1.0

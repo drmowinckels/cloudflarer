@@ -1,0 +1,42 @@
+http_interactions:
+  - request:
+      method: GET
+      uri: https://api.cloudflare.com/client/v4/accounts/acc-1/pages/projects
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {
+            "success": true,
+            "errors": [],
+            "messages": [],
+            "result": [
+              {
+                "name": "my-site",
+                "id": "proj-1",
+                "subdomain": "my-site.pages.dev",
+                "domains": ["example.com"],
+                "production_branch": "main",
+                "created_on": "2026-01-01T00:00:00Z"
+              },
+              {
+                "name": "blog",
+                "id": "proj-2",
+                "subdomain": "blog.pages.dev",
+                "domains": ["blog.example.com"],
+                "production_branch": "main",
+                "created_on": "2026-02-01T00:00:00Z"
+              }
+            ],
+            "result_info": {
+              "page": 1,
+              "per_page": 25,
+              "count": 2,
+              "total_count": 2,
+              "total_pages": 1
+            }
+          }
+    recorded_at: 2026-05-21 00:00:00
+recorded_with: VCR-vcr/2.1.0

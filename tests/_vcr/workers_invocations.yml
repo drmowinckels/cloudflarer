@@ -1,0 +1,34 @@
+http_interactions:
+  - request:
+      method: POST
+      uri: https://api.cloudflare.com/client/v4/graphql
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {
+            "data": {
+              "viewer": {
+                "accounts": [
+                  {
+                    "workersInvocationsAdaptive": [
+                      {
+                        "dimensions": {"date": "2026-05-19", "scriptName": "hello-world"},
+                        "sum": {"requests": 10000, "errors": 12, "subrequests": 0},
+                        "quantiles": {"cpuTimeP50": 50, "cpuTimeP99": 800}
+                      },
+                      {
+                        "dimensions": {"date": "2026-05-20", "scriptName": "hello-world"},
+                        "sum": {"requests": 12500, "errors": 9, "subrequests": 0},
+                        "quantiles": {"cpuTimeP50": 48, "cpuTimeP99": 760}
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+    recorded_at: 2026-05-21 00:00:00
+recorded_with: VCR-vcr/2.1.0

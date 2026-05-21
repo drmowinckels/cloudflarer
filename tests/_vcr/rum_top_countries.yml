@@ -1,0 +1,27 @@
+http_interactions:
+  - request:
+      method: POST
+      uri: https://api.cloudflare.com/client/v4/graphql
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {
+            "data": {
+              "viewer": {
+                "accounts": [
+                  {
+                    "rumPageloadEventsAdaptiveGroups": [
+                      {"count": 1200, "dimensions": {"countryName": "Norway"}},
+                      {"count": 800,  "dimensions": {"countryName": "United States"}},
+                      {"count": 450,  "dimensions": {"countryName": "Germany"}}
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+    recorded_at: 2026-05-21 00:00:00
+recorded_with: VCR-vcr/2.1.0

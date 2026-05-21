@@ -1,0 +1,80 @@
+describe("cf_get_email_routing_settings()", {
+  it("returns the routing settings", {
+    local_mock_auth()
+    vcr::use_cassette("email_routing_settings", {
+      res <- cf_get_email_routing_settings("zone-1")
+    })
+    expect_true(res$enabled)
+    expect_equal(res$status, "ready")
+    expect_equal(res$name, "example.com")
+  })
+})
+
+describe("cf_list_email_routing_rules()", {
+  it("returns a data.frame of routing rules from a cassette", {
+    local_mock_auth()
+    vcr::use_cassette("email_routing_rules_list", {
+      df <- cf_list_email_routing_rules("zone-1")
+    })
+    expect_s3_class(df, "data.frame")
+    expect_equal(nrow(df), 2L)
+    expect_true("matchers" %in% names(df))
+    expect_type(df$matchers, "list")
+    expect_equal(df$name, c("Send hello@ to gmail", "Catch-all to backup"))
+  })
+
+  it("forwards enabled_only as a query parameter", {
+    captured <- NULL
+    local_mocked_bindings(
+      cf_request_collect = function(endpoint, query, ...) {
+        captured <<- list(endpoint = endpoint, query = query)
+        list()
+      }
+    )
+    cf_list_email_routing_rules("zone-1", enabled_only = TRUE)
+    expect_equal(captured$endpoint, "zones/zone-1/email/routing/rules")
+    expect_equal(captured$query$enabled, "true")
+  })
+
+  it("returns a list when as_df = FALSE", {
+    local_mock_auth()
+    vcr::use_cassette("email_routing_rules_list", {
+      res <- cf_list_email_routing_rules("zone-1", as_df = FALSE)
+    })
+    expect_type(res, "list")
+    expect_equal(res[[1]]$id, "rule-1")
+  })
+})
+
+describe("cf_list_email_routing_addresses()", {
+  it("returns a data.frame of addresses from a cassette", {
+    local_mock_auth()
+    vcr::use_cassette("email_routing_addresses_list", {
+      df <- cf_list_email_routing_addresses("acc-1")
+    })
+    expect_s3_class(df, "data.frame")
+    expect_equal(nrow(df), 2L)
+    expect_equal(df$email, c("me@gmail.com", "backup@gmail.com"))
+  })
+
+  it("forwards verified_only as a query parameter", {
+    captured <- NULL
+    local_mocked_bindings(
+      cf_request_collect = function(endpoint, query, ...) {
+        captured <<- list(endpoint = endpoint, query = query)
+        list()
+      }
+    )
+    cf_list_email_routing_addresses("acc-1", verified_only = TRUE)
+    expect_equal(captured$query$verified, "true")
+  })
+
+  it("returns a list when as_df = FALSE", {
+    local_mock_auth()
+    vcr::use_cassette("email_routing_addresses_list", {
+      res <- cf_list_email_routing_addresses("acc-1", as_df = FALSE)
+    })
+    expect_type(res, "list")
+    expect_equal(res[[1]]$email, "me@gmail.com")
+  })
+})

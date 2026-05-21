@@ -1,0 +1,29 @@
+http_interactions:
+  - request:
+      method: GET
+      uri: https://api.cloudflare.com/client/v4/accounts/acc-1/pages/projects/my-site
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {
+            "success": true,
+            "errors": [],
+            "messages": [],
+            "result": {
+              "name": "my-site",
+              "id": "proj-1",
+              "subdomain": "my-site.pages.dev",
+              "domains": ["example.com"],
+              "production_branch": "main",
+              "build_config": {
+                "build_command": "npm run build",
+                "destination_dir": "dist",
+                "root_dir": ""
+              }
+            }
+          }
+    recorded_at: 2026-05-21 00:00:00
+recorded_with: VCR-vcr/2.1.0

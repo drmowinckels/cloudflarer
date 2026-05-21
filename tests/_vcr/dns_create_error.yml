@@ -1,0 +1,20 @@
+http_interactions:
+  - request:
+      method: POST
+      uri: https://api.cloudflare.com/client/v4/zones/zone-1/dns_records
+      body:
+        string: '{"type":"A","name":"www.example.com","content":"192.0.2.1"}'
+    response:
+      status: 400
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {
+            "success": false,
+            "errors": [{"code": 81044, "message": "DNS record already exists."}],
+            "messages": [],
+            "result": null
+          }
+    recorded_at: 2026-05-20 18:07:49
+recorded_with: VCR-vcr/2.1.0

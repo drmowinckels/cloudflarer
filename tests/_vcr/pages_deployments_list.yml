@@ -1,0 +1,42 @@
+http_interactions:
+  - request:
+      method: GET
+      uri: https://api.cloudflare.com/client/v4/accounts/acc-1/pages/projects/my-site/deployments?per_page=25&page=1
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {
+            "success": true,
+            "errors": [],
+            "messages": [],
+            "result": [
+              {
+                "id": "dep-1",
+                "short_id": "abc123",
+                "project_id": "proj-1",
+                "environment": "production",
+                "created_on": "2026-05-20T10:00:00Z",
+                "url": "https://abc123.my-site.pages.dev"
+              },
+              {
+                "id": "dep-2",
+                "short_id": "def456",
+                "project_id": "proj-1",
+                "environment": "preview",
+                "created_on": "2026-05-19T15:00:00Z",
+                "url": "https://def456.my-site.pages.dev"
+              }
+            ],
+            "result_info": {
+              "page": 1,
+              "per_page": 25,
+              "count": 2,
+              "total_count": 2,
+              "total_pages": 1
+            }
+          }
+    recorded_at: 2026-05-21 00:00:00
+recorded_with: VCR-vcr/2.1.0

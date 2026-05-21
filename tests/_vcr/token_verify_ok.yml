@@ -1,0 +1,26 @@
+http_interactions:
+  - request:
+      method: GET
+      uri: https://api.cloudflare.com/client/v4/user/tokens/verify
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+        api-version: "2026-05-20"
+      body:
+        string: |
+          {
+            "success": true,
+            "errors": [],
+            "messages": [
+              {"code": 10000, "message": "This API Token is valid and active", "type": null}
+            ],
+            "result": {
+              "id": "ed17574386854bf78a67040be0a770b0",
+              "status": "active",
+              "expires_on": "2030-01-31T00:00:00Z",
+              "not_before": "2026-01-01T00:00:00Z"
+            }
+          }
+    recorded_at: 2026-05-20 18:07:49
+recorded_with: VCR-vcr/2.1.0

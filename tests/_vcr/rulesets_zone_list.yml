@@ -1,0 +1,35 @@
+http_interactions:
+  - request:
+      method: GET
+      uri: https://api.cloudflare.com/client/v4/zones/zone-1/rulesets
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {
+            "success": true,
+            "errors": [],
+            "messages": [],
+            "result": [
+              {
+                "id": "rs-1",
+                "name": "default",
+                "kind": "zone",
+                "phase": "http_request_firewall_custom",
+                "version": "1",
+                "last_updated": "2026-04-01T00:00:00Z"
+              },
+              {
+                "id": "rs-2",
+                "name": "transforms",
+                "kind": "zone",
+                "phase": "http_request_transform",
+                "version": "3",
+                "last_updated": "2026-05-01T00:00:00Z"
+              }
+            ]
+          }
+    recorded_at: 2026-05-21 00:00:00
+recorded_with: VCR-vcr/2.1.0

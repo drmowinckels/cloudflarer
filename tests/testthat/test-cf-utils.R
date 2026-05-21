@@ -1,0 +1,115 @@
+describe("format_iso8601()", {
+  it("returns NULL unchanged", {
+    expect_null(format_iso8601(NULL))
+  })
+
+  it("formats POSIXct in UTC", {
+    out <- format_iso8601(as.POSIXct("2026-05-01 12:34:56", tz = "UTC"))
+    expect_equal(out, "2026-05-01T12:34:56Z")
+  })
+
+  it("formats Date at midnight UTC", {
+    expect_equal(
+      format_iso8601(as.Date("2026-05-01")),
+      "2026-05-01T00:00:00Z"
+    )
+  })
+
+  it("passes character through unchanged", {
+    expect_equal(
+      format_iso8601("2026-05-01T00:00:00Z"),
+      "2026-05-01T00:00:00Z"
+    )
+  })
+})
+
+describe("format_gql_date()", {
+  it("returns NULL unchanged", {
+    expect_null(format_gql_date(NULL))
+  })
+
+  it("formats Date as YYYY-MM-DD", {
+    expect_equal(format_gql_date(as.Date("2026-05-21")), "2026-05-21")
+  })
+
+  it("formats POSIXct as YYYY-MM-DD", {
+    expect_equal(
+      format_gql_date(as.POSIXct("2026-05-21 12:00:00", tz = "UTC")),
+      "2026-05-21"
+    )
+  })
+
+  it("passes character through unchanged", {
+    expect_equal(format_gql_date("2026-05-21"), "2026-05-21")
+  })
+})
+
+describe("as_cf_tibble()", {
+  it("adds tbl_df classes so tibble users get tibble printing", {
+    out <- as_cf_tibble(data.frame(a = 1:2, b = c("x", "y")))
+    expect_s3_class(out, "tbl_df")
+    expect_s3_class(out, "tbl")
+    expect_s3_class(out, "data.frame")
+  })
+
+  it("is a no-op for non-data.frame input", {
+    expect_equal(as_cf_tibble(1:3), 1:3)
+    expect_equal(as_cf_tibble("foo"), "foo")
+  })
+})
+
+describe("cf_records_to_df()", {
+  it("returns an empty data.frame for empty input", {
+    out <- cf_records_to_df(list())
+    expect_s3_class(out, "data.frame")
+    expect_equal(nrow(out), 0L)
+  })
+
+  it("returns scalar columns with detected types", {
+    records <- list(
+      list(id = "a", n = 1L, active = TRUE, score = 1.5),
+      list(id = "b", n = 2L, active = FALSE, score = 2.5)
+    )
+    out <- cf_records_to_df(records)
+    expect_type(out$id, "character")
+    expect_type(out$n, "integer")
+    expect_type(out$active, "logical")
+    expect_type(out$score, "double")
+    expect_equal(nrow(out), 2L)
+  })
+
+  it("fills missing fields with NA of the column type", {
+    records <- list(
+      list(id = "a", n = 1L),
+      list(id = "b")
+    )
+    out <- cf_records_to_df(records)
+    expect_equal(out$n, c(1L, NA_integer_))
+  })
+
+  it("keeps vector-valued fields as list-columns", {
+    records <- list(
+      list(id = "a", tags = c("x", "y")),
+      list(id = "b", tags = character(0))
+    )
+    out <- cf_records_to_df(records)
+    expect_type(out$tags, "list")
+    expect_equal(out$tags[[1]], c("x", "y"))
+  })
+
+  it("keeps nested objects as list-columns", {
+    records <- list(
+      list(id = "a", account = list(id = "acc-1", name = "Acme")),
+      list(id = "b", account = list(id = "acc-2", name = "Globex"))
+    )
+    out <- cf_records_to_df(records)
+    expect_type(out$account, "list")
+    expect_equal(out$account[[1]]$name, "Acme")
+  })
+
+  it("returns NA-only column when every value is NULL", {
+    records <- list(list(id = "a", optional = NULL), list(id = "b"))
+    out <- cf_records_to_df(records)
+    expect_true(all(is.na(out$optional)))
+  })
+})

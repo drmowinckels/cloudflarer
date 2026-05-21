@@ -1,0 +1,28 @@
+http_interactions:
+  - request:
+      method: POST
+      uri: https://api.cloudflare.com/client/v4/zones/zone-1/pagerules
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {
+            "success": true,
+            "errors": [],
+            "messages": [],
+            "result": {
+              "id": "rule-new",
+              "status": "active",
+              "priority": 1,
+              "targets": [
+                {"target": "url", "constraint": {"operator": "matches", "value": "*example.com/blog/*"}}
+              ],
+              "actions": [
+                {"id": "cache_level", "value": "cache_everything"}
+              ]
+            }
+          }
+    recorded_at: 2026-05-21 00:00:00
+recorded_with: VCR-vcr/2.1.0

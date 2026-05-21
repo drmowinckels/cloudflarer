@@ -1,0 +1,26 @@
+http_interactions:
+  - request:
+      method: GET
+      uri: https://api.cloudflare.com/client/v4/accounts/acc-1/rulesets/managed-1
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {
+            "success": true,
+            "errors": [],
+            "messages": [],
+            "result": {
+              "id": "managed-1",
+              "name": "Cloudflare Managed Ruleset",
+              "kind": "managed",
+              "phase": "http_request_firewall_managed",
+              "rules": [
+                {"id": "mr-1", "action": "block", "enabled": true}
+              ]
+            }
+          }
+    recorded_at: 2026-05-21 00:00:00
+recorded_with: VCR-vcr/2.1.0
