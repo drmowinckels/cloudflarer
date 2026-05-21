@@ -1,0 +1,234 @@
+# cloudflarer cheatsheet
+
+One-page reference of the most-used cloudflarer calls. Every list
+endpoint returns a data.frame (with `tbl_df` classes for tibble users);
+pass `as_df = FALSE` for the raw nested list.
+
+## Setup
+
+``` r
+
+# In ~/.Renviron
+# CLOUDFLARE_API_TOKEN=...                  # recommended
+# CLOUDFLARE_EMAIL=you@example.com          # OR (legacy)
+# CLOUDFLARE_API_KEY=...
+
+library(cloudflarer)
+cf_sitrep()
+```
+
+## Discover what you can reach
+
+``` r
+
+cf_user()
+cf_list_accounts()
+cf_list_zones()
+cf_list_zones(name = "example.com")
+```
+
+## Quick overview of a zone
+
+``` r
+
+zones <- cf_list_zones()
+zone_id    <- zones$id[1]
+account_id <- zones$account[[1]]$id
+
+cf_zone_overview(zone_id, account_id = account_id)
+```
+
+[`cf_zone_overview()`](https://drmowinckels.github.io/cloudflarer/reference/cf_zone_overview.md)
+pulls traffic, cache ratio, DNS queries, firewall events, and RUM top
+countries into one tidy bundle. Each component is wrapped so a missing
+permission or Pro-only feature yields `NULL` for that slot instead of
+failing the whole call.
+
+## Traffic analytics
+
+``` r
+
+cf_zone_requests(zone_id, Sys.Date() - 7, Sys.Date(), by = "day")
+cf_zone_requests(zone_id, Sys.time() - 12 * 3600, Sys.time(), by = "hour")
+
+cf_cache_ratio(zone_id, Sys.Date() - 7, Sys.Date())
+cf_dns_queries(zone_id, Sys.Date() - 7, Sys.Date())
+
+# Pro+ only:
+cf_firewall_events_by_day(zone_id, Sys.Date() - 7, Sys.Date())
+cf_firewall_events_top(
+  zone_id, Sys.Date() - 7, Sys.Date(),
+  dimension = "action", limit = 10
+)
+```
+
+## Web Analytics (RUM)
+
+``` r
+
+sites <- cf_list_rum_sites(account_id)
+site_tag <- sites$site_tag[1]
+
+cf_rum_page_views(account_id, site_tag,
+                  since = Sys.Date() - 30, until = Sys.Date())
+
+cf_rum_top(account_id, site_tag,
+           since = Sys.Date() - 30, until = Sys.Date(),
+           dimension = "countryName", limit = 10)
+```
+
+## DNS records
+
+``` r
+
+cf_list_dns_records(zone_id, type = "A")
+
+cf_create_dns_record(
+  zone_id, type = "A", name = "blog",
+  content = "192.0.2.5", proxied = TRUE
+)
+
+cf_update_dns_record(zone_id, "rec-1", content = "192.0.2.99")
+cf_delete_dns_record(zone_id, "rec-1")
+```
+
+## Page Rules
+
+``` r
+
+cf_list_page_rules(zone_id)
+
+cf_create_page_rule(
+  zone_id,
+  targets = list(cf_page_rule_target("*example.com/static/*")),
+  actions = list(
+    cf_page_rule_action("cache_level", "cache_everything"),
+    cf_page_rule_action("edge_cache_ttl", 7200)
+  )
+)
+
+cf_update_page_rule(zone_id, "rule-1", status = "disabled")
+cf_delete_page_rule(zone_id, "rule-1")
+```
+
+## Cache purging
+
+``` r
+
+cf_purge_cache(zone_id, files = c(
+  "https://example.com/index.html",
+  "https://example.com/style.css"
+))
+
+cf_purge_cache(zone_id, prefixes = "example.com/blog")
+
+cf_purge_cache(zone_id, purge_everything = TRUE)
+```
+
+## Zone settings
+
+``` r
+
+cf_get_zone_settings(zone_id)
+cf_get_zone_setting(zone_id, "ssl")
+```
+
+## Email Routing
+
+``` r
+
+cf_get_email_routing_settings(zone_id)
+cf_list_email_routing_rules(zone_id)
+cf_list_email_routing_addresses(account_id)
+```
+
+## Turnstile (CAPTCHA replacement)
+
+``` r
+
+cf_list_turnstile_widgets(account_id)
+
+cf_create_turnstile_widget(
+  account_id,
+  name = "comment-form",
+  domains = c("example.com", "www.example.com"),
+  mode = "managed"
+)
+```
+
+## Workers
+
+``` r
+
+cf_list_workers_scripts(account_id)
+cf_workers_invocations(account_id, Sys.Date() - 7, Sys.Date())
+cf_list_kv_namespaces(account_id)
+```
+
+## Pages, R2, Tunnels
+
+``` r
+
+cf_list_pages_projects(account_id)
+cf_list_pages_deployments(account_id, "my-project")
+cf_list_r2_buckets(account_id)
+cf_list_tunnels(account_id)
+```
+
+## Firewall + Rulesets
+
+``` r
+
+cf_list_firewall_rules(zone_id)
+
+# Modern rulesets surface:
+cf_list_rulesets(zone_id)
+cf_get_ruleset(zone_id, ruleset_id)
+cf_list_account_rulesets(account_id)
+```
+
+## Escape hatches
+
+For anything cloudflarer does not wrap, drop down to the generics. They
+handle auth and the envelope; you handle the path.
+
+``` r
+
+# Any REST endpoint:
+cf_request("user/tokens/verify")
+cf_request(
+  "zones/abc/dns_records",
+  method = "POST",
+  body = list(type = "A", name = "x", content = "1.2.3.4")
+)
+
+# Paginated REST list (returns a raw list):
+cf_request_collect("accounts/abc/access/apps", per_page = 50)
+
+# Any GraphQL Analytics query:
+cf_graphql(
+  "query Q($zoneTag: String!) {
+    viewer { zones(filter: {zoneTag: $zoneTag}) { httpRequests1dGroups(
+      limit: 7,
+      filter: { date_geq: \"2026-05-14\", date_lt: \"2026-05-21\" }
+    ) { dimensions { date } sum { requests } } } }
+  }",
+  zoneTag = zone_id
+)
+```
+
+## Error handling
+
+Every cloudflarer failure (HTTP error, envelope `success: false`,
+GraphQL `errors[]`) raises a classed condition:
+
+``` r
+
+tryCatch(
+  cf_get_zone("does-not-exist"),
+  cloudflarer_error = function(err) {
+    message("Cloudflare said: ", conditionMessage(err))
+    NULL
+  }
+)
+```

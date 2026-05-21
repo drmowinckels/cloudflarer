@@ -1,0 +1,12 @@
+pandoc: 3.8.3
+pkgdown: 2.2.0
+pkgdown_sha: ~
+articles:
+  analytics: analytics.html
+  authentication: authentication.html
+  cheatsheet: cheatsheet.html
+  cloudflarer: cloudflarer.html
+last_built: 2026-05-21T21:13Z
+urls:
+  reference: https://drmowinckels.github.io/cloudflarer/reference
+  article: https://drmowinckels.github.io/cloudflarer/articles
