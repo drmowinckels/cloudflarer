@@ -35,17 +35,17 @@ cf_list_zones(
 - per_page:
 
   Page size, see
-  [`cf_request_collect()`](https://drmowinckels.github.io/cloudflarer/reference/cf_request_collect.md).
+  [`cf_request_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_request_collect.md).
 
 - max_pages:
 
   Maximum pages to retrieve, see
-  [`cf_request_collect()`](https://drmowinckels.github.io/cloudflarer/reference/cf_request_collect.md).
+  [`cf_request_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_request_collect.md).
 
 - as_df:
 
   Logical. When `TRUE` (the default), returns a data.frame via
-  [`cf_records_to_df()`](https://drmowinckels.github.io/cloudflarer/reference/cf_records_to_df.md).
+  [`cf_records_to_df()`](http://drmowinckels.io/cloudflarer/reference/cf_records_to_df.md).
   Set to `FALSE` for the raw nested list.
 
 - token:
@@ -70,17 +70,17 @@ A data.frame of zone records (or a list when `as_df = FALSE`).
 ## See also
 
 Other zones:
-[`cf_create_page_rule()`](https://drmowinckels.github.io/cloudflarer/reference/cf_create_page_rule.md),
-[`cf_delete_page_rule()`](https://drmowinckels.github.io/cloudflarer/reference/cf_delete_page_rule.md),
-[`cf_get_page_rule()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_page_rule.md),
-[`cf_get_zone()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_zone.md),
-[`cf_get_zone_setting()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_zone_setting.md),
-[`cf_get_zone_settings()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_zone_settings.md),
-[`cf_list_firewall_rules()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_firewall_rules.md),
-[`cf_list_page_rules()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_page_rules.md),
-[`cf_page_rule_action()`](https://drmowinckels.github.io/cloudflarer/reference/cf_page_rule_action.md),
-[`cf_page_rule_target()`](https://drmowinckels.github.io/cloudflarer/reference/cf_page_rule_target.md),
-[`cf_update_page_rule()`](https://drmowinckels.github.io/cloudflarer/reference/cf_update_page_rule.md)
+[`cf_create_page_rule()`](http://drmowinckels.io/cloudflarer/reference/cf_create_page_rule.md),
+[`cf_delete_page_rule()`](http://drmowinckels.io/cloudflarer/reference/cf_delete_page_rule.md),
+[`cf_get_page_rule()`](http://drmowinckels.io/cloudflarer/reference/cf_get_page_rule.md),
+[`cf_get_zone()`](http://drmowinckels.io/cloudflarer/reference/cf_get_zone.md),
+[`cf_get_zone_setting()`](http://drmowinckels.io/cloudflarer/reference/cf_get_zone_setting.md),
+[`cf_get_zone_settings()`](http://drmowinckels.io/cloudflarer/reference/cf_get_zone_settings.md),
+[`cf_list_firewall_rules()`](http://drmowinckels.io/cloudflarer/reference/cf_list_firewall_rules.md),
+[`cf_list_page_rules()`](http://drmowinckels.io/cloudflarer/reference/cf_list_page_rules.md),
+[`cf_page_rule_action()`](http://drmowinckels.io/cloudflarer/reference/cf_page_rule_action.md),
+[`cf_page_rule_target()`](http://drmowinckels.io/cloudflarer/reference/cf_page_rule_target.md),
+[`cf_update_page_rule()`](http://drmowinckels.io/cloudflarer/reference/cf_update_page_rule.md)
 
 ## Examples
 

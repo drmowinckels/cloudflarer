@@ -23,7 +23,7 @@ cf_list_workers_scripts(
 - as_df:
 
   Logical. When `TRUE` (the default), returns a data.frame via
-  [`cf_records_to_df()`](https://drmowinckels.github.io/cloudflarer/reference/cf_records_to_df.md).
+  [`cf_records_to_df()`](http://drmowinckels.io/cloudflarer/reference/cf_records_to_df.md).
   Set to `FALSE` for the raw nested list.
 
 - token:
@@ -48,10 +48,10 @@ A data.frame of Workers script records (or list when `as_df = FALSE`).
 ## See also
 
 Other workers:
-[`cf_get_kv_namespace()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_kv_namespace.md),
-[`cf_get_workers_script()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_workers_script.md),
-[`cf_list_kv_namespaces()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_kv_namespaces.md),
-[`cf_workers_invocations()`](https://drmowinckels.github.io/cloudflarer/reference/cf_workers_invocations.md)
+[`cf_get_kv_namespace()`](http://drmowinckels.io/cloudflarer/reference/cf_get_kv_namespace.md),
+[`cf_get_workers_script()`](http://drmowinckels.io/cloudflarer/reference/cf_get_workers_script.md),
+[`cf_list_kv_namespaces()`](http://drmowinckels.io/cloudflarer/reference/cf_list_kv_namespaces.md),
+[`cf_workers_invocations()`](http://drmowinckels.io/cloudflarer/reference/cf_workers_invocations.md)
 
 ## Examples
 

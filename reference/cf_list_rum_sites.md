@@ -32,12 +32,12 @@ cf_list_rum_sites(
 - per_page, max_pages:
 
   Pagination controls, see
-  [`cf_request_collect()`](https://drmowinckels.github.io/cloudflarer/reference/cf_request_collect.md).
+  [`cf_request_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_request_collect.md).
 
 - as_df:
 
   Logical. When `TRUE` (the default), returns a data.frame via
-  [`cf_records_to_df()`](https://drmowinckels.github.io/cloudflarer/reference/cf_records_to_df.md).
+  [`cf_records_to_df()`](http://drmowinckels.io/cloudflarer/reference/cf_records_to_df.md).
   Set to `FALSE` to get the raw nested list.
 
 - token:
@@ -62,17 +62,17 @@ A data.frame of site records (or list when `as_df = FALSE`).
 ## See also
 
 Other analytics:
-[`cf_cache_ratio()`](https://drmowinckels.github.io/cloudflarer/reference/cf_cache_ratio.md),
-[`cf_dns_queries()`](https://drmowinckels.github.io/cloudflarer/reference/cf_dns_queries.md),
-[`cf_firewall_events_by_day()`](https://drmowinckels.github.io/cloudflarer/reference/cf_firewall_events_by_day.md),
-[`cf_firewall_events_top()`](https://drmowinckels.github.io/cloudflarer/reference/cf_firewall_events_top.md),
-[`cf_get_rum_site()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_rum_site.md),
-[`cf_graphql()`](https://drmowinckels.github.io/cloudflarer/reference/cf_graphql.md),
-[`cf_rum_page_views()`](https://drmowinckels.github.io/cloudflarer/reference/cf_rum_page_views.md),
-[`cf_rum_top()`](https://drmowinckels.github.io/cloudflarer/reference/cf_rum_top.md),
-[`cf_workers_invocations()`](https://drmowinckels.github.io/cloudflarer/reference/cf_workers_invocations.md),
-[`cf_zone_overview()`](https://drmowinckels.github.io/cloudflarer/reference/cf_zone_overview.md),
-[`cf_zone_requests()`](https://drmowinckels.github.io/cloudflarer/reference/cf_zone_requests.md)
+[`cf_cache_ratio()`](http://drmowinckels.io/cloudflarer/reference/cf_cache_ratio.md),
+[`cf_dns_queries()`](http://drmowinckels.io/cloudflarer/reference/cf_dns_queries.md),
+[`cf_firewall_events_by_day()`](http://drmowinckels.io/cloudflarer/reference/cf_firewall_events_by_day.md),
+[`cf_firewall_events_top()`](http://drmowinckels.io/cloudflarer/reference/cf_firewall_events_top.md),
+[`cf_get_rum_site()`](http://drmowinckels.io/cloudflarer/reference/cf_get_rum_site.md),
+[`cf_graphql()`](http://drmowinckels.io/cloudflarer/reference/cf_graphql.md),
+[`cf_rum_page_views()`](http://drmowinckels.io/cloudflarer/reference/cf_rum_page_views.md),
+[`cf_rum_top()`](http://drmowinckels.io/cloudflarer/reference/cf_rum_top.md),
+[`cf_workers_invocations()`](http://drmowinckels.io/cloudflarer/reference/cf_workers_invocations.md),
+[`cf_zone_overview()`](http://drmowinckels.io/cloudflarer/reference/cf_zone_overview.md),
+[`cf_zone_requests()`](http://drmowinckels.io/cloudflarer/reference/cf_zone_requests.md)
 
 ## Examples
 

@@ -46,9 +46,9 @@ A named list describing the widget.
 ## See also
 
 Other turnstile:
-[`cf_create_turnstile_widget()`](https://drmowinckels.github.io/cloudflarer/reference/cf_create_turnstile_widget.md),
-[`cf_delete_turnstile_widget()`](https://drmowinckels.github.io/cloudflarer/reference/cf_delete_turnstile_widget.md),
-[`cf_list_turnstile_widgets()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_turnstile_widgets.md)
+[`cf_create_turnstile_widget()`](http://drmowinckels.io/cloudflarer/reference/cf_create_turnstile_widget.md),
+[`cf_delete_turnstile_widget()`](http://drmowinckels.io/cloudflarer/reference/cf_delete_turnstile_widget.md),
+[`cf_list_turnstile_widgets()`](http://drmowinckels.io/cloudflarer/reference/cf_list_turnstile_widgets.md)
 
 ## Examples
 

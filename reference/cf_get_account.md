@@ -36,7 +36,7 @@ A named list describing the account.
 ## See also
 
 Other accounts:
-[`cf_list_accounts()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_accounts.md)
+[`cf_list_accounts()`](http://drmowinckels.io/cloudflarer/reference/cf_list_accounts.md)
 
 ## Examples
 

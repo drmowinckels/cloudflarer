@@ -4,8 +4,8 @@ Cloudflare exposes two analytics surfaces that this package wraps:
 
 | Surface | Best for | Wrapper |
 |----|----|----|
-| Web Analytics / RUM | Site catalogue (sites with the JavaScript beacon installed) | \[[`cf_list_rum_sites()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_rum_sites.md)\], \[[`cf_get_rum_site()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_rum_site.md)\] |
-| GraphQL Analytics | Everything else – HTTP requests, bandwidth, page views, uniques, firewall events, Workers, R2, DNS | \[[`cf_graphql()`](https://drmowinckels.github.io/cloudflarer/reference/cf_graphql.md)\] |
+| Web Analytics / RUM | Site catalogue (sites with the JavaScript beacon installed) | \[[`cf_list_rum_sites()`](http://drmowinckels.io/cloudflarer/reference/cf_list_rum_sites.md)\], \[[`cf_get_rum_site()`](http://drmowinckels.io/cloudflarer/reference/cf_get_rum_site.md)\] |
+| GraphQL Analytics | Everything else – HTTP requests, bandwidth, page views, uniques, firewall events, Workers, R2, DNS | \[[`cf_graphql()`](http://drmowinckels.io/cloudflarer/reference/cf_graphql.md)\] |
 
 The legacy REST Zone Analytics endpoints
 (`/zones/{id}/analytics/dashboard` and `/analytics/colos`) were retired
@@ -41,7 +41,7 @@ countries](#top-countries-for-a-web-analytics-rum-site) example below.
 
 ## GraphQL Analytics
 
-\[[`cf_graphql()`](https://drmowinckels.github.io/cloudflarer/reference/cf_graphql.md)\]
+\[[`cf_graphql()`](http://drmowinckels.io/cloudflarer/reference/cf_graphql.md)\]
 accepts the query as a string and variables as named `...` arguments.
 The full response body is returned, so you access fields under
 `$data$...`.
@@ -69,7 +69,7 @@ Two things worth knowing about Cloudflare’s GraphQL `viewer`:
   Always supply a `filter` with the `accountTag` you care about.
 - The `Account` type only exposes `accountTag`. The human-readable name
   lives on the REST `/accounts` endpoint, which you already have from
-  \[[`cf_list_accounts()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_accounts.md)\].
+  \[[`cf_list_accounts()`](http://drmowinckels.io/cloudflarer/reference/cf_list_accounts.md)\].
 
 ### HTTP requests per day for a zone
 
@@ -181,9 +181,9 @@ standard GraphQL convention).
 
 For the most common analytics questions, cloudflarer ships ready-made
 data.frame wrappers on top of
-[`cf_graphql()`](https://drmowinckels.github.io/cloudflarer/reference/cf_graphql.md).
+[`cf_graphql()`](http://drmowinckels.io/cloudflarer/reference/cf_graphql.md).
 Reach for these first; drop down to
-[`cf_graphql()`](https://drmowinckels.github.io/cloudflarer/reference/cf_graphql.md)
+[`cf_graphql()`](http://drmowinckels.io/cloudflarer/reference/cf_graphql.md)
 only when you need a dimension or filter they do not expose.
 
 ### HTTP traffic over time
@@ -231,7 +231,7 @@ cf_firewall_events_top(
 ```
 
 Other useful
-[`cf_firewall_events_top()`](https://drmowinckels.github.io/cloudflarer/reference/cf_firewall_events_top.md)
+[`cf_firewall_events_top()`](http://drmowinckels.io/cloudflarer/reference/cf_firewall_events_top.md)
 dimensions: `"source"`, `"ruleId"`, `"clientCountryName"`,
 `"clientRequestPath"`, `"clientRequestHTTPHost"`, `"userAgent"`.
 
@@ -250,25 +250,25 @@ cf_rum_top(account_id, site_tag,
 ## Picking the right query
 
 - **Counting requests, bandwidth, page views, or uniques over time:**
-  [`cf_zone_requests()`](https://drmowinckels.github.io/cloudflarer/reference/cf_zone_requests.md)
+  [`cf_zone_requests()`](http://drmowinckels.io/cloudflarer/reference/cf_zone_requests.md)
   (or `httpRequestsAdaptiveGroups` directly via
-  [`cf_graphql()`](https://drmowinckels.github.io/cloudflarer/reference/cf_graphql.md)
+  [`cf_graphql()`](http://drmowinckels.io/cloudflarer/reference/cf_graphql.md)
   for sub-hour granularity).
 - **Cache effectiveness:**
-  [`cf_cache_ratio()`](https://drmowinckels.github.io/cloudflarer/reference/cf_cache_ratio.md).
+  [`cf_cache_ratio()`](http://drmowinckels.io/cloudflarer/reference/cf_cache_ratio.md).
 - **DNS query volume:**
-  [`cf_dns_queries()`](https://drmowinckels.github.io/cloudflarer/reference/cf_dns_queries.md).
+  [`cf_dns_queries()`](http://drmowinckels.io/cloudflarer/reference/cf_dns_queries.md).
 - **Security visibility:**
-  [`cf_firewall_events_by_day()`](https://drmowinckels.github.io/cloudflarer/reference/cf_firewall_events_by_day.md)
+  [`cf_firewall_events_by_day()`](http://drmowinckels.io/cloudflarer/reference/cf_firewall_events_by_day.md)
   /
-  [`cf_firewall_events_top()`](https://drmowinckels.github.io/cloudflarer/reference/cf_firewall_events_top.md).
+  [`cf_firewall_events_top()`](http://drmowinckels.io/cloudflarer/reference/cf_firewall_events_top.md).
 - **RUM page views or unique visitors on a beacon site:**
-  [`cf_rum_page_views()`](https://drmowinckels.github.io/cloudflarer/reference/cf_rum_page_views.md)
+  [`cf_rum_page_views()`](http://drmowinckels.io/cloudflarer/reference/cf_rum_page_views.md)
   /
-  [`cf_rum_top()`](https://drmowinckels.github.io/cloudflarer/reference/cf_rum_top.md).
+  [`cf_rum_top()`](http://drmowinckels.io/cloudflarer/reference/cf_rum_top.md).
 - **Anything else** – Workers invocations, R2 usage, bandwidth by status
   code or hostname, etc.:
-  [`cf_graphql()`](https://drmowinckels.github.io/cloudflarer/reference/cf_graphql.md)
+  [`cf_graphql()`](http://drmowinckels.io/cloudflarer/reference/cf_graphql.md)
   directly. The [GraphQL schema
   explorer](https://graphql.cloudflare.com/explorer) is the fastest way
   to find the right node and dimensions.

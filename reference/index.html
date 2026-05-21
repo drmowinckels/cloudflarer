@@ -177,17 +177,17 @@
 
       <dl><dt>
 
-          <code><a href="cf_list_zones.html">cf_list_zones()</a></code>
-
-        </dt>
-        <dd>List zones</dd>
-
-        <dt>
-
           <code><a href="cf_get_zone.html">cf_get_zone()</a></code>
 
         </dt>
         <dd>Get a single zone</dd>
+
+        <dt>
+
+          <code><a href="cf_get_zone_setting.html">cf_get_zone_setting()</a></code>
+
+        </dt>
+        <dd>Get a single zone setting</dd>
 
         <dt>
 
@@ -198,10 +198,10 @@
 
         <dt>
 
-          <code><a href="cf_get_zone_setting.html">cf_get_zone_setting()</a></code>
+          <code><a href="cf_list_zones.html">cf_list_zones()</a></code>
 
         </dt>
-        <dd>Get a single zone setting</dd>
+        <dd>List zones</dd>
       </dl></div><div class="section level2">
       <h2 id="dns-records">DNS records<a class="anchor" aria-label="anchor" href="#dns-records"></a></h2>
 
@@ -214,10 +214,17 @@
 
       <dl><dt>
 
-          <code><a href="cf_list_dns_records.html">cf_list_dns_records()</a></code>
+          <code><a href="cf_create_dns_record.html">cf_create_dns_record()</a></code>
 
         </dt>
-        <dd>List DNS records in a zone</dd>
+        <dd>Create a DNS record</dd>
+
+        <dt>
+
+          <code><a href="cf_delete_dns_record.html">cf_delete_dns_record()</a></code>
+
+        </dt>
+        <dd>Delete a DNS record</dd>
 
         <dt>
 
@@ -228,10 +235,10 @@
 
         <dt>
 
-          <code><a href="cf_create_dns_record.html">cf_create_dns_record()</a></code>
+          <code><a href="cf_list_dns_records.html">cf_list_dns_records()</a></code>
 
         </dt>
-        <dd>Create a DNS record</dd>
+        <dd>List DNS records in a zone</dd>
 
         <dt>
 
@@ -239,13 +246,6 @@
 
         </dt>
         <dd>Update a DNS record</dd>
-
-        <dt>
-
-          <code><a href="cf_delete_dns_record.html">cf_delete_dns_record()</a></code>
-
-        </dt>
-        <dd>Delete a DNS record</dd>
       </dl></div><div class="section level2">
       <h2 id="page-rules">Page Rules<a class="anchor" aria-label="anchor" href="#page-rules"></a></h2>
 
@@ -258,31 +258,10 @@
 
       <dl><dt>
 
-          <code><a href="cf_list_page_rules.html">cf_list_page_rules()</a></code>
-
-        </dt>
-        <dd>List Page Rules for a zone</dd>
-
-        <dt>
-
-          <code><a href="cf_get_page_rule.html">cf_get_page_rule()</a></code>
-
-        </dt>
-        <dd>Get a single Page Rule</dd>
-
-        <dt>
-
           <code><a href="cf_create_page_rule.html">cf_create_page_rule()</a></code>
 
         </dt>
         <dd>Create a Page Rule</dd>
-
-        <dt>
-
-          <code><a href="cf_update_page_rule.html">cf_update_page_rule()</a></code>
-
-        </dt>
-        <dd>Update a Page Rule</dd>
 
         <dt>
 
@@ -293,10 +272,17 @@
 
         <dt>
 
-          <code><a href="cf_page_rule_target.html">cf_page_rule_target()</a></code>
+          <code><a href="cf_get_page_rule.html">cf_get_page_rule()</a></code>
 
         </dt>
-        <dd>Build a Page Rule URL-match target</dd>
+        <dd>Get a single Page Rule</dd>
+
+        <dt>
+
+          <code><a href="cf_list_page_rules.html">cf_list_page_rules()</a></code>
+
+        </dt>
+        <dd>List Page Rules for a zone</dd>
 
         <dt>
 
@@ -304,6 +290,20 @@
 
         </dt>
         <dd>Build a Page Rule action</dd>
+
+        <dt>
+
+          <code><a href="cf_page_rule_target.html">cf_page_rule_target()</a></code>
+
+        </dt>
+        <dd>Build a Page Rule URL-match target</dd>
+
+        <dt>
+
+          <code><a href="cf_update_page_rule.html">cf_update_page_rule()</a></code>
+
+        </dt>
+        <dd>Update a Page Rule</dd>
       </dl></div><div class="section level2">
       <h2 id="firewall-rules">Firewall rules<a class="anchor" aria-label="anchor" href="#firewall-rules"></a></h2>
 
@@ -332,10 +332,10 @@
 
       <dl><dt>
 
-          <code><a href="cf_list_rulesets.html">cf_list_rulesets()</a></code>
+          <code><a href="cf_get_account_ruleset.html">cf_get_account_ruleset()</a></code>
 
         </dt>
-        <dd>List Rulesets for a zone</dd>
+        <dd>Get a single account Ruleset (with its rules)</dd>
 
         <dt>
 
@@ -353,10 +353,10 @@
 
         <dt>
 
-          <code><a href="cf_get_account_ruleset.html">cf_get_account_ruleset()</a></code>
+          <code><a href="cf_list_rulesets.html">cf_list_rulesets()</a></code>
 
         </dt>
-        <dd>Get a single account Ruleset (with its rules)</dd>
+        <dd>List Rulesets for a zone</dd>
       </dl></div><div class="section level2">
       <h2 id="cache">Cache<a class="anchor" aria-label="anchor" href="#cache"></a></h2>
 
@@ -482,20 +482,6 @@
 
       <dl><dt>
 
-          <code><a href="cf_list_turnstile_widgets.html">cf_list_turnstile_widgets()</a></code>
-
-        </dt>
-        <dd>List Turnstile widgets</dd>
-
-        <dt>
-
-          <code><a href="cf_get_turnstile_widget.html">cf_get_turnstile_widget()</a></code>
-
-        </dt>
-        <dd>Get a single Turnstile widget</dd>
-
-        <dt>
-
           <code><a href="cf_create_turnstile_widget.html">cf_create_turnstile_widget()</a></code>
 
         </dt>
@@ -507,6 +493,20 @@
 
         </dt>
         <dd>Delete a Turnstile widget</dd>
+
+        <dt>
+
+          <code><a href="cf_get_turnstile_widget.html">cf_get_turnstile_widget()</a></code>
+
+        </dt>
+        <dd>Get a single Turnstile widget</dd>
+
+        <dt>
+
+          <code><a href="cf_list_turnstile_widgets.html">cf_list_turnstile_widgets()</a></code>
+
+        </dt>
+        <dd>List Turnstile widgets</dd>
       </dl></div><div class="section level2">
       <h2 id="email-routing">Email Routing<a class="anchor" aria-label="anchor" href="#email-routing"></a></h2>
 
@@ -526,17 +526,17 @@
 
         <dt>
 
-          <code><a href="cf_list_email_routing_rules.html">cf_list_email_routing_rules()</a></code>
-
-        </dt>
-        <dd>List Email Routing rules for a zone</dd>
-
-        <dt>
-
           <code><a href="cf_list_email_routing_addresses.html">cf_list_email_routing_addresses()</a></code>
 
         </dt>
         <dd>List Email Routing destination addresses</dd>
+
+        <dt>
+
+          <code><a href="cf_list_email_routing_rules.html">cf_list_email_routing_rules()</a></code>
+
+        </dt>
+        <dd>List Email Routing rules for a zone</dd>
       </dl></div><div class="section level2">
       <h2 id="tunnels-zero-trust-cloudflared-">Tunnels (Zero Trust / cloudflared)<a class="anchor" aria-label="anchor" href="#tunnels-zero-trust-cloudflared-"></a></h2>
 
@@ -579,17 +579,17 @@
 
       <dl><dt>
 
-          <code><a href="cf_list_rum_sites.html">cf_list_rum_sites()</a></code>
-
-        </dt>
-        <dd>List Web Analytics (RUM) sites</dd>
-
-        <dt>
-
           <code><a href="cf_get_rum_site.html">cf_get_rum_site()</a></code>
 
         </dt>
         <dd>Get a single Web Analytics (RUM) site</dd>
+
+        <dt>
+
+          <code><a href="cf_list_rum_sites.html">cf_list_rum_sites()</a></code>
+
+        </dt>
+        <dd>List Web Analytics (RUM) sites</dd>
 
         <dt>
 

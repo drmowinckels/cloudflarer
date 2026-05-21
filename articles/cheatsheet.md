@@ -38,7 +38,7 @@ account_id <- zones$account[[1]]$id
 cf_zone_overview(zone_id, account_id = account_id)
 ```
 
-[`cf_zone_overview()`](https://drmowinckels.github.io/cloudflarer/reference/cf_zone_overview.md)
+[`cf_zone_overview()`](http://drmowinckels.io/cloudflarer/reference/cf_zone_overview.md)
 pulls traffic, cache ratio, DNS queries, firewall events, and RUM top
 countries into one tidy bundle. Each component is wrapped so a missing
 permission or Pro-only feature yields `NULL` for that slot instead of

@@ -78,7 +78,7 @@ condition you can catch with
 ## See also
 
 Other requests:
-[`cf_request_collect()`](https://drmowinckels.github.io/cloudflarer/reference/cf_request_collect.md)
+[`cf_request_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_request_collect.md)
 
 ## Examples
 

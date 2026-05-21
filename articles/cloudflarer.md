@@ -3,7 +3,7 @@
 cloudflarer wraps the Cloudflare v4 REST API. Most users will reach for
 a handful of named endpoint helpers, but anything not yet wrapped is
 reachable through the generic
-[`cf_request()`](https://drmowinckels.github.io/cloudflarer/reference/cf_request.md)
+[`cf_request()`](http://drmowinckels.io/cloudflarer/reference/cf_request.md)
 function.
 
 List endpoints return a data.frame by default (one row per record,
@@ -20,7 +20,7 @@ Set a Cloudflare API token in `~/.Renviron` and restart R:
 
 The Global API Key (legacy) also works through `CLOUDFLARE_EMAIL` +
 `CLOUDFLARE_API_KEY`. See
-[`vignette("authentication")`](https://drmowinckels.github.io/cloudflarer/articles/authentication.md)
+[`vignette("authentication")`](http://drmowinckels.io/cloudflarer/articles/authentication.md)
 for the full setup.
 
 Verify the connection:
@@ -51,13 +51,13 @@ cf_list_zones(max_pages = 1)
 
 ## DNS records
 
-[`cf_list_dns_records()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_dns_records.md)
+[`cf_list_dns_records()`](http://drmowinckels.io/cloudflarer/reference/cf_list_dns_records.md)
 returns a data.frame;
-[`cf_get_dns_record()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_dns_record.md),
-[`cf_create_dns_record()`](https://drmowinckels.github.io/cloudflarer/reference/cf_create_dns_record.md),
-[`cf_update_dns_record()`](https://drmowinckels.github.io/cloudflarer/reference/cf_update_dns_record.md),
+[`cf_get_dns_record()`](http://drmowinckels.io/cloudflarer/reference/cf_get_dns_record.md),
+[`cf_create_dns_record()`](http://drmowinckels.io/cloudflarer/reference/cf_create_dns_record.md),
+[`cf_update_dns_record()`](http://drmowinckels.io/cloudflarer/reference/cf_update_dns_record.md),
 and
-[`cf_delete_dns_record()`](https://drmowinckels.github.io/cloudflarer/reference/cf_delete_dns_record.md)
+[`cf_delete_dns_record()`](http://drmowinckels.io/cloudflarer/reference/cf_delete_dns_record.md)
 cover the CRUD lifecycle:
 
 ``` r
@@ -111,7 +111,7 @@ cf_get_zone_setting(zone_id, "ssl")
 
 Every endpoint in the [Cloudflare API
 reference](https://developers.cloudflare.com/api/) is reachable through
-[`cf_request()`](https://drmowinckels.github.io/cloudflarer/reference/cf_request.md).
+[`cf_request()`](http://drmowinckels.io/cloudflarer/reference/cf_request.md).
 Pass the path relative to `/client/v4`, an HTTP `method`, and optional
 `query` or `body` lists.
 
@@ -132,9 +132,9 @@ cf_request(
 ```
 
 For paginated list endpoints, use
-[`cf_request_collect()`](https://drmowinckels.github.io/cloudflarer/reference/cf_request_collect.md)
+[`cf_request_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_request_collect.md)
 to get the raw list, or call
-[`cf_records_to_df()`](https://drmowinckels.github.io/cloudflarer/reference/cf_records_to_df.md)
+[`cf_records_to_df()`](http://drmowinckels.io/cloudflarer/reference/cf_records_to_df.md)
 on the result yourself to tidy it into a data.frame:
 
 ``` r

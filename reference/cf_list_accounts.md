@@ -25,17 +25,17 @@ cf_list_accounts(
 - per_page:
 
   Page size, see
-  [`cf_request_collect()`](https://drmowinckels.github.io/cloudflarer/reference/cf_request_collect.md).
+  [`cf_request_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_request_collect.md).
 
 - max_pages:
 
   Maximum number of pages to retrieve, see
-  [`cf_request_collect()`](https://drmowinckels.github.io/cloudflarer/reference/cf_request_collect.md).
+  [`cf_request_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_request_collect.md).
 
 - as_df:
 
   Logical. When `TRUE` (the default), returns a data.frame via
-  [`cf_records_to_df()`](https://drmowinckels.github.io/cloudflarer/reference/cf_records_to_df.md).
+  [`cf_records_to_df()`](http://drmowinckels.io/cloudflarer/reference/cf_records_to_df.md).
   Set to `FALSE` to get the raw nested list.
 
 - token:
@@ -60,7 +60,7 @@ A data.frame of account records (or a list when `as_df = FALSE`).
 ## See also
 
 Other accounts:
-[`cf_get_account()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_account.md)
+[`cf_get_account()`](http://drmowinckels.io/cloudflarer/reference/cf_get_account.md)
 
 ## Examples
 

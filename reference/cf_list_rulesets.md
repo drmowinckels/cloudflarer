@@ -25,7 +25,7 @@ cf_list_rulesets(
 - as_df:
 
   Logical. When `TRUE` (the default), returns a data.frame via
-  [`cf_records_to_df()`](https://drmowinckels.github.io/cloudflarer/reference/cf_records_to_df.md).
+  [`cf_records_to_df()`](http://drmowinckels.io/cloudflarer/reference/cf_records_to_df.md).
   Set to `FALSE` for the raw nested list.
 
 - token:
@@ -50,9 +50,9 @@ A data.frame of rulesets (or list when `as_df = FALSE`).
 ## See also
 
 Other rulesets:
-[`cf_get_account_ruleset()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_account_ruleset.md),
-[`cf_get_ruleset()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_ruleset.md),
-[`cf_list_account_rulesets()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_account_rulesets.md)
+[`cf_get_account_ruleset()`](http://drmowinckels.io/cloudflarer/reference/cf_get_account_ruleset.md),
+[`cf_get_ruleset()`](http://drmowinckels.io/cloudflarer/reference/cf_get_ruleset.md),
+[`cf_list_account_rulesets()`](http://drmowinckels.io/cloudflarer/reference/cf_list_account_rulesets.md)
 
 ## Examples
 

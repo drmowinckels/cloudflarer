@@ -47,8 +47,8 @@ and the latest deployment.
 ## See also
 
 Other pages:
-[`cf_list_pages_deployments()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_pages_deployments.md),
-[`cf_list_pages_projects()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_pages_projects.md)
+[`cf_list_pages_deployments()`](http://drmowinckels.io/cloudflarer/reference/cf_list_pages_deployments.md),
+[`cf_list_pages_projects()`](http://drmowinckels.io/cloudflarer/reference/cf_list_pages_projects.md)
 
 ## Examples
 

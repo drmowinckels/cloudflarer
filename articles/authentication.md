@@ -8,9 +8,9 @@ cloudflarer supports both Cloudflare authentication schemes:
     your email address, sent as `X-Auth-Email` and `X-Auth-Key` headers.
 
 The package picks the mode automatically from the environment.
-\[[`cf_auth_mode()`](https://drmowinckels.github.io/cloudflarer/reference/cf_auth_mode.md)\]
+\[[`cf_auth_mode()`](http://drmowinckels.io/cloudflarer/reference/cf_auth_mode.md)\]
 tells you which one is active, and
-\[[`cf_sitrep()`](https://drmowinckels.github.io/cloudflarer/reference/cf_sitrep.md)\]
+\[[`cf_sitrep()`](http://drmowinckels.io/cloudflarer/reference/cf_sitrep.md)\]
 confirms that the configured credentials work.
 
 If both are configured, the API token wins because it is the modern,
@@ -85,7 +85,7 @@ cf_has_auth()
 cf_sitrep()
 ```
 
-[`cf_sitrep()`](https://drmowinckels.github.io/cloudflarer/reference/cf_sitrep.md)
+[`cf_sitrep()`](http://drmowinckels.io/cloudflarer/reference/cf_sitrep.md)
 reports the package version, which auth mode is active, and the result
 of an authenticated call against the live API (`/user/tokens/verify` for
 tokens; `/user` for the Global API Key).

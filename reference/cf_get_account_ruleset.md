@@ -47,9 +47,9 @@ list of rule objects.
 ## See also
 
 Other rulesets:
-[`cf_get_ruleset()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_ruleset.md),
-[`cf_list_account_rulesets()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_account_rulesets.md),
-[`cf_list_rulesets()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_rulesets.md)
+[`cf_get_ruleset()`](http://drmowinckels.io/cloudflarer/reference/cf_get_ruleset.md),
+[`cf_list_account_rulesets()`](http://drmowinckels.io/cloudflarer/reference/cf_list_account_rulesets.md),
+[`cf_list_rulesets()`](http://drmowinckels.io/cloudflarer/reference/cf_list_rulesets.md)
 
 ## Examples
 

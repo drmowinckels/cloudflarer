@@ -7,21 +7,21 @@
 ### Core
 
 - Core request helpers: `cf_req()`,
-  [`cf_request()`](https://drmowinckels.github.io/cloudflarer/reference/cf_request.md),
-  [`cf_request_collect()`](https://drmowinckels.github.io/cloudflarer/reference/cf_request_collect.md).
+  [`cf_request()`](http://drmowinckels.io/cloudflarer/reference/cf_request.md),
+  [`cf_request_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_request_collect.md).
 - Two-mode authentication: API token via `CLOUDFLARE_API_TOKEN`, or
   legacy Global API Key via `CLOUDFLARE_EMAIL` + `CLOUDFLARE_API_KEY`.
   The active mode is reported by
-  [`cf_auth_mode()`](https://drmowinckels.github.io/cloudflarer/reference/cf_auth_mode.md).
+  [`cf_auth_mode()`](http://drmowinckels.io/cloudflarer/reference/cf_auth_mode.md).
 - Authentication helpers:
-  [`cf_token()`](https://drmowinckels.github.io/cloudflarer/reference/cf_token.md),
-  [`cf_email()`](https://drmowinckels.github.io/cloudflarer/reference/cf_email.md),
-  [`cf_api_key()`](https://drmowinckels.github.io/cloudflarer/reference/cf_api_key.md),
-  [`cf_has_auth()`](https://drmowinckels.github.io/cloudflarer/reference/cf_has_auth.md),
-  [`cf_token_verify()`](https://drmowinckels.github.io/cloudflarer/reference/cf_verify.md),
-  [`cf_verify()`](https://drmowinckels.github.io/cloudflarer/reference/cf_verify.md).
+  [`cf_token()`](http://drmowinckels.io/cloudflarer/reference/cf_token.md),
+  [`cf_email()`](http://drmowinckels.io/cloudflarer/reference/cf_email.md),
+  [`cf_api_key()`](http://drmowinckels.io/cloudflarer/reference/cf_api_key.md),
+  [`cf_has_auth()`](http://drmowinckels.io/cloudflarer/reference/cf_has_auth.md),
+  [`cf_token_verify()`](http://drmowinckels.io/cloudflarer/reference/cf_verify.md),
+  [`cf_verify()`](http://drmowinckels.io/cloudflarer/reference/cf_verify.md).
 - Diagnostic helper
-  [`cf_sitrep()`](https://drmowinckels.github.io/cloudflarer/reference/cf_sitrep.md)
+  [`cf_sitrep()`](http://drmowinckels.io/cloudflarer/reference/cf_sitrep.md)
   reports the active mode and verifies the configured credentials
   against the live API.
 - All REST API failures, whether HTTP-level or envelope-level
@@ -32,13 +32,13 @@
 ### Data frame defaults
 
 - List endpoints
-  ([`cf_list_accounts()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_accounts.md),
-  [`cf_list_zones()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_zones.md),
-  [`cf_list_dns_records()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_dns_records.md),
-  [`cf_list_rum_sites()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_rum_sites.md),
-  [`cf_get_zone_settings()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_zone_settings.md))
+  ([`cf_list_accounts()`](http://drmowinckels.io/cloudflarer/reference/cf_list_accounts.md),
+  [`cf_list_zones()`](http://drmowinckels.io/cloudflarer/reference/cf_list_zones.md),
+  [`cf_list_dns_records()`](http://drmowinckels.io/cloudflarer/reference/cf_list_dns_records.md),
+  [`cf_list_rum_sites()`](http://drmowinckels.io/cloudflarer/reference/cf_list_rum_sites.md),
+  [`cf_get_zone_settings()`](http://drmowinckels.io/cloudflarer/reference/cf_get_zone_settings.md))
   return a data.frame by default via the new
-  [`cf_records_to_df()`](https://drmowinckels.github.io/cloudflarer/reference/cf_records_to_df.md)
+  [`cf_records_to_df()`](http://drmowinckels.io/cloudflarer/reference/cf_records_to_df.md)
   helper. Scalar fields become typed columns; vector or nested fields
   are kept as list-columns. Pass `as_df = FALSE` to get the raw nested
   list back.
@@ -48,44 +48,44 @@
 
 ### REST endpoints
 
-- [`cf_user()`](https://drmowinckels.github.io/cloudflarer/reference/cf_user.md).
+- [`cf_user()`](http://drmowinckels.io/cloudflarer/reference/cf_user.md).
 - Accounts:
-  [`cf_list_accounts()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_accounts.md),
-  [`cf_get_account()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_account.md).
+  [`cf_list_accounts()`](http://drmowinckels.io/cloudflarer/reference/cf_list_accounts.md),
+  [`cf_get_account()`](http://drmowinckels.io/cloudflarer/reference/cf_get_account.md).
 - Zones:
-  [`cf_list_zones()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_zones.md),
-  [`cf_get_zone()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_zone.md),
-  [`cf_get_zone_settings()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_zone_settings.md),
-  [`cf_get_zone_setting()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_zone_setting.md).
+  [`cf_list_zones()`](http://drmowinckels.io/cloudflarer/reference/cf_list_zones.md),
+  [`cf_get_zone()`](http://drmowinckels.io/cloudflarer/reference/cf_get_zone.md),
+  [`cf_get_zone_settings()`](http://drmowinckels.io/cloudflarer/reference/cf_get_zone_settings.md),
+  [`cf_get_zone_setting()`](http://drmowinckels.io/cloudflarer/reference/cf_get_zone_setting.md).
 - DNS records:
-  [`cf_list_dns_records()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_dns_records.md),
-  [`cf_get_dns_record()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_dns_record.md),
-  [`cf_create_dns_record()`](https://drmowinckels.github.io/cloudflarer/reference/cf_create_dns_record.md),
-  [`cf_update_dns_record()`](https://drmowinckels.github.io/cloudflarer/reference/cf_update_dns_record.md),
-  [`cf_delete_dns_record()`](https://drmowinckels.github.io/cloudflarer/reference/cf_delete_dns_record.md).
+  [`cf_list_dns_records()`](http://drmowinckels.io/cloudflarer/reference/cf_list_dns_records.md),
+  [`cf_get_dns_record()`](http://drmowinckels.io/cloudflarer/reference/cf_get_dns_record.md),
+  [`cf_create_dns_record()`](http://drmowinckels.io/cloudflarer/reference/cf_create_dns_record.md),
+  [`cf_update_dns_record()`](http://drmowinckels.io/cloudflarer/reference/cf_update_dns_record.md),
+  [`cf_delete_dns_record()`](http://drmowinckels.io/cloudflarer/reference/cf_delete_dns_record.md).
 - Cache:
-  [`cf_purge_cache()`](https://drmowinckels.github.io/cloudflarer/reference/cf_purge_cache.md)
+  [`cf_purge_cache()`](http://drmowinckels.io/cloudflarer/reference/cf_purge_cache.md)
   for targeted (`files`, `hosts`, `prefixes`, `tags`) or whole-zone
   (`purge_everything = TRUE`) invalidations.
 - Page Rules:
-  [`cf_list_page_rules()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_page_rules.md),
-  [`cf_get_page_rule()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_page_rule.md),
-  [`cf_create_page_rule()`](https://drmowinckels.github.io/cloudflarer/reference/cf_create_page_rule.md),
-  [`cf_update_page_rule()`](https://drmowinckels.github.io/cloudflarer/reference/cf_update_page_rule.md),
-  [`cf_delete_page_rule()`](https://drmowinckels.github.io/cloudflarer/reference/cf_delete_page_rule.md),
+  [`cf_list_page_rules()`](http://drmowinckels.io/cloudflarer/reference/cf_list_page_rules.md),
+  [`cf_get_page_rule()`](http://drmowinckels.io/cloudflarer/reference/cf_get_page_rule.md),
+  [`cf_create_page_rule()`](http://drmowinckels.io/cloudflarer/reference/cf_create_page_rule.md),
+  [`cf_update_page_rule()`](http://drmowinckels.io/cloudflarer/reference/cf_update_page_rule.md),
+  [`cf_delete_page_rule()`](http://drmowinckels.io/cloudflarer/reference/cf_delete_page_rule.md),
   plus the constructor helpers
-  [`cf_page_rule_target()`](https://drmowinckels.github.io/cloudflarer/reference/cf_page_rule_target.md)
+  [`cf_page_rule_target()`](http://drmowinckels.io/cloudflarer/reference/cf_page_rule_target.md)
   and
-  [`cf_page_rule_action()`](https://drmowinckels.github.io/cloudflarer/reference/cf_page_rule_action.md).
+  [`cf_page_rule_action()`](http://drmowinckels.io/cloudflarer/reference/cf_page_rule_action.md).
 - Firewall rules (classic expression-based custom rules):
-  [`cf_list_firewall_rules()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_firewall_rules.md).
+  [`cf_list_firewall_rules()`](http://drmowinckels.io/cloudflarer/reference/cf_list_firewall_rules.md).
 - Rulesets API (modern unified rule management):
-  [`cf_list_rulesets()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_rulesets.md),
-  [`cf_get_ruleset()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_ruleset.md),
-  [`cf_list_account_rulesets()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_account_rulesets.md),
-  [`cf_get_account_ruleset()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_account_ruleset.md).
+  [`cf_list_rulesets()`](http://drmowinckels.io/cloudflarer/reference/cf_list_rulesets.md),
+  [`cf_get_ruleset()`](http://drmowinckels.io/cloudflarer/reference/cf_get_ruleset.md),
+  [`cf_list_account_rulesets()`](http://drmowinckels.io/cloudflarer/reference/cf_list_account_rulesets.md),
+  [`cf_get_account_ruleset()`](http://drmowinckels.io/cloudflarer/reference/cf_get_account_ruleset.md).
 - DNS query counts:
-  [`cf_dns_queries()`](https://drmowinckels.github.io/cloudflarer/reference/cf_dns_queries.md)
+  [`cf_dns_queries()`](http://drmowinckels.io/cloudflarer/reference/cf_dns_queries.md)
   returns daily query totals for a zone via the GraphQL
   `dnsAnalyticsAdaptiveGroups` node (requires `Account Analytics: Read`
   or the Global API Key).
@@ -93,9 +93,9 @@
 ### Analytics
 
 - Web Analytics (RUM) site catalogue:
-  [`cf_list_rum_sites()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_rum_sites.md),
-  [`cf_get_rum_site()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_rum_site.md).
-- [`cf_graphql()`](https://drmowinckels.github.io/cloudflarer/reference/cf_graphql.md)
+  [`cf_list_rum_sites()`](http://drmowinckels.io/cloudflarer/reference/cf_list_rum_sites.md),
+  [`cf_get_rum_site()`](http://drmowinckels.io/cloudflarer/reference/cf_get_rum_site.md).
+- [`cf_graphql()`](http://drmowinckels.io/cloudflarer/reference/cf_graphql.md)
   is a generic GraphQL client for Cloudflare’s Analytics GraphQL API.
   Variables are passed as named `...` arguments. The full response body
   is returned (so callers access `$data$...`); non-empty `errors[]`
@@ -170,12 +170,12 @@
 
 - `cf_zone_overview(zone_id, since, until, account_id, site_tag)`
   bundles
-  [`cf_zone_requests()`](https://drmowinckels.github.io/cloudflarer/reference/cf_zone_requests.md),
-  [`cf_cache_ratio()`](https://drmowinckels.github.io/cloudflarer/reference/cf_cache_ratio.md),
-  [`cf_dns_queries()`](https://drmowinckels.github.io/cloudflarer/reference/cf_dns_queries.md),
-  [`cf_firewall_events_by_day()`](https://drmowinckels.github.io/cloudflarer/reference/cf_firewall_events_by_day.md),
+  [`cf_zone_requests()`](http://drmowinckels.io/cloudflarer/reference/cf_zone_requests.md),
+  [`cf_cache_ratio()`](http://drmowinckels.io/cloudflarer/reference/cf_cache_ratio.md),
+  [`cf_dns_queries()`](http://drmowinckels.io/cloudflarer/reference/cf_dns_queries.md),
+  [`cf_firewall_events_by_day()`](http://drmowinckels.io/cloudflarer/reference/cf_firewall_events_by_day.md),
   and (when `account_id` + `site_tag` are supplied)
-  [`cf_rum_top()`](https://drmowinckels.github.io/cloudflarer/reference/cf_rum_top.md)
+  [`cf_rum_top()`](http://drmowinckels.io/cloudflarer/reference/cf_rum_top.md)
   into a single named list, with a one-row `summary` covering the
   window. Each underlying call is wrapped in
   [`tryCatch()`](https://rdrr.io/r/base/conditions.html) so an
@@ -187,6 +187,6 @@
 ### Documentation
 
 - New cheatsheet vignette
-  ([`vignette("cheatsheet")`](https://drmowinckels.github.io/cloudflarer/articles/cheatsheet.md))
+  ([`vignette("cheatsheet")`](http://drmowinckels.io/cloudflarer/articles/cheatsheet.md))
   – a single page of copy-pasteable patterns for every endpoint surface
   in the package.

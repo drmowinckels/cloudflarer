@@ -68,7 +68,7 @@ A list of records.
 ## See also
 
 Other requests:
-[`cf_request()`](https://drmowinckels.github.io/cloudflarer/reference/cf_request.md)
+[`cf_request()`](http://drmowinckels.io/cloudflarer/reference/cf_request.md)
 
 ## Examples
 

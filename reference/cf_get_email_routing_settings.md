@@ -42,8 +42,8 @@ A named list with the routing settings.
 ## See also
 
 Other email:
-[`cf_list_email_routing_addresses()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_email_routing_addresses.md),
-[`cf_list_email_routing_rules()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_email_routing_rules.md)
+[`cf_list_email_routing_addresses()`](http://drmowinckels.io/cloudflarer/reference/cf_list_email_routing_addresses.md),
+[`cf_list_email_routing_rules()`](http://drmowinckels.io/cloudflarer/reference/cf_list_email_routing_rules.md)
 
 ## Examples
 

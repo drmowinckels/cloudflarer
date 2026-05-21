@@ -31,12 +31,12 @@ cf_list_tunnels(
 - per_page, max_pages:
 
   Pagination controls, see
-  [`cf_request_collect()`](https://drmowinckels.github.io/cloudflarer/reference/cf_request_collect.md).
+  [`cf_request_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_request_collect.md).
 
 - as_df:
 
   Logical. When `TRUE` (the default), returns a data.frame via
-  [`cf_records_to_df()`](https://drmowinckels.github.io/cloudflarer/reference/cf_records_to_df.md).
+  [`cf_records_to_df()`](http://drmowinckels.io/cloudflarer/reference/cf_records_to_df.md).
 
 - token:
 
@@ -60,8 +60,8 @@ A data.frame of tunnel records (or list when `as_df = FALSE`).
 ## See also
 
 Other tunnels:
-[`cf_get_tunnel()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_tunnel.md),
-[`cf_list_tunnel_connections()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_tunnel_connections.md)
+[`cf_get_tunnel()`](http://drmowinckels.io/cloudflarer/reference/cf_get_tunnel.md),
+[`cf_list_tunnel_connections()`](http://drmowinckels.io/cloudflarer/reference/cf_list_tunnel_connections.md)
 
 ## Examples
 

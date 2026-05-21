@@ -26,12 +26,12 @@ cf_list_turnstile_widgets(
 - per_page, max_pages:
 
   Pagination controls, see
-  [`cf_request_collect()`](https://drmowinckels.github.io/cloudflarer/reference/cf_request_collect.md).
+  [`cf_request_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_request_collect.md).
 
 - as_df:
 
   Logical. When `TRUE` (the default), returns a data.frame via
-  [`cf_records_to_df()`](https://drmowinckels.github.io/cloudflarer/reference/cf_records_to_df.md).
+  [`cf_records_to_df()`](http://drmowinckels.io/cloudflarer/reference/cf_records_to_df.md).
   Set to `FALSE` for the raw nested list.
 
 - token:
@@ -56,9 +56,9 @@ A data.frame of widget records (or list when `as_df = FALSE`).
 ## See also
 
 Other turnstile:
-[`cf_create_turnstile_widget()`](https://drmowinckels.github.io/cloudflarer/reference/cf_create_turnstile_widget.md),
-[`cf_delete_turnstile_widget()`](https://drmowinckels.github.io/cloudflarer/reference/cf_delete_turnstile_widget.md),
-[`cf_get_turnstile_widget()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_turnstile_widget.md)
+[`cf_create_turnstile_widget()`](http://drmowinckels.io/cloudflarer/reference/cf_create_turnstile_widget.md),
+[`cf_delete_turnstile_widget()`](http://drmowinckels.io/cloudflarer/reference/cf_delete_turnstile_widget.md),
+[`cf_get_turnstile_widget()`](http://drmowinckels.io/cloudflarer/reference/cf_get_turnstile_widget.md)
 
 ## Examples
 

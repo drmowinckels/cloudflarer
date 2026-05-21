@@ -46,8 +46,8 @@ A named list describing the tunnel.
 ## See also
 
 Other tunnels:
-[`cf_list_tunnel_connections()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_tunnel_connections.md),
-[`cf_list_tunnels()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_tunnels.md)
+[`cf_list_tunnel_connections()`](http://drmowinckels.io/cloudflarer/reference/cf_list_tunnel_connections.md),
+[`cf_list_tunnels()`](http://drmowinckels.io/cloudflarer/reference/cf_list_tunnels.md)
 
 ## Examples
 

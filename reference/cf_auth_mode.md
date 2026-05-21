@@ -27,12 +27,12 @@ scoped credential type.
 ## See also
 
 Other authentication:
-[`cf_api_key()`](https://drmowinckels.github.io/cloudflarer/reference/cf_api_key.md),
-[`cf_email()`](https://drmowinckels.github.io/cloudflarer/reference/cf_email.md),
-[`cf_has_auth()`](https://drmowinckels.github.io/cloudflarer/reference/cf_has_auth.md),
-[`cf_sitrep()`](https://drmowinckels.github.io/cloudflarer/reference/cf_sitrep.md),
-[`cf_token()`](https://drmowinckels.github.io/cloudflarer/reference/cf_token.md),
-[`cf_verify()`](https://drmowinckels.github.io/cloudflarer/reference/cf_verify.md)
+[`cf_api_key()`](http://drmowinckels.io/cloudflarer/reference/cf_api_key.md),
+[`cf_email()`](http://drmowinckels.io/cloudflarer/reference/cf_email.md),
+[`cf_has_auth()`](http://drmowinckels.io/cloudflarer/reference/cf_has_auth.md),
+[`cf_sitrep()`](http://drmowinckels.io/cloudflarer/reference/cf_sitrep.md),
+[`cf_token()`](http://drmowinckels.io/cloudflarer/reference/cf_token.md),
+[`cf_verify()`](http://drmowinckels.io/cloudflarer/reference/cf_verify.md)
 
 ## Examples
 

@@ -23,7 +23,7 @@ cf_list_r2_buckets(
 - as_df:
 
   Logical. When `TRUE` (the default), returns a data.frame via
-  [`cf_records_to_df()`](https://drmowinckels.github.io/cloudflarer/reference/cf_records_to_df.md).
+  [`cf_records_to_df()`](http://drmowinckels.io/cloudflarer/reference/cf_records_to_df.md).
   Set to `FALSE` for the raw nested list.
 
 - token:
@@ -48,7 +48,7 @@ A data.frame of bucket records (or list when `as_df = FALSE`).
 ## See also
 
 Other r2:
-[`cf_get_r2_bucket()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_r2_bucket.md)
+[`cf_get_r2_bucket()`](http://drmowinckels.io/cloudflarer/reference/cf_get_r2_bucket.md)
 
 ## Examples
 

@@ -35,7 +35,7 @@ cf_list_pages_deployments(
 - as_df:
 
   Logical. When `TRUE` (the default), returns a data.frame via
-  [`cf_records_to_df()`](https://drmowinckels.github.io/cloudflarer/reference/cf_records_to_df.md).
+  [`cf_records_to_df()`](http://drmowinckels.io/cloudflarer/reference/cf_records_to_df.md).
 
 - token:
 
@@ -59,8 +59,8 @@ A data.frame of deployment records (or list when `as_df = FALSE`).
 ## See also
 
 Other pages:
-[`cf_get_pages_project()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_pages_project.md),
-[`cf_list_pages_projects()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_pages_projects.md)
+[`cf_get_pages_project()`](http://drmowinckels.io/cloudflarer/reference/cf_get_pages_project.md),
+[`cf_list_pages_projects()`](http://drmowinckels.io/cloudflarer/reference/cf_list_pages_projects.md)
 
 ## Examples
 

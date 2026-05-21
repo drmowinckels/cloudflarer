@@ -2,7 +2,7 @@
 
 Performs a `PATCH` on the record, only sending fields supplied as
 non-`NULL`. Use a `PUT`-style replace via
-[`cf_request()`](https://drmowinckels.github.io/cloudflarer/reference/cf_request.md)
+[`cf_request()`](http://drmowinckels.io/cloudflarer/reference/cf_request.md)
 if you need to overwrite the entire record.
 
 ## Usage
@@ -93,10 +93,10 @@ A named list describing the updated record.
 ## See also
 
 Other dns:
-[`cf_create_dns_record()`](https://drmowinckels.github.io/cloudflarer/reference/cf_create_dns_record.md),
-[`cf_delete_dns_record()`](https://drmowinckels.github.io/cloudflarer/reference/cf_delete_dns_record.md),
-[`cf_get_dns_record()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_dns_record.md),
-[`cf_list_dns_records()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_dns_records.md)
+[`cf_create_dns_record()`](http://drmowinckels.io/cloudflarer/reference/cf_create_dns_record.md),
+[`cf_delete_dns_record()`](http://drmowinckels.io/cloudflarer/reference/cf_delete_dns_record.md),
+[`cf_get_dns_record()`](http://drmowinckels.io/cloudflarer/reference/cf_get_dns_record.md),
+[`cf_list_dns_records()`](http://drmowinckels.io/cloudflarer/reference/cf_list_dns_records.md)
 
 ## Examples
 

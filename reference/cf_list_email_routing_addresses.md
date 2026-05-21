@@ -36,7 +36,7 @@ cf_list_email_routing_addresses(
 - as_df:
 
   Logical. See
-  [`cf_list_email_routing_rules()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_email_routing_rules.md).
+  [`cf_list_email_routing_rules()`](http://drmowinckels.io/cloudflarer/reference/cf_list_email_routing_rules.md).
 
 - token:
 
@@ -60,8 +60,8 @@ A data.frame of destination addresses (or list when `as_df = FALSE`).
 ## See also
 
 Other email:
-[`cf_get_email_routing_settings()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_email_routing_settings.md),
-[`cf_list_email_routing_rules()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_email_routing_rules.md)
+[`cf_get_email_routing_settings()`](http://drmowinckels.io/cloudflarer/reference/cf_get_email_routing_settings.md),
+[`cf_list_email_routing_rules()`](http://drmowinckels.io/cloudflarer/reference/cf_list_email_routing_rules.md)
 
 ## Examples
 

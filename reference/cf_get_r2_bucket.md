@@ -46,7 +46,7 @@ A named list describing the bucket.
 ## See also
 
 Other r2:
-[`cf_list_r2_buckets()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_r2_buckets.md)
+[`cf_list_r2_buckets()`](http://drmowinckels.io/cloudflarer/reference/cf_list_r2_buckets.md)
 
 ## Examples
 

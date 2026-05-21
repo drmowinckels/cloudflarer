@@ -2,7 +2,7 @@
 
 Prints a short summary of the package version, which auth mode is
 configured
-([`cf_auth_mode()`](https://drmowinckels.github.io/cloudflarer/reference/cf_auth_mode.md)),
+([`cf_auth_mode()`](http://drmowinckels.io/cloudflarer/reference/cf_auth_mode.md)),
 and whether the configured credentials successfully authenticate against
 the Cloudflare API. Use this as a first stop when debugging
 configuration issues.
@@ -20,12 +20,12 @@ Invisibly, a list with the diagnostic results.
 ## See also
 
 Other authentication:
-[`cf_api_key()`](https://drmowinckels.github.io/cloudflarer/reference/cf_api_key.md),
-[`cf_auth_mode()`](https://drmowinckels.github.io/cloudflarer/reference/cf_auth_mode.md),
-[`cf_email()`](https://drmowinckels.github.io/cloudflarer/reference/cf_email.md),
-[`cf_has_auth()`](https://drmowinckels.github.io/cloudflarer/reference/cf_has_auth.md),
-[`cf_token()`](https://drmowinckels.github.io/cloudflarer/reference/cf_token.md),
-[`cf_verify()`](https://drmowinckels.github.io/cloudflarer/reference/cf_verify.md)
+[`cf_api_key()`](http://drmowinckels.io/cloudflarer/reference/cf_api_key.md),
+[`cf_auth_mode()`](http://drmowinckels.io/cloudflarer/reference/cf_auth_mode.md),
+[`cf_email()`](http://drmowinckels.io/cloudflarer/reference/cf_email.md),
+[`cf_has_auth()`](http://drmowinckels.io/cloudflarer/reference/cf_has_auth.md),
+[`cf_token()`](http://drmowinckels.io/cloudflarer/reference/cf_token.md),
+[`cf_verify()`](http://drmowinckels.io/cloudflarer/reference/cf_verify.md)
 
 ## Examples
 

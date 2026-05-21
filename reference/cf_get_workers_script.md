@@ -3,7 +3,7 @@
 Returns the script's metadata (placement, bindings, etc.). To fetch the
 actual source, use the API's `/workers/scripts/{name}/content` endpoint
 via
-[`cf_request()`](https://drmowinckels.github.io/cloudflarer/reference/cf_request.md).
+[`cf_request()`](http://drmowinckels.io/cloudflarer/reference/cf_request.md).
 
 ## Usage
 
@@ -49,10 +49,10 @@ A named list with the script metadata.
 ## See also
 
 Other workers:
-[`cf_get_kv_namespace()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_kv_namespace.md),
-[`cf_list_kv_namespaces()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_kv_namespaces.md),
-[`cf_list_workers_scripts()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_workers_scripts.md),
-[`cf_workers_invocations()`](https://drmowinckels.github.io/cloudflarer/reference/cf_workers_invocations.md)
+[`cf_get_kv_namespace()`](http://drmowinckels.io/cloudflarer/reference/cf_get_kv_namespace.md),
+[`cf_list_kv_namespaces()`](http://drmowinckels.io/cloudflarer/reference/cf_list_kv_namespaces.md),
+[`cf_list_workers_scripts()`](http://drmowinckels.io/cloudflarer/reference/cf_list_workers_scripts.md),
+[`cf_workers_invocations()`](http://drmowinckels.io/cloudflarer/reference/cf_workers_invocations.md)
 
 ## Examples
 

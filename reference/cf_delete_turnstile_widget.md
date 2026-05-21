@@ -46,9 +46,9 @@ A named list with the deleted widget's `sitekey`.
 ## See also
 
 Other turnstile:
-[`cf_create_turnstile_widget()`](https://drmowinckels.github.io/cloudflarer/reference/cf_create_turnstile_widget.md),
-[`cf_get_turnstile_widget()`](https://drmowinckels.github.io/cloudflarer/reference/cf_get_turnstile_widget.md),
-[`cf_list_turnstile_widgets()`](https://drmowinckels.github.io/cloudflarer/reference/cf_list_turnstile_widgets.md)
+[`cf_create_turnstile_widget()`](http://drmowinckels.io/cloudflarer/reference/cf_create_turnstile_widget.md),
+[`cf_get_turnstile_widget()`](http://drmowinckels.io/cloudflarer/reference/cf_get_turnstile_widget.md),
+[`cf_list_turnstile_widgets()`](http://drmowinckels.io/cloudflarer/reference/cf_list_turnstile_widgets.md)
 
 ## Examples
 
