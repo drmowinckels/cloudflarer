@@ -68,6 +68,7 @@ cf_list_zones <- function(
 #' cf_get_zone("abc123")
 #' }
 cf_get_zone <- function(zone_id, token = NULL, email = NULL, api_key = NULL) {
+  cf_check_id(zone_id)
   cf_request(
     paste0("zones/", zone_id),
     token = token,
@@ -103,6 +104,7 @@ cf_get_zone_settings <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
   records <- cf_request(
     paste0("zones/", zone_id, "/settings"),
     token = token,
@@ -136,6 +138,8 @@ cf_get_zone_setting <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
+  cf_check_id(setting)
   cf_request(
     paste0("zones/", zone_id, "/settings/", setting),
     token = token,

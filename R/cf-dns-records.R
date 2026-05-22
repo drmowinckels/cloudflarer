@@ -34,6 +34,7 @@ cf_list_dns_records <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
   records <- cf_request_collect(
     paste0("zones/", zone_id, "/dns_records"),
     query = list(type = type, name = name),
@@ -68,6 +69,8 @@ cf_get_dns_record <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
+  cf_check_id(record_id)
   cf_request(
     paste0("zones/", zone_id, "/dns_records/", record_id),
     token = token,
@@ -124,6 +127,7 @@ cf_create_dns_record <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
   body <- drop_nulls(list(
     type = type,
     name = name,
@@ -175,6 +179,8 @@ cf_update_dns_record <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
+  cf_check_id(record_id)
   body <- drop_nulls(list(
     type = type,
     name = name,
@@ -213,6 +219,8 @@ cf_delete_dns_record <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
+  cf_check_id(record_id)
   cf_request(
     paste0("zones/", zone_id, "/dns_records/", record_id),
     method = "DELETE",

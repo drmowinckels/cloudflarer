@@ -62,6 +62,7 @@ cf_get_account <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(account_id)
   cf_request(
     paste0("accounts/", account_id),
     token = token,

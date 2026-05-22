@@ -51,6 +51,7 @@ cf_zone_requests <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
   by <- match.arg(by)
   node <- switch(
     by,

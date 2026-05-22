@@ -28,6 +28,7 @@ cf_list_rulesets <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
   records <- cf_request(
     paste0("zones/", zone_id, "/rulesets"),
     token = token,
@@ -60,6 +61,8 @@ cf_get_ruleset <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
+  cf_check_id(ruleset_id)
   cf_request(
     paste0("zones/", zone_id, "/rulesets/", ruleset_id),
     token = token,
@@ -91,6 +94,7 @@ cf_list_account_rulesets <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(account_id)
   records <- cf_request(
     paste0("accounts/", account_id, "/rulesets"),
     token = token,
@@ -123,6 +127,8 @@ cf_get_account_ruleset <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(account_id)
+  cf_check_id(ruleset_id)
   cf_request(
     paste0("accounts/", account_id, "/rulesets/", ruleset_id),
     token = token,

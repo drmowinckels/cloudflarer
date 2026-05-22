@@ -47,6 +47,7 @@ cf_purge_cache <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
   if (purge_everything) {
     body <- list(purge_everything = TRUE)
   } else {

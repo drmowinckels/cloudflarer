@@ -45,6 +45,7 @@ cf_firewall_events_by_day <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
   query <- "
   query FwDaily($zoneTag: String!, $since: Time!, $until: Time!,
                 $limit: Int!) {
@@ -125,6 +126,7 @@ cf_firewall_events_top <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
   query <- sprintf(
     "query FwTop($zoneTag: String!, $since: Time!, $until: Time!,
                  $limit: Int!) {

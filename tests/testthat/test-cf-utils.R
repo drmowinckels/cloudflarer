@@ -112,4 +112,72 @@ describe("cf_records_to_df()", {
     out <- cf_records_to_df(records)
     expect_true(all(is.na(out$optional)))
   })
+
+  it("widens integer+double mixed values to double instead of truncating", {
+    records <- list(list(n = 1L), list(n = 2.5))
+    out <- cf_records_to_df(records)
+    expect_type(out$n, "double")
+    expect_equal(out$n, c(1, 2.5))
+  })
+
+  it("falls back to a list-column for incompatible mixed scalar types", {
+    records <- list(list(v = 1L), list(v = "two"))
+    out <- cf_records_to_df(records)
+    expect_type(out$v, "list")
+  })
+
+  it("aborts on non-list input", {
+    expect_error(cf_records_to_df(1:3), "must be a list")
+  })
+
+  it("aborts when an element is not a list", {
+    expect_error(
+      cf_records_to_df(list(list(a = 1), "not-a-list")),
+      "must be a list"
+    )
+  })
+})
+
+describe("cf_query_bool()", {
+  it("returns Cloudflare's lowercase form", {
+    expect_equal(cf_query_bool(TRUE), "true")
+    expect_equal(cf_query_bool(FALSE), "false")
+  })
+})
+
+describe("cf_check_id()", {
+  it("passes for a non-empty character scalar", {
+    expect_invisible(cf_check_id("abc"))
+  })
+
+  it("aborts for NULL", {
+    expect_error(cf_check_id(NULL), "must be a non-empty character string")
+  })
+
+  it("aborts for empty string", {
+    expect_error(cf_check_id(""), "must be a non-empty character string")
+  })
+
+  it("aborts for NA", {
+    expect_error(
+      cf_check_id(NA_character_),
+      "must be a non-empty character string"
+    )
+  })
+
+  it("aborts for length != 1", {
+    expect_error(
+      cf_check_id(c("a", "b")),
+      "must be a non-empty character string"
+    )
+  })
+
+  it("aborts for non-character", {
+    expect_error(cf_check_id(42L), "must be a non-empty character string")
+  })
+
+  it("names the failing argument in the message", {
+    zone_id <- NULL
+    expect_error(cf_check_id(zone_id), "zone_id")
+  })
 })

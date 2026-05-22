@@ -100,7 +100,7 @@ describe("cf_zone_overview()", {
     expect_null(ov$top_countries)
   })
 
-  it("survives a failure in any one component", {
+  it("survives a Cloudflare-API failure in any one component", {
     local_mocked_bindings(
       cf_zone_requests = function(...) {
         make_overview_mock_df(
@@ -115,7 +115,9 @@ describe("cf_zone_overview()", {
       cf_cache_ratio = function(...) {
         cli::cli_abort("nope", class = "cloudflarer_error")
       },
-      cf_dns_queries = function(...) stop("boom"),
+      cf_dns_queries = function(...) {
+        cli::cli_abort("rate limited", class = "cloudflarer_error")
+      },
       cf_firewall_events_by_day = function(...) {
         cli::cli_abort("Pro plan required", class = "cloudflarer_error")
       }
@@ -128,6 +130,25 @@ describe("cf_zone_overview()", {
     expect_true(is.na(ov$summary$cache_hit_ratio))
     expect_true(is.na(ov$summary$dns_queries))
     expect_true(is.na(ov$summary$firewall_events))
+  })
+
+  it("propagates non-cloudflarer errors so bugs are not silenced", {
+    local_mocked_bindings(
+      cf_zone_requests = function(...) {
+        make_overview_mock_df(
+          date = "2026-05-20",
+          requests = 1L,
+          bytes = 1,
+          pageviews = 1L,
+          threats = 0L,
+          uniques = 1L
+        )
+      },
+      cf_cache_ratio = function(...) stop("boom"),
+      cf_dns_queries = function(...) NULL,
+      cf_firewall_events_by_day = function(...) NULL
+    )
+    expect_error(cf_zone_overview("zone-1"), "boom")
   })
 
   it("snapshots cleanly when printed", {

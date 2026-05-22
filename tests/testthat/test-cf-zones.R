@@ -43,4 +43,10 @@ describe("cf_get_zone()", {
     expect_equal(captured, "zones/zone-1")
     expect_equal(res$id, "zone-1")
   })
+
+  it("aborts when zone_id is empty rather than silently listing zones", {
+    expect_error(cf_get_zone(""), "zone_id")
+    expect_error(cf_get_zone(NULL), "zone_id")
+    expect_error(cf_get_zone(NA_character_), "zone_id")
+  })
 })

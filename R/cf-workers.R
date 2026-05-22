@@ -25,6 +25,7 @@ cf_list_workers_scripts <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(account_id)
   records <- cf_request(
     paste0("accounts/", account_id, "/workers/scripts"),
     token = token,
@@ -60,6 +61,8 @@ cf_get_workers_script <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(account_id)
+  cf_check_id(script_name)
   cf_request(
     paste0("accounts/", account_id, "/workers/scripts/", script_name),
     token = token,
@@ -109,6 +112,7 @@ cf_workers_invocations <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(account_id)
   filter_extra <- if (is.null(script_name)) "" else ", scriptName: $script"
   vars_extra <- if (is.null(script_name)) "" else ", $script: String!"
   query <- sprintf(

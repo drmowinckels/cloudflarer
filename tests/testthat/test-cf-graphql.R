@@ -129,4 +129,12 @@ describe("format_graphql_error()", {
     out <- format_graphql_error(list(path = list("foo")))
     expect_match(out, "Unknown error")
   })
+
+  it("escapes braces appearing in the path segment as well", {
+    out <- format_graphql_error(list(
+      message = "broke",
+      path = list("foo", "{bar}")
+    ))
+    expect_match(out, "\\{\\{bar\\}\\}", fixed = FALSE)
+  })
 })

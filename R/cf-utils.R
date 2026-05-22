@@ -24,6 +24,15 @@ cf_records_to_df <- function(records) {
   if (!length(records)) {
     return(as_cf_tibble(data.frame()))
   }
+  if (
+    !is.list(records) ||
+      !all(vapply(records, is.list, logical(1)))
+  ) {
+    cli::cli_abort(c(
+      "{.arg records} must be a list of named lists.",
+      i = "Got an object of class {.cls {class(records)}}."
+    ))
+  }
   all_names <- unique(unlist(lapply(records, names), use.names = FALSE))
   cols <- lapply(all_names, function(field) {
     vals <- lapply(records, function(r) r[[field]])
@@ -71,33 +80,36 @@ simplify_column <- function(vals) {
   if (!all(scalar)) {
     return(vals)
   }
-  example <- non_null[[1]]
-  if (is.logical(example)) {
+  types <- vapply(non_null, typeof, character(1))
+  if (all(types == "logical")) {
     return(vapply(
       vals,
       function(v) if (is.null(v)) NA else as.logical(v),
       logical(1)
     ))
   }
-  if (is.integer(example)) {
+  if (all(types == "integer")) {
     return(vapply(
       vals,
       function(v) if (is.null(v)) NA_integer_ else as.integer(v),
       integer(1)
     ))
   }
-  if (is.numeric(example)) {
+  if (all(types %in% c("integer", "double"))) {
     return(vapply(
       vals,
       function(v) if (is.null(v)) NA_real_ else as.numeric(v),
       numeric(1)
     ))
   }
-  vapply(
-    vals,
-    function(v) if (is.null(v)) NA_character_ else as.character(v),
-    character(1)
-  )
+  if (all(types == "character")) {
+    return(vapply(
+      vals,
+      function(v) if (is.null(v)) NA_character_ else as.character(v),
+      character(1)
+    ))
+  }
+  vals
 }
 
 #' Format a date or datetime as ISO-8601 UTC
@@ -133,10 +145,39 @@ format_gql_date <- function(x) {
   as.character(x)
 }
 
-# nocov start
-mock_if_no_auth <- function() {
-  if (!cf_has_auth()) {
-    Sys.setenv(CLOUDFLARE_API_TOKEN = "test-token-for-vcr-cassettes")
-  }
+#' Serialize a logical for use in a Cloudflare query string
+#'
+#' httr2 serializes logicals as `TRUE`/`FALSE` but Cloudflare's
+#' REST API expects lowercase `true`/`false`. This helper enforces
+#' the convention so every wrapper passing a boolean query parameter
+#' uses the same encoding.
+#'
+#' @param x A length-one logical.
+#' @return A lowercase character scalar (`"true"` or `"false"`).
+#' @keywords internal
+#' @noRd
+cf_query_bool <- function(x) {
+  tolower(as.character(x))
 }
-# nocov end
+
+#' Validate an identifier path segment
+#'
+#' Used by endpoint wrappers to fail fast with a useful message when
+#' callers pass `NULL`, `NA`, an empty string, or a non-character
+#' value as a path-segment argument (zone id, record id, etc.).
+#'
+#' @keywords internal
+#' @noRd
+cf_check_id <- function(
+  x,
+  arg = rlang::caller_arg(x),
+  call = rlang::caller_env()
+) {
+  if (!is_nonempty_string(x)) {
+    cli::cli_abort(
+      "{.arg {arg}} must be a non-empty character string.",
+      call = call
+    )
+  }
+  invisible(x)
+}

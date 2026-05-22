@@ -218,6 +218,20 @@ describe("cf_request_collect()", {
     expect_equal(out[[5]]$id, 5)
   })
 
+  it("tolerates a missing result field on an otherwise-OK page", {
+    local_mocked_bindings(
+      cf_perform = function(...) {
+        structure(list(), class = "httr2_response")
+      },
+      cf_resp_envelope = function(resp) {
+        list(result_info = list(page = 1, total_pages = 1))
+      }
+    )
+    local_mock_auth()
+    out <- cf_request_collect("zones")
+    expect_equal(out, list())
+  })
+
   it("respects max_pages", {
     call <- 0L
     local_mocked_bindings(

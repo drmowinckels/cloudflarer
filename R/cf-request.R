@@ -154,7 +154,7 @@ cf_request <- function(
     api_key = api_key,
     ...
   )
-  cf_resp_envelope(resp)$result
+  cf_resp_envelope(resp)[["result"]]
 }
 
 #' Collect every page of a paginated endpoint
@@ -202,7 +202,9 @@ cf_request_collect <- function(
       ...
     )
     env <- cf_resp_envelope(resp)
-    results <- c(results, env$result)
+    if (!is.null(env[["result"]])) {
+      results <- c(results, env[["result"]])
+    }
     total_pages <- env$result_info$total_pages %||% 1L
     if (page >= total_pages || page >= max_pages) {
       break

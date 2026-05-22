@@ -29,6 +29,7 @@ cf_cache_ratio <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
   query <- "
   query CacheDaily($zoneTag: String!, $since: Date!, $until: Date!,
                    $limit: Int!) {

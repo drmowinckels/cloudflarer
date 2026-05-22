@@ -13,6 +13,7 @@ Useful links:
 \itemize{
   \item \url{https://github.com/drmowinckels/cloudflarer}
   \item \url{https://drmowinckels.github.io/cloudflarer/}
+  \item \url{http://drmowinckels.io/cloudflarer/}
   \item Report bugs at \url{https://github.com/drmowinckels/cloudflarer/issues}
 }
 

@@ -28,6 +28,7 @@ cf_list_pages_projects <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(account_id)
   records <- cf_request(
     paste0("accounts/", account_id, "/pages/projects"),
     token = token,
@@ -60,6 +61,8 @@ cf_get_pages_project <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(account_id)
+  cf_check_id(project_name)
   cf_request(
     paste0(
       "accounts/",
@@ -104,6 +107,8 @@ cf_list_pages_deployments <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(account_id)
+  cf_check_id(project_name)
   records <- cf_request_collect(
     paste0(
       "accounts/",

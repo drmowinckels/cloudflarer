@@ -52,9 +52,7 @@ cf_zone_overview <- function(
   api_key = NULL
 ) {
   safe <- function(expr) {
-    tryCatch(expr, cloudflarer_error = function(e) NULL, error = function(e) {
-      NULL
-    })
+    tryCatch(expr, cloudflarer_error = function(e) NULL)
   }
 
   traffic <- safe(cf_zone_requests(
@@ -186,11 +184,11 @@ print.cloudflarer_overview <- function(x, ...) {
   if (!is.null(x$top_countries) && nrow(x$top_countries)) {
     cli::cli_h2("Top countries (RUM)")
     top_rows <- utils::head(x$top_countries, 5)
-    dim_name <- names(top_rows)[1]
+    label_col <- setdiff(names(top_rows), "count")[1]
     for (i in seq_len(nrow(top_rows))) {
       cli::cli_alert(sprintf(
         "  %s: %s",
-        top_rows[[dim_name]][i],
+        top_rows[[label_col]][i],
         format(top_rows$count[i], big.mark = ",")
       ))
     }

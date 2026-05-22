@@ -153,4 +153,17 @@ describe("cf_verify()", {
     cf_verify(token = "abc")
     expect_equal(captured, "user/tokens/verify")
   })
+
+  it("falls through to /user when no credentials are configured", {
+    captured <- NULL
+    local_mocked_bindings(
+      cf_request = function(endpoint, ...) {
+        captured <<- endpoint
+        list()
+      }
+    )
+    local_no_auth()
+    cf_verify()
+    expect_equal(captured, "user")
+  })
 })

@@ -21,6 +21,7 @@ cf_get_email_routing_settings <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
   cf_request(
     paste0("zones/", zone_id, "/email/routing"),
     token = token,
@@ -63,7 +64,8 @@ cf_list_email_routing_rules <- function(
   email = NULL,
   api_key = NULL
 ) {
-  query <- if (enabled_only) list(enabled = "true") else NULL
+  cf_check_id(zone_id)
+  query <- if (enabled_only) list(enabled = cf_query_bool(TRUE)) else NULL
   records <- cf_request_collect(
     paste0("zones/", zone_id, "/email/routing/rules"),
     query = query,
@@ -110,7 +112,8 @@ cf_list_email_routing_addresses <- function(
   email = NULL,
   api_key = NULL
 ) {
-  query <- if (verified_only) list(verified = "true") else NULL
+  cf_check_id(account_id)
+  query <- if (verified_only) list(verified = cf_query_bool(TRUE)) else NULL
   records <- cf_request_collect(
     paste0("accounts/", account_id, "/email/routing/addresses"),
     query = query,

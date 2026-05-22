@@ -40,6 +40,8 @@ cf_rum_page_views <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(account_id)
+  cf_check_id(site_tag)
   query <- "
   query Pv($accountTag: String!, $siteTag: String!,
            $since: Time!, $until: Time!, $limit: Int!) {
@@ -128,6 +130,8 @@ cf_rum_top <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(account_id)
+  cf_check_id(site_tag)
   query <- sprintf(
     "query Top($accountTag: String!, $siteTag: String!,
               $since: Time!, $until: Time!, $limit: Int!) {

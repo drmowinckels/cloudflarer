@@ -2,6 +2,36 @@
 
 - Initial scaffold of the package.
 
+## Hardening
+
+- `cf_verify()` no longer crashes with an `NA`-in-`if` error when
+  no credentials are configured. It now falls through to
+  `/user` so the underlying credential helpers raise the
+  documented "No Cloudflare credentials found" message.
+- `cf_records_to_df()` no longer silently truncates numeric data
+  when records mix integer and double values for the same field.
+  Mixed `integer + double` columns widen to `double`; otherwise
+  incompatible mixed scalar types fall back to a list-column.
+- `cf_records_to_df()` validates that `records` is a list of
+  named lists and aborts with a clear message otherwise.
+- `cf_zone_overview()` now only swallows `cloudflarer_error`
+  conditions per its documented contract. Programmer errors and
+  other unexpected exceptions propagate instead of being silently
+  reduced to `NULL`.
+- Every endpoint wrapper that interpolates an identifier into a
+  URL path now validates the identifier via the new internal
+  `cf_check_id()` helper, replacing confusing API or routing
+  errors with a single useful message.
+- Boolean Cloudflare query parameters are now serialized
+  consistently through an internal `cf_query_bool()` helper.
+- `format_graphql_error()` escapes braces after assembling the
+  full message, so a brace appearing in the GraphQL `path`
+  segment can no longer confuse `cli`'s interpolation.
+- Response-envelope access uses `[["result"]]` instead of
+  `$result`, avoiding R's partial name matching against
+  `result_info` on the unusual case where an envelope omits
+  `result`.
+
 ## Core
 
 - Core request helpers: `cf_req()`, `cf_request()`, `cf_request_collect()`.

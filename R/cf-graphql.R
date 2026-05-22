@@ -149,7 +149,6 @@ cf_graphql_envelope <- function(resp, .envir = parent.frame()) {
 
 format_graphql_error <- function(e) {
   msg <- e$message %||% "Unknown error"
-  msg <- gsub("\\{", "{{", gsub("\\}", "}}", msg))
   if (length(e$path)) {
     msg <- paste0(
       msg,
@@ -158,7 +157,7 @@ format_graphql_error <- function(e) {
       ")"
     )
   }
-  msg
+  gsub("\\{", "{{", gsub("\\}", "}}", msg))
 }
 
 validate_graphql_variables <- function(variables, .envir = parent.frame()) {

@@ -30,6 +30,7 @@ cf_list_turnstile_widgets <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(account_id)
   records <- cf_request_collect(
     paste0("accounts/", account_id, "/challenges/widgets"),
     per_page = per_page,
@@ -63,6 +64,8 @@ cf_get_turnstile_widget <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(account_id)
+  cf_check_id(sitekey)
   cf_request(
     paste0("accounts/", account_id, "/challenges/widgets/", sitekey),
     token = token,
@@ -115,6 +118,7 @@ cf_create_turnstile_widget <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(account_id)
   mode <- match.arg(mode)
   cf_request(
     paste0("accounts/", account_id, "/challenges/widgets"),
@@ -150,6 +154,8 @@ cf_delete_turnstile_widget <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(account_id)
+  cf_check_id(sitekey)
   cf_request(
     paste0("accounts/", account_id, "/challenges/widgets/", sitekey),
     method = "DELETE",

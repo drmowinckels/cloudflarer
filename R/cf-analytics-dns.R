@@ -30,6 +30,7 @@ cf_dns_queries <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
   query <- "
   query DnsDaily($zoneTag: String!, $since: Time!, $until: Time!,
                  $limit: Int!) {
