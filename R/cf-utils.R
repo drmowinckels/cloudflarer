@@ -150,21 +150,36 @@ format_gql_date <- function(x) {
 #' httr2 serializes logicals as `TRUE`/`FALSE` but Cloudflare's
 #' REST API expects lowercase `true`/`false`. This helper enforces
 #' the convention so every wrapper passing a boolean query parameter
-#' uses the same encoding.
+#' uses the same encoding, and rejects any input that is not a
+#' length-one non-`NA` logical.
 #'
 #' @param x A length-one logical.
 #' @return A lowercase character scalar (`"true"` or `"false"`).
 #' @keywords internal
 #' @noRd
-cf_query_bool <- function(x) {
-  tolower(as.character(x))
+cf_query_bool <- function(
+  x,
+  arg = rlang::caller_arg(x),
+  call = rlang::caller_env()
+) {
+  if (!is.logical(x) || length(x) != 1L || is.na(x)) {
+    cli::cli_abort(
+      "{.arg {arg}} must be {.code TRUE} or {.code FALSE}.",
+      call = call
+    )
+  }
+  if (x) "true" else "false"
 }
 
-#' Validate an identifier path segment
+#' Validate a URL-path-segment argument
 #'
 #' Used by endpoint wrappers to fail fast with a useful message when
 #' callers pass `NULL`, `NA`, an empty string, or a non-character
-#' value as a path-segment argument (zone id, record id, etc.).
+#' value as any argument that ends up interpolated into a request
+#' path. Despite the name, the helper guards more than just IDs:
+#' setting names, project names, bucket names, sitekeys, etc. all
+#' use it because a missing value here silently re-routes the call
+#' to the parent collection endpoint.
 #'
 #' @keywords internal
 #' @noRd

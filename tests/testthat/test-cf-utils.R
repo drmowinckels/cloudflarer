@@ -113,11 +113,18 @@ describe("cf_records_to_df()", {
     expect_true(all(is.na(out$optional)))
   })
 
-  it("widens integer+double mixed values to double instead of truncating", {
+  it("promotes mixed integer+double values to double without truncating", {
     records <- list(list(n = 1L), list(n = 2.5))
     out <- cf_records_to_df(records)
     expect_type(out$n, "double")
     expect_equal(out$n, c(1, 2.5))
+  })
+
+  it("returns a double column when every value is already double", {
+    records <- list(list(n = 1.1), list(n = 2.2))
+    out <- cf_records_to_df(records)
+    expect_type(out$n, "double")
+    expect_equal(out$n, c(1.1, 2.2))
   })
 
   it("falls back to a list-column for incompatible mixed scalar types", {
@@ -142,6 +149,22 @@ describe("cf_query_bool()", {
   it("returns Cloudflare's lowercase form", {
     expect_equal(cf_query_bool(TRUE), "true")
     expect_equal(cf_query_bool(FALSE), "false")
+  })
+
+  it("aborts on non-logical input", {
+    expect_error(cf_query_bool(1), "TRUE")
+    expect_error(cf_query_bool("yes"), "TRUE")
+  })
+
+  it("aborts on NA or wrong length", {
+    expect_error(cf_query_bool(NA), "TRUE")
+    expect_error(cf_query_bool(c(TRUE, FALSE)), "TRUE")
+    expect_error(cf_query_bool(logical(0)), "TRUE")
+  })
+
+  it("names the failing argument", {
+    is_deleted <- "yes"
+    expect_error(cf_query_bool(is_deleted), "is_deleted")
   })
 })
 

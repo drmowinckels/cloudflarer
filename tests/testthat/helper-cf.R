@@ -47,12 +47,3 @@ local_no_auth <- function(envir = parent.frame()) {
     .local_envir = envir
   )
 }
-
-local_mock_if_no_auth <- function(envir = parent.frame()) {
-  if (!cf_has_auth()) {
-    withr::local_envvar(
-      CLOUDFLARE_API_TOKEN = mock_token,
-      .local_envir = envir
-    )
-  }
-}
