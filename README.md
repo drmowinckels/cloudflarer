@@ -18,13 +18,19 @@ cloudflarer is an R wrapper around the [Cloudflare REST API
 (v4)](https://developers.cloudflare.com/api/). It provides authenticated
 request helpers, response unwrapping, paginated list collectors, and a
 generic
-[`cf_request()`](https://drmowinckels.github.io/cloudflarer/reference/cf_request.html)
+[`cf_request()`](https://drmowinckels.io/cloudflarer/reference/cf_request.html)
 function so you can call any endpoint, including ones the package does
 not wrap yet.
 
 ## Installation
 
-Install the development version from GitHub:
+Install the released version from CRAN:
+
+``` r
+install.packages("cloudflarer")
+```
+
+Or install the development version from GitHub:
 
 ``` r
 # install.packages("pak")
