@@ -36,9 +36,14 @@ A named list with the setting's \code{id}, \code{value},
 Get a single zone setting
 }
 \examples{
-\dontrun{
-cf_get_zone_setting("abc123", "ssl")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette("cf_get_zone_setting", package = "cloudflarer")
 }
+cf_get_zone_setting("abc123", "ssl")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other zones: 

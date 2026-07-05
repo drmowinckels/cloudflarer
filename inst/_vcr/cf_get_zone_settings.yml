@@ -1,0 +1,16 @@
+http_interactions:
+  - request:
+      method: GET
+      uri: https://api.cloudflare.com/client/v4/zones/abc123/settings
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {"success": true, "errors": [], "messages": [],
+           "result": [{"id": "ssl", "value": "full", "editable": true},
+                      {"id": "cache_level", "value": "aggressive", "editable": true},
+                      {"id": "security_level", "value": "medium", "editable": true}]}
+    recorded_at: 2026-05-20 18:07:49
+recorded_with: VCR-vcr/2.1.0

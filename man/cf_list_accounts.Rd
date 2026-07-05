@@ -44,9 +44,14 @@ A data.frame of account records (or a list when
 Lists all accounts the authenticated user has access to.
 }
 \examples{
-\dontrun{
-cf_list_accounts()
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette("cf_list_accounts", package = "cloudflarer")
 }
+cf_list_accounts()
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other accounts: 

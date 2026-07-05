@@ -34,9 +34,14 @@ A named list describing the record.
 Get a single DNS record
 }
 \examples{
-\dontrun{
-cf_get_dns_record("zone-1", "rec-1")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette("cf_get_dns_record", package = "cloudflarer")
 }
+cf_get_dns_record("zone-1", "rec-1")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other dns: 

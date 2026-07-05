@@ -52,10 +52,15 @@ Lists the zones (domains) accessible to the authenticated
 credential.
 }
 \examples{
-\dontrun{
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette("cf_list_zones", package = "cloudflarer")
+}
 cf_list_zones()
 cf_list_zones(name = "example.com")
-}
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other zones: 

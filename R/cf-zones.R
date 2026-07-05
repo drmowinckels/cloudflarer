@@ -21,11 +21,14 @@
 #'   `as_df = FALSE`).
 #' @export
 #' @family zones
-#' @examples
-#' \dontrun{
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_list_zones", package = "cloudflarer")
+#' }
 #' cf_list_zones()
 #' cf_list_zones(name = "example.com")
-#' }
+#' \dontshow{vcr::eject_cassette()}
 cf_list_zones <- function(
   name = NULL,
   status = NULL,
@@ -62,10 +65,13 @@ cf_list_zones <- function(
 #' @return A named list describing the zone.
 #' @export
 #' @family zones
-#' @examples
-#' \dontrun{
-#' cf_get_zone("abc123")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_get_zone", package = "cloudflarer")
 #' }
+#' cf_get_zone("abc123")
+#' \dontshow{vcr::eject_cassette()}
 cf_get_zone <- function(zone_id, token = NULL, email = NULL, api_key = NULL) {
   cf_check_id(zone_id)
   cf_request(
@@ -94,10 +100,13 @@ cf_get_zone <- function(zone_id, token = NULL, email = NULL, api_key = NULL) {
 #' @return A data.frame of settings (or list when `as_df = FALSE`).
 #' @export
 #' @family zones
-#' @examples
-#' \dontrun{
-#' cf_get_zone_settings("abc123")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_get_zone_settings", package = "cloudflarer")
 #' }
+#' cf_get_zone_settings("abc123")
+#' \dontshow{vcr::eject_cassette()}
 cf_get_zone_settings <- function(
   zone_id,
   as_df = TRUE,
@@ -130,10 +139,13 @@ cf_get_zone_settings <- function(
 #'   `modified_on`, and editability flags.
 #' @export
 #' @family zones
-#' @examples
-#' \dontrun{
-#' cf_get_zone_setting("abc123", "ssl")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_get_zone_setting", package = "cloudflarer")
 #' }
+#' cf_get_zone_setting("abc123", "ssl")
+#' \dontshow{vcr::eject_cassette()}
 cf_get_zone_setting <- function(
   zone_id,
   setting,

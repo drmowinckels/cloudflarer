@@ -51,10 +51,15 @@ A data.frame of DNS records (or list when
 List DNS records in a zone
 }
 \examples{
-\dontrun{
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette("cf_list_dns_records", package = "cloudflarer")
+}
 cf_list_dns_records("abc123")
 cf_list_dns_records("abc123", type = "A")
-}
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other dns: 

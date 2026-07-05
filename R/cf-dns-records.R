@@ -18,11 +18,14 @@
 #'   `as_df = FALSE`).
 #' @export
 #' @family dns
-#' @examples
-#' \dontrun{
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_list_dns_records", package = "cloudflarer")
+#' }
 #' cf_list_dns_records("abc123")
 #' cf_list_dns_records("abc123", type = "A")
-#' }
+#' \dontshow{vcr::eject_cassette()}
 cf_list_dns_records <- function(
   zone_id,
   type = NULL,
@@ -57,10 +60,13 @@ cf_list_dns_records <- function(
 #' @return A named list describing the record.
 #' @export
 #' @family dns
-#' @examples
-#' \dontrun{
-#' cf_get_dns_record("zone-1", "rec-1")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_get_dns_record", package = "cloudflarer")
 #' }
+#' cf_get_dns_record("zone-1", "rec-1")
+#' \dontshow{vcr::eject_cassette()}
 cf_get_dns_record <- function(
   zone_id,
   record_id,
@@ -104,8 +110,15 @@ cf_get_dns_record <- function(
 #' @return A named list describing the created record.
 #' @export
 #' @family dns
-#' @examples
-#' \dontrun{
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette(
+#'   "cf_create_dns_record",
+#'   package = "cloudflarer",
+#'   match_requests_on = c("method", "uri")
+#' )
+#' }
 #' cf_create_dns_record(
 #'   "zone-1",
 #'   type    = "A",
@@ -113,7 +126,7 @@ cf_get_dns_record <- function(
 #'   content = "192.0.2.1",
 #'   proxied = TRUE
 #' )
-#' }
+#' \dontshow{vcr::eject_cassette()}
 cf_create_dns_record <- function(
   zone_id,
   type,
@@ -163,10 +176,17 @@ cf_create_dns_record <- function(
 #' @return A named list describing the updated record.
 #' @export
 #' @family dns
-#' @examples
-#' \dontrun{
-#' cf_update_dns_record("zone-1", "rec-1", content = "192.0.2.2")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette(
+#'   "cf_update_dns_record",
+#'   package = "cloudflarer",
+#'   match_requests_on = c("method", "uri")
+#' )
 #' }
+#' cf_update_dns_record("zone-1", "rec-1", content = "192.0.2.2")
+#' \dontshow{vcr::eject_cassette()}
 cf_update_dns_record <- function(
   zone_id,
   record_id,
@@ -213,10 +233,13 @@ cf_update_dns_record <- function(
 #' @return A named list with the deleted record's `id`.
 #' @export
 #' @family dns
-#' @examples
-#' \dontrun{
-#' cf_delete_dns_record("zone-1", "rec-1")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_delete_dns_record", package = "cloudflarer")
 #' }
+#' cf_delete_dns_record("zone-1", "rec-1")
+#' \dontshow{vcr::eject_cassette()}
 cf_delete_dns_record <- function(
   zone_id,
   record_id,

@@ -17,10 +17,13 @@
 #'   `as_df = FALSE`).
 #' @export
 #' @family accounts
-#' @examples
-#' \dontrun{
-#' cf_list_accounts()
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_list_accounts", package = "cloudflarer")
 #' }
+#' cf_list_accounts()
+#' \dontshow{vcr::eject_cassette()}
 cf_list_accounts <- function(
   name = NULL,
   per_page = 50,
@@ -51,10 +54,13 @@ cf_list_accounts <- function(
 #' @return A named list describing the account.
 #' @export
 #' @family accounts
-#' @examples
-#' \dontrun{
-#' cf_get_account("abc123")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_get_account", package = "cloudflarer")
 #' }
+#' cf_get_account("abc123")
+#' \dontshow{vcr::eject_cassette()}
 cf_get_account <- function(
   account_id,
   token = NULL,

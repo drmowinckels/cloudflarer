@@ -37,9 +37,14 @@ Returns the full settings catalogue for a zone (cache level,
 SSL mode, minify, security level, ...). One row per setting.
 }
 \examples{
-\dontrun{
-cf_get_zone_settings("abc123")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette("cf_get_zone_settings", package = "cloudflarer")
 }
+cf_get_zone_settings("abc123")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other zones: 
