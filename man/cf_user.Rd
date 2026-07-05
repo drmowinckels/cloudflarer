@@ -18,8 +18,13 @@ A named list of user fields, including \code{id}, \code{email},
 Returns information about the user that owns the API token.
 }
 \examples{
-\dontrun{
-cf_user()
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette("cf_user", package = "cloudflarer")
 }
+cf_user()
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \concept{user}

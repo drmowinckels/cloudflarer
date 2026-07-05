@@ -8,10 +8,13 @@
 #'   `first_name`, `last_name`, and `organizations`.
 #' @export
 #' @family user
-#' @examples
-#' \dontrun{
-#' cf_user()
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_user", package = "cloudflarer")
 #' }
+#' cf_user()
+#' \dontshow{vcr::eject_cassette()}
 cf_user <- function(token = NULL) {
   cf_request("user", token = token) |>
     httr2::req_perform() |>

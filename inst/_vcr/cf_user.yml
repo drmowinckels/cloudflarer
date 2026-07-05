@@ -1,0 +1,26 @@
+http_interactions:
+  - request:
+      method: GET
+      uri: https://api.cloudflare.com/client/v4/user
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {
+            "success": true,
+            "errors": [],
+            "messages": [],
+            "result": {
+              "id": "7c5dae5552338874e5053f2534d2767a",
+              "email": "user@example.com",
+              "first_name": "Ada",
+              "last_name": "Lovelace",
+              "telephone": null,
+              "country": "GB",
+              "organizations": []
+            }
+          }
+    recorded_at: 2026-05-20 18:07:49
+recorded_with: VCR-vcr/2.1.0
