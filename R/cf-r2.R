@@ -27,7 +27,7 @@ cf_list_r2_buckets <- function(
 ) {
   cf_check_id(account_id)
   res <- cf_request(
-    paste0("accounts/", account_id, "/r2/buckets"),
+    c("accounts", account_id, "r2", "buckets"),
     token = token,
     email = email,
     api_key = api_key
@@ -61,7 +61,7 @@ cf_get_r2_bucket <- function(
   cf_check_id(account_id)
   cf_check_id(bucket_name)
   cf_request(
-    paste0("accounts/", account_id, "/r2/buckets/", bucket_name),
+    c("accounts", account_id, "r2", "buckets", bucket_name),
     token = token,
     email = email,
     api_key = api_key

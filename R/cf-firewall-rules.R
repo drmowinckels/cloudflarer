@@ -35,7 +35,7 @@ cf_list_firewall_rules <- function(
 ) {
   cf_check_id(zone_id)
   records <- cf_request_collect(
-    paste0("zones/", zone_id, "/firewall/rules"),
+    c("zones", zone_id, "firewall", "rules"),
     per_page = per_page,
     max_pages = max_pages,
     token = token,

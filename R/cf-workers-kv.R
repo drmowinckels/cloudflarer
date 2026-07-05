@@ -31,7 +31,7 @@ cf_list_kv_namespaces <- function(
 ) {
   cf_check_id(account_id)
   records <- cf_request_collect(
-    paste0("accounts/", account_id, "/storage/kv/namespaces"),
+    c("accounts", account_id, "storage", "kv", "namespaces"),
     per_page = per_page,
     max_pages = max_pages,
     token = token,
@@ -66,7 +66,7 @@ cf_get_kv_namespace <- function(
   cf_check_id(account_id)
   cf_check_id(namespace_id)
   cf_request(
-    paste0("accounts/", account_id, "/storage/kv/namespaces/", namespace_id),
+    c("accounts", account_id, "storage", "kv", "namespaces", namespace_id),
     token = token,
     email = email,
     api_key = api_key

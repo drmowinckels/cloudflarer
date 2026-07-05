@@ -40,7 +40,7 @@ describe("cf_get_zone()", {
       }
     )
     res <- cf_get_zone("zone-1")
-    expect_equal(captured, "zones/zone-1")
+    expect_equal(captured, c("zones", "zone-1"))
     expect_equal(res$id, "zone-1")
   })
 

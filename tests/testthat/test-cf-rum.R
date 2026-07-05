@@ -8,7 +8,10 @@ describe("cf_list_rum_sites()", {
       }
     )
     cf_list_rum_sites("acc-1", order_by = "host")
-    expect_equal(captured$endpoint, "accounts/acc-1/rum/site_info/list")
+    expect_equal(
+      captured$endpoint,
+      c("accounts", "acc-1", "rum", "site_info", "list")
+    )
     expect_equal(captured$query$order_by, "host")
   })
 
@@ -44,7 +47,7 @@ describe("cf_get_rum_site()", {
       }
     )
     res <- cf_get_rum_site("acc-1", "abc")
-    expect_equal(captured, "accounts/acc-1/rum/site_info/abc")
+    expect_equal(captured, c("accounts", "acc-1", "rum", "site_info", "abc"))
     expect_equal(res$site_tag, "abc")
   })
 })

@@ -80,6 +80,10 @@ simplify_column <- function(vals) {
   if (!all(scalar)) {
     return(vals)
   }
+  classed <- vapply(non_null, function(v) !is.null(oldClass(v)), logical(1))
+  if (any(classed)) {
+    return(vals)
+  }
   types <- vapply(non_null, typeof, character(1))
   if (all(types == "logical")) {
     return(vapply(
@@ -145,6 +149,32 @@ format_gql_date <- function(x) {
   as.character(x)
 }
 
+#' Validate a length-one logical flag
+#'
+#' Guards a boolean argument, aborting with a consistent message when
+#' the input is not a length-one non-`NA` logical. Used by wrappers
+#' whose boolean flag is a filter that should only be serialized when
+#' `TRUE` (so [cf_query_bool()], which always serializes, does not
+#' fit) but which still deserve the same validation message.
+#'
+#' @param x A length-one logical.
+#' @return `x`, invisibly.
+#' @keywords internal
+#' @noRd
+cf_check_flag <- function(
+  x,
+  arg = rlang::caller_arg(x),
+  call = rlang::caller_env()
+) {
+  if (!is.logical(x) || length(x) != 1L || is.na(x)) {
+    cli::cli_abort(
+      "{.arg {arg}} must be {.code TRUE} or {.code FALSE}.",
+      call = call
+    )
+  }
+  invisible(x)
+}
+
 #' Serialize a logical for use in a Cloudflare query string
 #'
 #' httr2 serializes logicals as `TRUE`/`FALSE` but Cloudflare's
@@ -162,12 +192,7 @@ cf_query_bool <- function(
   arg = rlang::caller_arg(x),
   call = rlang::caller_env()
 ) {
-  if (!is.logical(x) || length(x) != 1L || is.na(x)) {
-    cli::cli_abort(
-      "{.arg {arg}} must be {.code TRUE} or {.code FALSE}.",
-      call = call
-    )
-  }
+  cf_check_flag(x, arg = arg, call = call)
   if (x) "true" else "false"
 }
 

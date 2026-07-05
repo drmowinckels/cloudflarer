@@ -13,4 +13,5 @@
 ^\.lintr$
 ^\.vscode$
 ^\.claude$
+^\.impeccable$
 ^tests/spelling\.R$

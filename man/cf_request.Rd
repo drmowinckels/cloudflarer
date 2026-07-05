@@ -16,10 +16,11 @@ cf_request(
 )
 }
 \arguments{
-\item{endpoint}{Character. Path relative to the API base URL,
-without a leading slash (for example \code{"zones"} or
-\code{"zones/abc123/dns_records"}). May also include path segments
-joined by \code{"/"}.}
+\item{endpoint}{Path relative to the API base URL, without a
+leading slash. Either a single string (for example \code{"zones"} or
+\code{"zones/abc123/dns_records"}) or a character vector of segments
+(\code{c("zones", zone_id, "dns_records")}); each segment is appended
+to the URL path via \code{\link[httr2:req_url]{httr2::req_url_path_append()}}.}
 
 \item{method}{HTTP method as a character string. Defaults to
 \code{"GET"}.}
@@ -56,9 +57,14 @@ does not yet have a dedicated wrapper in the package.
 \details{
 The Cloudflare API wraps every response in an envelope with
 \code{success}, \code{errors}, \code{messages}, \code{result}, and (for paginated
-endpoints) \code{result_info}. \code{cf_request()} extracts \code{result};
-errors raise a classed condition you can catch with
+endpoints) \code{result_info}. \code{cf_request()} extracts \code{result}.
+API-level failures -- both HTTP error statuses and envelope
+errors (HTTP 200 with \code{success: false}) -- raise a classed
+condition you can catch with
 \code{tryCatch(cf_request(...), cloudflarer_error = ...)}.
+Transport-level failures that never reach the API (DNS
+resolution, connection refused, timeout) surface as the
+underlying \code{httr2} error instead.
 }
 \examples{
 \dontrun{

@@ -34,7 +34,7 @@ describe("cf_list_page_rules()", {
       order = "priority",
       direction = "desc"
     )
-    expect_equal(captured$endpoint, "zones/zone-1/pagerules")
+    expect_equal(captured$endpoint, c("zones", "zone-1", "pagerules"))
     expect_equal(captured$query$status, "active")
     expect_equal(captured$query$order, "priority")
     expect_equal(captured$query$direction, "desc")
@@ -82,7 +82,7 @@ describe("cf_create_page_rule()", {
       priority = 5,
       status = "disabled"
     )
-    expect_equal(captured$endpoint, "zones/zone-1/pagerules")
+    expect_equal(captured$endpoint, c("zones", "zone-1", "pagerules"))
     expect_equal(captured$method, "POST")
     expect_equal(captured$body$priority, 5)
     expect_equal(captured$body$status, "disabled")

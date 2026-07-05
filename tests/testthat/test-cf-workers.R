@@ -30,7 +30,10 @@ describe("cf_get_workers_script()", {
       }
     )
     cf_get_workers_script("acc-1", "my-worker")
-    expect_equal(captured, "accounts/acc-1/workers/scripts/my-worker")
+    expect_equal(
+      captured,
+      c("accounts", "acc-1", "workers", "scripts", "my-worker")
+    )
   })
 })
 

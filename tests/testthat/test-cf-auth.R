@@ -154,6 +154,21 @@ describe("cf_verify()", {
     expect_equal(captured, "user/tokens/verify")
   })
 
+  it("uses /user with explicit key auth even when an env token is set", {
+    captured <- NULL
+    local_mocked_bindings(
+      cf_request = function(endpoint, email = NULL, api_key = NULL, ...) {
+        captured <<- list(endpoint = endpoint, email = email, api_key = api_key)
+        list(email = "x@example.com")
+      }
+    )
+    local_mock_auth()
+    cf_verify(email = "e@example.com", api_key = "k")
+    expect_equal(captured$endpoint, "user")
+    expect_equal(captured$email, "e@example.com")
+    expect_equal(captured$api_key, "k")
+  })
+
   it("falls through to /user when no credentials are configured", {
     captured <- NULL
     local_mocked_bindings(

@@ -16,10 +16,11 @@ cf_request_collect(
 )
 }
 \arguments{
-\item{endpoint}{Character. Path relative to the API base URL,
-without a leading slash (for example \code{"zones"} or
-\code{"zones/abc123/dns_records"}). May also include path segments
-joined by \code{"/"}.}
+\item{endpoint}{Path relative to the API base URL, without a
+leading slash. Either a single string (for example \code{"zones"} or
+\code{"zones/abc123/dns_records"}) or a character vector of segments
+(\code{c("zones", zone_id, "dns_records")}); each segment is appended
+to the URL path via \code{\link[httr2:req_url]{httr2::req_url_path_append()}}.}
 
 \item{query}{Optional named list of query parameters.
 \code{NULL} values are dropped.}

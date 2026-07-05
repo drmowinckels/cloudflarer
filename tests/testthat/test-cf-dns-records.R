@@ -8,7 +8,7 @@ describe("cf_list_dns_records()", {
       }
     )
     cf_list_dns_records("zone-1", type = "A", name = "www.example.com")
-    expect_equal(captured$endpoint, "zones/zone-1/dns_records")
+    expect_equal(captured$endpoint, c("zones", "zone-1", "dns_records"))
     expect_equal(captured$query$type, "A")
     expect_equal(captured$query$name, "www.example.com")
   })
@@ -67,7 +67,7 @@ describe("cf_create_dns_record()", {
       name = "_dmarc.example.com",
       content = "v=DMARC1; p=none;"
     )
-    expect_equal(captured$endpoint, "zones/zone-1/dns_records")
+    expect_equal(captured$endpoint, c("zones", "zone-1", "dns_records"))
     expect_equal(captured$method, "POST")
     expect_equal(captured$body$type, "TXT")
     expect_equal(captured$body$content, "v=DMARC1; p=none;")

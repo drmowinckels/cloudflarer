@@ -41,7 +41,7 @@ describe("cf_get_account()", {
       }
     )
     res <- cf_get_account("acc-1")
-    expect_equal(captured, "accounts/acc-1")
+    expect_equal(captured, c("accounts", "acc-1"))
     expect_equal(res$id, "acc-1")
   })
 })

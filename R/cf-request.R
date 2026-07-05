@@ -99,14 +99,20 @@ cf_req_auth <- function(req, token = NULL, email = NULL, api_key = NULL) {
 #'
 #' The Cloudflare API wraps every response in an envelope with
 #' `success`, `errors`, `messages`, `result`, and (for paginated
-#' endpoints) `result_info`. `cf_request()` extracts `result`;
-#' errors raise a classed condition you can catch with
+#' endpoints) `result_info`. `cf_request()` extracts `result`.
+#' API-level failures -- both HTTP error statuses and envelope
+#' errors (HTTP 200 with `success: false`) -- raise a classed
+#' condition you can catch with
 #' `tryCatch(cf_request(...), cloudflarer_error = ...)`.
+#' Transport-level failures that never reach the API (DNS
+#' resolution, connection refused, timeout) surface as the
+#' underlying `httr2` error instead.
 #'
-#' @param endpoint Character. Path relative to the API base URL,
-#'   without a leading slash (for example `"zones"` or
-#'   `"zones/abc123/dns_records"`). May also include path segments
-#'   joined by `"/"`.
+#' @param endpoint Path relative to the API base URL, without a
+#'   leading slash. Either a single string (for example `"zones"` or
+#'   `"zones/abc123/dns_records"`) or a character vector of segments
+#'   (`c("zones", zone_id, "dns_records")`); each segment is appended
+#'   to the URL path via [httr2::req_url_path_append()].
 #' @param method HTTP method as a character string. Defaults to
 #'   `"GET"`.
 #' @param query Optional named list of query parameters.
@@ -285,22 +291,6 @@ cf_resp_envelope <- function(resp) {
   body
 }
 
-#' Format the `errors` array from a Cloudflare envelope into
-#' user-readable strings. Exposed as a helper for `cf_resp_envelope()`
-#' and any caller that wants to inspect the raw error list.
-#' @keywords internal
-#' @noRd
-cf_error_body <- function(resp) {
-  body <- tryCatch(
-    httr2::resp_body_json(resp, simplifyVector = FALSE),
-    error = function(e) NULL
-  )
-  if (is.null(body) || !length(body$errors)) {
-    return("Cloudflare returned an error with no parseable details.")
-  }
-  format_cf_errors(body$errors)
-}
-
 #' Raise a classed error from a parsed envelope
 #' @keywords internal
 #' @noRd
@@ -341,7 +331,7 @@ format_cf_error <- function(err) {
 }
 
 cf_req_path <- function(req, endpoint) {
-  parts <- strsplit(endpoint, "/", fixed = TRUE)[[1]]
+  parts <- unlist(strsplit(endpoint, "/", fixed = TRUE), use.names = FALSE)
   parts <- parts[nzchar(parts)]
   if (!length(parts)) {
     return(req)

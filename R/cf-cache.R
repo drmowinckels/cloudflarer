@@ -68,7 +68,7 @@ cf_purge_cache <- function(
     }
   }
   cf_request(
-    paste0("zones/", zone_id, "/purge_cache"),
+    c("zones", zone_id, "purge_cache"),
     method = "POST",
     body = body,
     token = token,

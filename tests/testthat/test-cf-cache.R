@@ -12,7 +12,7 @@ describe("cf_purge_cache()", {
       }
     )
     cf_purge_cache("zone-1", purge_everything = TRUE)
-    expect_equal(captured$endpoint, "zones/zone-1/purge_cache")
+    expect_equal(captured$endpoint, c("zones", "zone-1", "purge_cache"))
     expect_equal(captured$method, "POST")
     expect_equal(captured$body, list(purge_everything = TRUE))
   })

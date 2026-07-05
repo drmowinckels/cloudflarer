@@ -253,50 +253,17 @@ describe("cf_request_collect()", {
   })
 })
 
-describe("cf_error_body()", {
-  it("formats the first error code and message", {
-    fake_resp <- response(
-      status_code = 400,
-      headers = list(`content-type` = "application/json"),
-      body = charToRaw(
-        '{"success":false,"errors":[{"code":1001,"message":"Boom"}]}'
-      )
-    )
-    out <- cf_error_body(fake_resp)
-    expect_match(out, "1001")
-    expect_match(out, "Boom")
-  })
-
-  it("includes error_chain entries when present", {
-    fake_resp <- response(
-      status_code = 400,
-      headers = list(`content-type` = "application/json"),
-      body = charToRaw(paste0(
-        '{"success":false,"errors":[{"code":10,"message":"X",',
-        '"error_chain":[{"code":11,"message":"Y"}]}]}'
-      ))
-    )
-    out <- cf_error_body(fake_resp)
-    expect_match(out, "11")
-    expect_match(out, "Y")
-  })
-
-  it("falls back to a generic message when the body is not JSON", {
-    fake_resp <- response(
-      status_code = 400,
-      headers = list(`content-type` = "text/plain"),
-      body = charToRaw("not json")
-    )
-    out <- cf_error_body(fake_resp)
-    expect_match(out, "no parseable details")
-  })
-})
-
 describe("cf_req_path()", {
   it("appends every path segment", {
     req <- request("https://example.com") |>
       cf_req_path("a/b/c")
     expect_equal(req$url, "https://example.com/a/b/c")
+  })
+
+  it("accepts a character vector of segments", {
+    req <- request("https://example.com") |>
+      cf_req_path(c("zones", "zone-1", "dns_records"))
+    expect_equal(req$url, "https://example.com/zones/zone-1/dns_records")
   })
 
   it("is a no-op for an empty endpoint", {

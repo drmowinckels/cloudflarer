@@ -39,7 +39,7 @@ cf_list_page_rules <- function(
 ) {
   cf_check_id(zone_id)
   records <- cf_request(
-    paste0("zones/", zone_id, "/pagerules"),
+    c("zones", zone_id, "pagerules"),
     query = list(status = status, order = order, direction = direction),
     token = token,
     email = email,
@@ -74,7 +74,7 @@ cf_get_page_rule <- function(
   cf_check_id(zone_id)
   cf_check_id(rule_id)
   cf_request(
-    paste0("zones/", zone_id, "/pagerules/", rule_id),
+    c("zones", zone_id, "pagerules", rule_id),
     token = token,
     email = email,
     api_key = api_key
@@ -130,7 +130,7 @@ cf_create_page_rule <- function(
   cf_check_id(zone_id)
   status <- match.arg(status)
   cf_request(
-    paste0("zones/", zone_id, "/pagerules"),
+    c("zones", zone_id, "pagerules"),
     method = "POST",
     body = list(
       targets = targets,
@@ -182,7 +182,7 @@ cf_update_page_rule <- function(
     status = status
   ))
   cf_request(
-    paste0("zones/", zone_id, "/pagerules/", rule_id),
+    c("zones", zone_id, "pagerules", rule_id),
     method = "PATCH",
     body = body,
     token = token,
@@ -212,7 +212,7 @@ cf_delete_page_rule <- function(
   cf_check_id(zone_id)
   cf_check_id(rule_id)
   cf_request(
-    paste0("zones/", zone_id, "/pagerules/", rule_id),
+    c("zones", zone_id, "pagerules", rule_id),
     method = "DELETE",
     token = token,
     email = email,

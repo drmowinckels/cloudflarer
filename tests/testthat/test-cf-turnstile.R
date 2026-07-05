@@ -60,7 +60,10 @@ describe("cf_create_turnstile_widget()", {
       mode = "invisible",
       bot_fight_mode = TRUE
     )
-    expect_equal(captured$endpoint, "accounts/acc-1/challenges/widgets")
+    expect_equal(
+      captured$endpoint,
+      c("accounts", "acc-1", "challenges", "widgets")
+    )
     expect_equal(captured$method, "POST")
     expect_equal(captured$body$name, "form")
     expect_equal(captured$body$domains, list("a.com", "b.com"))

@@ -37,7 +37,7 @@ cf_list_rum_sites <- function(
 ) {
   cf_check_id(account_id)
   records <- cf_request_collect(
-    paste0("accounts/", account_id, "/rum/site_info/list"),
+    c("accounts", account_id, "rum", "site_info", "list"),
     query = list(order_by = order_by),
     per_page = per_page,
     max_pages = max_pages,
@@ -74,7 +74,7 @@ cf_get_rum_site <- function(
   cf_check_id(account_id)
   cf_check_id(site_tag)
   cf_request(
-    paste0("accounts/", account_id, "/rum/site_info/", site_tag),
+    c("accounts", account_id, "rum", "site_info", site_tag),
     token = token,
     email = email,
     api_key = api_key

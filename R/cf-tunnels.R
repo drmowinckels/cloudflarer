@@ -34,7 +34,7 @@ cf_list_tunnels <- function(
 ) {
   cf_check_id(account_id)
   records <- cf_request_collect(
-    paste0("accounts/", account_id, "/cfd_tunnel"),
+    c("accounts", account_id, "cfd_tunnel"),
     query = list(is_deleted = cf_query_bool(is_deleted)),
     per_page = per_page,
     max_pages = max_pages,
@@ -70,7 +70,7 @@ cf_get_tunnel <- function(
   cf_check_id(account_id)
   cf_check_id(tunnel_id)
   cf_request(
-    paste0("accounts/", account_id, "/cfd_tunnel/", tunnel_id),
+    c("accounts", account_id, "cfd_tunnel", tunnel_id),
     token = token,
     email = email,
     api_key = api_key
@@ -108,13 +108,7 @@ cf_list_tunnel_connections <- function(
   cf_check_id(account_id)
   cf_check_id(tunnel_id)
   records <- cf_request(
-    paste0(
-      "accounts/",
-      account_id,
-      "/cfd_tunnel/",
-      tunnel_id,
-      "/connections"
-    ),
+    c("accounts", account_id, "cfd_tunnel", tunnel_id, "connections"),
     token = token,
     email = email,
     api_key = api_key

@@ -147,10 +147,16 @@ cf_api_key <- function(api_key = NULL) {
 #' cf_verify()
 #' }
 cf_verify <- function(token = NULL, email = NULL, api_key = NULL) {
-  if (!is.null(token) || isTRUE(cf_auth_mode() == "token")) {
+  if (!is.null(token)) {
     return(cf_request("user/tokens/verify", token = token))
   }
-  cf_request("user", email = email, api_key = api_key)
+  if (!is.null(email) || !is.null(api_key)) {
+    return(cf_request("user", email = email, api_key = api_key))
+  }
+  if (isTRUE(cf_auth_mode() == "token")) {
+    return(cf_request("user/tokens/verify"))
+  }
+  cf_request("user")
 }
 
 #' @rdname cf_verify

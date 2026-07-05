@@ -32,7 +32,7 @@ cf_list_turnstile_widgets <- function(
 ) {
   cf_check_id(account_id)
   records <- cf_request_collect(
-    paste0("accounts/", account_id, "/challenges/widgets"),
+    c("accounts", account_id, "challenges", "widgets"),
     per_page = per_page,
     max_pages = max_pages,
     token = token,
@@ -67,7 +67,7 @@ cf_get_turnstile_widget <- function(
   cf_check_id(account_id)
   cf_check_id(sitekey)
   cf_request(
-    paste0("accounts/", account_id, "/challenges/widgets/", sitekey),
+    c("accounts", account_id, "challenges", "widgets", sitekey),
     token = token,
     email = email,
     api_key = api_key
@@ -121,7 +121,7 @@ cf_create_turnstile_widget <- function(
   cf_check_id(account_id)
   mode <- match.arg(mode)
   cf_request(
-    paste0("accounts/", account_id, "/challenges/widgets"),
+    c("accounts", account_id, "challenges", "widgets"),
     method = "POST",
     body = list(
       name = name,
@@ -157,7 +157,7 @@ cf_delete_turnstile_widget <- function(
   cf_check_id(account_id)
   cf_check_id(sitekey)
   cf_request(
-    paste0("accounts/", account_id, "/challenges/widgets/", sitekey),
+    c("accounts", account_id, "challenges", "widgets", sitekey),
     method = "DELETE",
     token = token,
     email = email,

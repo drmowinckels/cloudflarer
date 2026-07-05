@@ -8,10 +8,16 @@
   no credentials are configured. It now falls through to
   `/user` so the underlying credential helpers raise the
   documented "No Cloudflare credentials found" message.
+- `cf_verify()` honours the same credential precedence as the
+  request layer: explicitly-passed `email`/`api_key` now verify
+  against `/user` even when a `CLOUDFLARE_API_TOKEN` is present in
+  the environment, instead of silently verifying the env token.
 - `cf_records_to_df()` no longer silently truncates numeric data
   when records mix integer and double values for the same field.
   Mixed `integer + double` columns widen to `double`; otherwise
   incompatible mixed scalar types fall back to a list-column.
+  Classed scalar values (`Date`, `POSIXct`) are kept in a
+  list-column rather than being stripped to bare numerics.
 - `cf_records_to_df()` validates that `records` is a list of
   named lists and aborts with a clear message otherwise.
 - `cf_zone_overview()` now only swallows `cloudflarer_error`
@@ -23,7 +29,16 @@
   `cf_check_id()` helper, replacing confusing API or routing
   errors with a single useful message.
 - Boolean Cloudflare query parameters are now serialized
-  consistently through an internal `cf_query_bool()` helper.
+  consistently through an internal `cf_query_bool()` helper, and
+  boolean flags that are only sent when `TRUE` (for example
+  `enabled_only`, `verified_only`) are validated up front through
+  the shared `cf_check_flag()` helper so bad input raises the same
+  clear, argument-named message everywhere.
+- Endpoint wrappers no longer assemble request paths with
+  `paste0()`. Each wrapper passes its path as a character vector of
+  segments (`c("zones", zone_id, "dns_records")`) that is appended
+  through `httr2::req_url_path_append()`, so every segment is
+  URL-encoded by `httr2` rather than string-concatenated.
 - `format_graphql_error()` escapes braces after assembling the
   full message, so a brace appearing in the GraphQL `path`
   segment can no longer confuse `cli`'s interpolation.
@@ -42,9 +57,11 @@
   `cf_has_auth()`, `cf_token_verify()`, `cf_verify()`.
 - Diagnostic helper `cf_sitrep()` reports the active mode and verifies
   the configured credentials against the live API.
-- All REST API failures, whether HTTP-level or envelope-level
-  (`success: false`), raise a classed `cloudflarer_error` condition
-  that can be caught with `tryCatch()`.
+- All REST API failures that reach the API, whether HTTP-level or
+  envelope-level (`success: false`), raise a classed
+  `cloudflarer_error` condition that can be caught with
+  `tryCatch()`. Transport-level failures (DNS, connection refused,
+  timeout) surface as the underlying `httr2` error.
 
 ## Data frame defaults
 

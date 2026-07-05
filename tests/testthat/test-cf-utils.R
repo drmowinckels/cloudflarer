@@ -56,6 +56,20 @@ describe("as_cf_tibble()", {
     expect_equal(as_cf_tibble(1:3), 1:3)
     expect_equal(as_cf_tibble("foo"), "foo")
   })
+
+  it("produces an object tibble accepts, prints, and subsets", {
+    skip_if_not_installed("tibble")
+    records <- list(
+      list(id = "a", n = 1L, tags = c("x", "y")),
+      list(id = "b", n = 2L, tags = character(0))
+    )
+    out <- cf_records_to_df(records)
+    expect_true(tibble::is_tibble(out))
+    expect_no_error(format(out))
+    expect_no_error(capture.output(print(out)))
+    expect_equal(out$id, c("a", "b"))
+    expect_equal(out[["tags"]][[1]], c("x", "y"))
+  })
 })
 
 describe("cf_records_to_df()", {
@@ -133,6 +147,17 @@ describe("cf_records_to_df()", {
     expect_type(out$v, "list")
   })
 
+  it("keeps classed scalars (Date) as a list-column instead of stripping class", {
+    records <- list(
+      list(d = as.Date("2026-05-01")),
+      list(d = as.Date("2026-05-02"))
+    )
+    out <- cf_records_to_df(records)
+    expect_type(out$d, "list")
+    expect_s3_class(out$d[[1]], "Date")
+    expect_equal(out$d[[2]], as.Date("2026-05-02"))
+  })
+
   it("aborts on non-list input", {
     expect_error(cf_records_to_df(1:3), "must be a list")
   })
@@ -165,6 +190,25 @@ describe("cf_query_bool()", {
   it("names the failing argument", {
     is_deleted <- "yes"
     expect_error(cf_query_bool(is_deleted), "is_deleted")
+  })
+})
+
+describe("cf_check_flag()", {
+  it("returns the flag invisibly for valid input", {
+    expect_invisible(cf_check_flag(TRUE))
+    expect_true(cf_check_flag(FALSE) == FALSE)
+  })
+
+  it("aborts on non-logical, NA, or wrong length", {
+    expect_error(cf_check_flag(1), "TRUE")
+    expect_error(cf_check_flag(NA), "TRUE")
+    expect_error(cf_check_flag(c(TRUE, FALSE)), "TRUE")
+    expect_error(cf_check_flag(logical(0)), "TRUE")
+  })
+
+  it("names the failing argument", {
+    enabled_only <- "yes"
+    expect_error(cf_check_flag(enabled_only), "enabled_only")
   })
 })
 

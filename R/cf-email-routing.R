@@ -23,7 +23,7 @@ cf_get_email_routing_settings <- function(
 ) {
   cf_check_id(zone_id)
   cf_request(
-    paste0("zones/", zone_id, "/email/routing"),
+    c("zones", zone_id, "email", "routing"),
     token = token,
     email = email,
     api_key = api_key
@@ -65,9 +65,10 @@ cf_list_email_routing_rules <- function(
   api_key = NULL
 ) {
   cf_check_id(zone_id)
-  query <- if (enabled_only) list(enabled = cf_query_bool(TRUE)) else NULL
+  cf_check_flag(enabled_only)
+  query <- if (enabled_only) list(enabled = "true") else NULL
   records <- cf_request_collect(
-    paste0("zones/", zone_id, "/email/routing/rules"),
+    c("zones", zone_id, "email", "routing", "rules"),
     query = query,
     per_page = per_page,
     max_pages = max_pages,
@@ -113,9 +114,10 @@ cf_list_email_routing_addresses <- function(
   api_key = NULL
 ) {
   cf_check_id(account_id)
-  query <- if (verified_only) list(verified = cf_query_bool(TRUE)) else NULL
+  cf_check_flag(verified_only)
+  query <- if (verified_only) list(verified = "true") else NULL
   records <- cf_request_collect(
-    paste0("accounts/", account_id, "/email/routing/addresses"),
+    c("accounts", account_id, "email", "routing", "addresses"),
     query = query,
     per_page = per_page,
     max_pages = max_pages,

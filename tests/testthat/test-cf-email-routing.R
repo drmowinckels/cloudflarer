@@ -32,8 +32,18 @@ describe("cf_list_email_routing_rules()", {
       }
     )
     cf_list_email_routing_rules("zone-1", enabled_only = TRUE)
-    expect_equal(captured$endpoint, "zones/zone-1/email/routing/rules")
+    expect_equal(
+      captured$endpoint,
+      c("zones", "zone-1", "email", "routing", "rules")
+    )
     expect_equal(captured$query$enabled, "true")
+  })
+
+  it("rejects a non-logical enabled_only with a named message", {
+    expect_error(
+      cf_list_email_routing_rules("zone-1", enabled_only = "yes"),
+      "enabled_only"
+    )
   })
 
   it("returns a list when as_df = FALSE", {
@@ -67,6 +77,13 @@ describe("cf_list_email_routing_addresses()", {
     )
     cf_list_email_routing_addresses("acc-1", verified_only = TRUE)
     expect_equal(captured$query$verified, "true")
+  })
+
+  it("rejects a non-logical verified_only with a named message", {
+    expect_error(
+      cf_list_email_routing_addresses("acc-1", verified_only = NA),
+      "verified_only"
+    )
   })
 
   it("returns a list when as_df = FALSE", {

@@ -27,7 +27,7 @@ cf_list_workers_scripts <- function(
 ) {
   cf_check_id(account_id)
   records <- cf_request(
-    paste0("accounts/", account_id, "/workers/scripts"),
+    c("accounts", account_id, "workers", "scripts"),
     token = token,
     email = email,
     api_key = api_key
@@ -64,7 +64,7 @@ cf_get_workers_script <- function(
   cf_check_id(account_id)
   cf_check_id(script_name)
   cf_request(
-    paste0("accounts/", account_id, "/workers/scripts/", script_name),
+    c("accounts", account_id, "workers", "scripts", script_name),
     token = token,
     email = email,
     api_key = api_key
