@@ -4,30 +4,25 @@ describe("cf_purge_cache()", {
   })
 
   it("sends purge_everything = TRUE", {
-    captured <- NULL
-    local_mocked_bindings(
-      cf_request = function(endpoint, method, body, ...) {
-        captured <<- list(endpoint = endpoint, method = method, body = body)
-        list(id = "job-1")
-      }
+    cap <- local_captured_request(
+      body = '{"success":true,"result":{"id":"job-1"}}'
     )
+    local_mock_auth()
     cf_purge_cache("zone-1", purge_everything = TRUE)
-    expect_equal(captured$endpoint, c("zones", "zone-1", "purge_cache"))
-    expect_equal(captured$method, "POST")
-    expect_equal(captured$body, list(purge_everything = TRUE))
+    expect_match(cap$req$url, "zones/zone-1/purge_cache")
+    expect_equal(cap$req$method, "POST")
+    expect_equal(cap$req$body$data, list(purge_everything = TRUE))
   })
 
   it("sends only the targeted fields when files supplied", {
-    captured <- NULL
-    local_mocked_bindings(
-      cf_request = function(endpoint, method, body, ...) {
-        captured <<- body
-        list(id = "job-2")
-      }
+    cap <- local_captured_request(
+      body = '{"success":true,"result":{"id":"job-2"}}'
     )
+    local_mock_auth()
     cf_purge_cache("zone-1", files = c("https://x/a", "https://x/b"))
-    expect_equal(captured$files, c("https://x/a", "https://x/b"))
-    expect_false("hosts" %in% names(captured))
+    body <- cap$req$body$data
+    expect_equal(body$files, c("https://x/a", "https://x/b"))
+    expect_false("hosts" %in% names(body))
   })
 
   it("returns the purge job id from a cassette", {

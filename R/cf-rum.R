@@ -9,7 +9,7 @@
 #' @param order_by Optional column name to sort by, for example
 #'   `"created"` or `"host"`.
 #' @param per_page,max_pages Pagination controls, see
-#'   [cf_request_collect()].
+#'   [cf_collect()].
 #' @param as_df Logical. When `TRUE` (the default), returns a
 #'   data.frame via [cf_records_to_df()]. Set to `FALSE` to get the
 #'   raw nested list.
@@ -36,15 +36,14 @@ cf_list_rum_sites <- function(
   api_key = NULL
 ) {
   cf_check_id(account_id)
-  records <- cf_request_collect(
+  records <- cf_request(
     c("accounts", account_id, "rum", "site_info", "list"),
-    query = list(order_by = order_by),
-    per_page = per_page,
-    max_pages = max_pages,
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_url_query(order_by = order_by) |>
+    cf_collect(per_page = per_page, max_pages = max_pages)
   if (as_df) cf_records_to_df(records) else records
 }
 
@@ -78,5 +77,7 @@ cf_get_rum_site <- function(
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
 }

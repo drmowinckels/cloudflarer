@@ -4,9 +4,9 @@
 #' @param type Optional record type filter, for example `"A"` or
 #'   `"CNAME"`.
 #' @param name Optional record name filter.
-#' @param per_page Page size, see [cf_request_collect()].
+#' @param per_page Page size, see [cf_collect()].
 #' @param max_pages Maximum pages to retrieve, see
-#'   [cf_request_collect()].
+#'   [cf_collect()].
 #' @param as_df Logical. When `TRUE` (the default), returns a
 #'   data.frame via [cf_records_to_df()]. Set to `FALSE` for the
 #'   raw nested list.
@@ -35,15 +35,14 @@ cf_list_dns_records <- function(
   api_key = NULL
 ) {
   cf_check_id(zone_id)
-  records <- cf_request_collect(
+  records <- cf_request(
     c("zones", zone_id, "dns_records"),
-    query = list(type = type, name = name),
-    per_page = per_page,
-    max_pages = max_pages,
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_url_query(type = type, name = name) |>
+    cf_collect(per_page = per_page, max_pages = max_pages)
   if (as_df) cf_records_to_df(records) else records
 }
 
@@ -76,7 +75,9 @@ cf_get_dns_record <- function(
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' Create a DNS record
@@ -140,12 +141,14 @@ cf_create_dns_record <- function(
   ))
   cf_request(
     c("zones", zone_id, "dns_records"),
-    method = "POST",
-    body = body,
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_method("POST") |>
+    httr2::req_body_json(body) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' Update a DNS record
@@ -193,12 +196,14 @@ cf_update_dns_record <- function(
   ))
   cf_request(
     c("zones", zone_id, "dns_records", record_id),
-    method = "PATCH",
-    body = body,
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_method("PATCH") |>
+    httr2::req_body_json(body) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' Delete a DNS record
@@ -223,9 +228,11 @@ cf_delete_dns_record <- function(
   cf_check_id(record_id)
   cf_request(
     c("zones", zone_id, "dns_records", record_id),
-    method = "DELETE",
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_method("DELETE") |>
+    httr2::req_perform() |>
+    cf_resp()
 }

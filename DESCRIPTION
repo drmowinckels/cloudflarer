@@ -4,7 +4,10 @@ Version: 0.0.0.9000
 Authors@R:
     person("Athanasia Mo", "Mowinckel", , "a.m.mowinckel@psykologi.uio.no",
            role = c("aut", "cre", "cph"),
-           comment = c(ORCID = "0000-0002-5756-0223"))
+           comment = c(
+            ORCID = "0000-0002-5756-0223",
+            GitHub = "drmowinckels"
+            ))
 Description: An 'R' interface to the 'Cloudflare' REST API
     (<https://developers.cloudflare.com/api/>). Wraps the v4 API with
     authenticated requests, response unwrapping, paginated list helpers,

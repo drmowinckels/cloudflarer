@@ -3,9 +3,9 @@
 #' Lists all accounts the authenticated user has access to.
 #'
 #' @param name Optional name filter passed to the API.
-#' @param per_page Page size, see [cf_request_collect()].
+#' @param per_page Page size, see [cf_collect()].
 #' @param max_pages Maximum number of pages to retrieve, see
-#'   [cf_request_collect()].
+#'   [cf_collect()].
 #' @param as_df Logical. When `TRUE` (the default), returns a
 #'   data.frame via [cf_records_to_df()]. Set to `FALSE` to get the
 #'   raw nested list.
@@ -30,15 +30,14 @@ cf_list_accounts <- function(
   email = NULL,
   api_key = NULL
 ) {
-  records <- cf_request_collect(
+  records <- cf_request(
     "accounts",
-    query = list(name = name),
-    per_page = per_page,
-    max_pages = max_pages,
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_url_query(name = name) |>
+    cf_collect(per_page = per_page, max_pages = max_pages)
   if (as_df) cf_records_to_df(records) else records
 }
 
@@ -68,5 +67,7 @@ cf_get_account <- function(
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
 }

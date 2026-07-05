@@ -24,10 +24,10 @@ cf_list_dns_records(
 
 \item{name}{Optional record name filter.}
 
-\item{per_page}{Page size, see \code{\link[=cf_request_collect]{cf_request_collect()}}.}
+\item{per_page}{Page size, see \code{\link[=cf_collect]{cf_collect()}}.}
 
 \item{max_pages}{Maximum pages to retrieve, see
-\code{\link[=cf_request_collect]{cf_request_collect()}}.}
+\code{\link[=cf_collect]{cf_collect()}}.}
 
 \item{as_df}{Logical. When \code{TRUE} (the default), returns a
 data.frame via \code{\link[=cf_records_to_df]{cf_records_to_df()}}. Set to \code{FALSE} for the

@@ -19,7 +19,8 @@ describe("cf_list_r2_buckets()", {
   })
 
   it("returns an empty data.frame when there are no buckets", {
-    local_mocked_bindings(cf_request = function(...) list(buckets = list()))
+    local_captured_request(body = '{"success":true,"result":{"buckets":[]}}')
+    local_mock_auth()
     df <- cf_list_r2_buckets("acc-1")
     expect_s3_class(df, "data.frame")
     expect_equal(nrow(df), 0L)

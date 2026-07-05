@@ -1,8 +1,31 @@
 describe("cf_request()", {
+  it("builds an authenticated request with the endpoint path", {
+    local_mock_auth()
+    req <- cf_request(c("zones", "abc"))
+    expect_s3_class(req, "httr2_request")
+    expect_match(req$url, "zones/abc$")
+    headers <- httr2::req_dry_run(
+      req,
+      quiet = TRUE,
+      redact_headers = FALSE
+    )$headers
+    expect_equal(headers$authorization, paste("Bearer", mock_token))
+  })
+
+  it("accepts a slash-joined endpoint string", {
+    local_mock_auth()
+    req <- cf_request("zones/abc/dns_records")
+    expect_match(req$url, "zones/abc/dns_records$")
+  })
+})
+
+describe("cf_resp()", {
   it("returns the result element from a successful envelope", {
     local_mock_auth()
     vcr::use_cassette("token_verify_ok", {
-      res <- cf_request("user/tokens/verify")
+      res <- cf_request("user/tokens/verify") |>
+        httr2::req_perform() |>
+        cf_resp()
     })
     expect_type(res, "list")
     expect_true("status" %in% names(res))
@@ -12,37 +35,10 @@ describe("cf_request()", {
     local_mock_auth()
     vcr::use_cassette("zones_unauthorised", {
       expect_error(
-        cf_request("zones"),
+        cf_request("zones") |> httr2::req_perform() |> cf_resp(),
         class = "cloudflarer_error"
       )
     })
-  })
-
-  it("forwards endpoint, method, query and body to cf_perform", {
-    captured <- NULL
-    local_mocked_bindings(
-      cf_perform = function(endpoint, method, query, body, ...) {
-        captured <<- list(
-          endpoint = endpoint,
-          method = method,
-          query = query,
-          body = body
-        )
-        structure(list(), class = "httr2_response")
-      },
-      cf_resp_envelope = function(resp) list(result = list(ok = TRUE))
-    )
-    local_mock_auth()
-    cf_request(
-      "zones/abc",
-      method = "POST",
-      query = list(q = "v"),
-      body = list(type = "A")
-    )
-    expect_equal(captured$endpoint, "zones/abc")
-    expect_equal(captured$method, "POST")
-    expect_equal(captured$query, list(q = "v"))
-    expect_equal(captured$body, list(type = "A"))
   })
 })
 
@@ -152,11 +148,11 @@ describe("cf_resp_envelope()", {
   })
 })
 
-describe("cf_perform()", {
+describe("request pipeline", {
   it("injects query parameters into the request", {
     local_mock_auth()
     vcr::use_cassette("accounts_one_page", {
-      out <- cf_request_collect("accounts", per_page = 2)
+      out <- cf_request("accounts") |> cf_collect(per_page = 2)
     })
     expect_length(out, 2)
     expect_equal(out[[1]]$id, "acc-1")
@@ -166,15 +162,15 @@ describe("cf_perform()", {
     local_mock_auth()
     vcr::use_cassette("dns_create_error", {
       expect_error(
-        cf_request(
-          "zones/zone-1/dns_records",
-          method = "POST",
-          body = list(
+        cf_request("zones/zone-1/dns_records") |>
+          httr2::req_method("POST") |>
+          httr2::req_body_json(list(
             type = "A",
             name = "www.example.com",
             content = "192.0.2.1"
-          )
-        ),
+          )) |>
+          httr2::req_perform() |>
+          cf_resp(),
         class = "cloudflarer_error"
       )
     })
@@ -188,7 +184,7 @@ describe("format_cf_errors()", {
   })
 })
 
-describe("cf_request_collect()", {
+describe("cf_collect()", {
   it("walks every page until total_pages is reached", {
     pages <- list(
       list(
@@ -204,41 +200,47 @@ describe("cf_request_collect()", {
         result_info = list(page = 3, total_pages = 3)
       )
     )
-    call <- 0L
+    state <- new.env(parent = emptyenv())
+    state$n <- 0L
     local_mocked_bindings(
-      cf_perform = function(...) {
-        call <<- call + 1L
-        structure(list(page = call), class = "httr2_response")
+      req_perform = function(req, ...) {
+        state$n <- state$n + 1L
+        structure(list(page = state$n), class = "httr2_response")
       },
-      cf_resp_envelope = function(resp) pages[[resp$page]]
+      .package = "httr2"
     )
+    local_mocked_bindings(cf_resp_envelope = function(resp) pages[[resp$page]])
     local_mock_auth()
-    out <- cf_request_collect("zones", per_page = 2)
+    out <- cf_request("zones") |> cf_collect(per_page = 2)
     expect_length(out, 5)
     expect_equal(out[[5]]$id, 5)
   })
 
   it("tolerates a missing result field on an otherwise-OK page", {
     local_mocked_bindings(
-      cf_perform = function(...) {
+      req_perform = function(req, ...) {
         structure(list(), class = "httr2_response")
       },
+      .package = "httr2"
+    )
+    local_mocked_bindings(
       cf_resp_envelope = function(resp) {
         list(result_info = list(page = 1, total_pages = 1))
       }
     )
     local_mock_auth()
-    out <- cf_request_collect("zones")
+    out <- cf_request("zones") |> cf_collect()
     expect_equal(out, list())
   })
 
   it("respects max_pages", {
-    call <- 0L
     local_mocked_bindings(
-      cf_perform = function(...) {
-        call <<- call + 1L
+      req_perform = function(req, ...) {
         structure(list(), class = "httr2_response")
       },
+      .package = "httr2"
+    )
+    local_mocked_bindings(
       cf_resp_envelope = function(resp) {
         list(
           result = list(list(id = 1)),
@@ -247,9 +249,8 @@ describe("cf_request_collect()", {
       }
     )
     local_mock_auth()
-    out <- cf_request_collect("zones", per_page = 1, max_pages = 2)
+    out <- cf_request("zones") |> cf_collect(per_page = 1, max_pages = 2)
     expect_length(out, 2)
-    expect_equal(call, 2L)
   })
 })
 

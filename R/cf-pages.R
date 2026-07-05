@@ -34,7 +34,9 @@ cf_list_pages_projects <- function(
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
   if (as_df) cf_records_to_df(records) else records
 }
 
@@ -68,7 +70,9 @@ cf_get_pages_project <- function(
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' List deployments for a Pages project
@@ -104,13 +108,12 @@ cf_list_pages_deployments <- function(
 ) {
   cf_check_id(account_id)
   cf_check_id(project_name)
-  records <- cf_request_collect(
+  records <- cf_request(
     c("accounts", account_id, "pages", "projects", project_name, "deployments"),
-    per_page = per_page,
-    max_pages = max_pages,
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    cf_collect(per_page = per_page, max_pages = max_pages)
   if (as_df) cf_records_to_df(records) else records
 }

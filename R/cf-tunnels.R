@@ -7,7 +7,7 @@
 #' @param is_deleted Logical. When `TRUE`, include deleted
 #'   tunnels.
 #' @param per_page,max_pages Pagination controls, see
-#'   [cf_request_collect()].
+#'   [cf_collect()].
 #' @param as_df Logical. When `TRUE` (the default), returns a
 #'   data.frame via [cf_records_to_df()].
 #' @inheritParams cf_token
@@ -33,15 +33,14 @@ cf_list_tunnels <- function(
   api_key = NULL
 ) {
   cf_check_id(account_id)
-  records <- cf_request_collect(
+  records <- cf_request(
     c("accounts", account_id, "cfd_tunnel"),
-    query = list(is_deleted = cf_query_bool(is_deleted)),
-    per_page = per_page,
-    max_pages = max_pages,
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_url_query(is_deleted = cf_query_bool(is_deleted)) |>
+    cf_collect(per_page = per_page, max_pages = max_pages)
   if (as_df) cf_records_to_df(records) else records
 }
 
@@ -74,7 +73,9 @@ cf_get_tunnel <- function(
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' List active connections for a Cloudflare Tunnel
@@ -112,6 +113,8 @@ cf_list_tunnel_connections <- function(
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
   if (as_df) cf_records_to_df(records) else records
 }

@@ -5,7 +5,7 @@
 #'
 #' @param account_id Character. Cloudflare account identifier.
 #' @param per_page,max_pages Pagination controls, see
-#'   [cf_request_collect()].
+#'   [cf_collect()].
 #' @param as_df Logical. When `TRUE` (the default), returns a
 #'   data.frame via [cf_records_to_df()]. Set to `FALSE` for the
 #'   raw nested list.
@@ -31,14 +31,13 @@ cf_list_turnstile_widgets <- function(
   api_key = NULL
 ) {
   cf_check_id(account_id)
-  records <- cf_request_collect(
+  records <- cf_request(
     c("accounts", account_id, "challenges", "widgets"),
-    per_page = per_page,
-    max_pages = max_pages,
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    cf_collect(per_page = per_page, max_pages = max_pages)
   if (as_df) cf_records_to_df(records) else records
 }
 
@@ -71,7 +70,9 @@ cf_get_turnstile_widget <- function(
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' Create a Turnstile widget
@@ -122,18 +123,20 @@ cf_create_turnstile_widget <- function(
   mode <- match.arg(mode)
   cf_request(
     c("accounts", account_id, "challenges", "widgets"),
-    method = "POST",
-    body = list(
+    token = token,
+    email = email,
+    api_key = api_key
+  ) |>
+    httr2::req_method("POST") |>
+    httr2::req_body_json(list(
       name = name,
       domains = as.list(domains),
       mode = mode,
       bot_fight_mode = bot_fight_mode,
       region = region
-    ),
-    token = token,
-    email = email,
-    api_key = api_key
-  )
+    )) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' Delete a Turnstile widget
@@ -158,9 +161,11 @@ cf_delete_turnstile_widget <- function(
   cf_check_id(sitekey)
   cf_request(
     c("accounts", account_id, "challenges", "widgets", sitekey),
-    method = "DELETE",
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_method("DELETE") |>
+    httr2::req_perform() |>
+    cf_resp()
 }

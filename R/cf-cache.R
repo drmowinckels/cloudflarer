@@ -69,10 +69,12 @@ cf_purge_cache <- function(
   }
   cf_request(
     c("zones", zone_id, "purge_cache"),
-    method = "POST",
-    body = body,
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_method("POST") |>
+    httr2::req_body_json(body) |>
+    httr2::req_perform() |>
+    cf_resp()
 }

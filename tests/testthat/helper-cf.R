@@ -47,3 +47,27 @@ local_no_auth <- function(envir = parent.frame()) {
     .local_envir = envir
   )
 }
+
+# Intercept httr2::req_perform so a wrapper builds a real request but
+# performs nothing. Returns an environment whose `$req` holds the
+# captured httr2 request; the mocked perform returns a canned success
+# envelope so cf_resp()/cf_collect() unwrap without hitting the network.
+local_captured_request <- function(
+  body = '{"success":true,"result":[],"result_info":{"total_pages":1}}',
+  envir = parent.frame()
+) {
+  captured <- new.env(parent = emptyenv())
+  testthat::local_mocked_bindings(
+    req_perform = function(req, ...) {
+      captured$req <- req
+      httr2::response(
+        status_code = 200,
+        headers = list("content-type" = "application/json"),
+        body = charToRaw(body)
+      )
+    },
+    .package = "httr2",
+    .env = envir
+  )
+  captured
+}

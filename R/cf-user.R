@@ -13,5 +13,7 @@
 #' cf_user()
 #' }
 cf_user <- function(token = NULL) {
-  cf_request("user", token = token)
+  cf_request("user", token = token) |>
+    httr2::req_perform() |>
+    cf_resp()
 }

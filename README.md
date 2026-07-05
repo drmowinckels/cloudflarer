@@ -1,4 +1,3 @@
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # cloudflarer
@@ -12,6 +11,7 @@ coverage](https://codecov.io/gh/drmowinckels/cloudflarer/graph/badge.svg)](https
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/cloudflarer)](https://CRAN.R-project.org/package=cloudflarer)
+
 <!-- badges: end -->
 
 cloudflarer is an R wrapper around the [Cloudflare REST API
@@ -26,13 +26,13 @@ not wrap yet.
 
 Install the released version from CRAN:
 
-``` r
+```r
 install.packages("cloudflarer")
 ```
 
 Or install the development version from GitHub:
 
-``` r
+```r
 # install.packages("pak")
 pak::pak("drmowinckels/cloudflarer")
 ```
@@ -58,7 +58,7 @@ Set whichever you prefer in `~/.Renviron`:
 
 Restart R and check the connection:
 
-``` r
+```r
 library(cloudflarer)
 cf_sitrep()
 ```
@@ -68,7 +68,7 @@ walkthrough.
 
 ## Usage
 
-``` r
+```r
 library(cloudflarer)
 
 cf_user()
@@ -81,30 +81,33 @@ cf_list_dns_records(zone_id = "abc123")
 
 Every endpoint in the [Cloudflare API
 reference](https://developers.cloudflare.com/api/) is reachable through
-the generic `cf_request()` helper. It handles authentication, unwraps
-the `{success, errors, result, ...}` envelope, and raises a classed
-`cloudflarer_error` for failures.
+the generic `cf_request()` helper, which builds an authenticated
+request. Pipe it through the `httr2` verbs you need, perform it, and
+unwrap the `{success, errors, result, ...}` envelope with `cf_resp()`
+(which raises a classed `cloudflarer_error` on failure).
 
-``` r
-cf_request("user/tokens/verify")
+```r
+cf_request("user/tokens/verify") |>
+  httr2::req_perform() |>
+  cf_resp()
 
-cf_request(
-  "zones/abc123/dns_records",
-  method = "POST",
-  body = list(
+cf_request("zones/abc123/dns_records") |>
+  httr2::req_method("POST") |>
+  httr2::req_body_json(list(
     type    = "A",
     name    = "www.example.com",
     content = "192.0.2.1",
     ttl     = 1,
     proxied = TRUE
-  )
-)
+  )) |>
+  httr2::req_perform() |>
+  cf_resp()
 ```
 
-For paginated list endpoints, use `cf_request_collect()`:
+For paginated list endpoints, pipe the request into `cf_collect()`:
 
-``` r
-cf_request_collect("accounts", per_page = 50)
+```r
+cf_request("accounts") |> cf_collect(per_page = 50)
 ```
 
 ## Code of Conduct

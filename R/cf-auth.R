@@ -147,22 +147,26 @@ cf_api_key <- function(api_key = NULL) {
 #' cf_verify()
 #' }
 cf_verify <- function(token = NULL, email = NULL, api_key = NULL) {
-  if (!is.null(token)) {
-    return(cf_request("user/tokens/verify", token = token))
+  req <- if (!is.null(token)) {
+    cf_request("user/tokens/verify", token = token)
+  } else if (!is.null(email) || !is.null(api_key)) {
+    cf_request("user", email = email, api_key = api_key)
+  } else if (isTRUE(cf_auth_mode() == "token")) {
+    cf_request("user/tokens/verify")
+  } else {
+    cf_request("user")
   }
-  if (!is.null(email) || !is.null(api_key)) {
-    return(cf_request("user", email = email, api_key = api_key))
-  }
-  if (isTRUE(cf_auth_mode() == "token")) {
-    return(cf_request("user/tokens/verify"))
-  }
-  cf_request("user")
+  req |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' @rdname cf_verify
 #' @export
 cf_token_verify <- function(token = NULL) {
-  cf_request("user/tokens/verify", token = token)
+  cf_request("user/tokens/verify", token = token) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 is_nonempty_string <- function(x) {

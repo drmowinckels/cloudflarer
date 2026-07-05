@@ -27,7 +27,9 @@ cf_get_email_routing_settings <- function(
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' List Email Routing rules for a zone
@@ -39,7 +41,7 @@ cf_get_email_routing_settings <- function(
 #' @param enabled_only Logical. When `TRUE`, asks the API to
 #'   return only enabled rules.
 #' @param per_page,max_pages Pagination controls, see
-#'   [cf_request_collect()].
+#'   [cf_collect()].
 #' @param as_df Logical. When `TRUE` (the default), returns a
 #'   data.frame via [cf_records_to_df()].
 #' @inheritParams cf_token
@@ -66,16 +68,14 @@ cf_list_email_routing_rules <- function(
 ) {
   cf_check_id(zone_id)
   cf_check_flag(enabled_only)
-  query <- if (enabled_only) list(enabled = "true") else NULL
-  records <- cf_request_collect(
+  records <- cf_request(
     c("zones", zone_id, "email", "routing", "rules"),
-    query = query,
-    per_page = per_page,
-    max_pages = max_pages,
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_url_query(enabled = if (enabled_only) "true" else NULL) |>
+    cf_collect(per_page = per_page, max_pages = max_pages)
   if (as_df) cf_records_to_df(records) else records
 }
 
@@ -115,15 +115,13 @@ cf_list_email_routing_addresses <- function(
 ) {
   cf_check_id(account_id)
   cf_check_flag(verified_only)
-  query <- if (verified_only) list(verified = "true") else NULL
-  records <- cf_request_collect(
+  records <- cf_request(
     c("accounts", account_id, "email", "routing", "addresses"),
-    query = query,
-    per_page = per_page,
-    max_pages = max_pages,
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_url_query(verified = if (verified_only) "true" else NULL) |>
+    cf_collect(per_page = per_page, max_pages = max_pages)
   if (as_df) cf_records_to_df(records) else records
 }

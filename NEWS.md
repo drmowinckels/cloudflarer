@@ -49,7 +49,15 @@
 
 ## Core
 
-- Core request helpers: `cf_req()`, `cf_request()`, `cf_request_collect()`.
+- Composable request layer built on `httr2`. `cf_request()` builds
+  an authenticated request for an endpoint and returns it; callers
+  pipe on the `httr2` verbs they need (`req_method()`,
+  `req_url_query()`, `req_body_json()`), perform it, and unwrap the
+  Cloudflare envelope with `cf_resp()`. `cf_collect()` walks a
+  paginated list endpoint from such a request. This lets users mix
+  the package's helpers with plain `httr2` to call anything the
+  package does not wrap, instead of routing everything through one
+  argument-heavy function.
 - Two-mode authentication: API token via `CLOUDFLARE_API_TOKEN`, or
   legacy Global API Key via `CLOUDFLARE_EMAIL` + `CLOUDFLARE_API_KEY`.
   The active mode is reported by `cf_auth_mode()`.

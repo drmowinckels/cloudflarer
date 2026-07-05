@@ -7,7 +7,7 @@
 #'
 #' @param zone_id Character. Cloudflare zone identifier.
 #' @param per_page,max_pages Pagination controls, see
-#'   [cf_request_collect()].
+#'   [cf_collect()].
 #' @param as_df Logical. When `TRUE` (the default), returns a
 #'   data.frame via [cf_records_to_df()]. Set to `FALSE` for the
 #'   raw nested list.
@@ -34,13 +34,12 @@ cf_list_firewall_rules <- function(
   api_key = NULL
 ) {
   cf_check_id(zone_id)
-  records <- cf_request_collect(
+  records <- cf_request(
     c("zones", zone_id, "firewall", "rules"),
-    per_page = per_page,
-    max_pages = max_pages,
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    cf_collect(per_page = per_page, max_pages = max_pages)
   if (as_df) cf_records_to_df(records) else records
 }

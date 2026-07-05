@@ -17,10 +17,10 @@ cf_list_accounts(
 \arguments{
 \item{name}{Optional name filter passed to the API.}
 
-\item{per_page}{Page size, see \code{\link[=cf_request_collect]{cf_request_collect()}}.}
+\item{per_page}{Page size, see \code{\link[=cf_collect]{cf_collect()}}.}
 
 \item{max_pages}{Maximum number of pages to retrieve, see
-\code{\link[=cf_request_collect]{cf_request_collect()}}.}
+\code{\link[=cf_collect]{cf_collect()}}.}
 
 \item{as_df}{Logical. When \code{TRUE} (the default), returns a
 data.frame via \code{\link[=cf_records_to_df]{cf_records_to_df()}}. Set to \code{FALSE} to get the

@@ -1,14 +1,11 @@
 describe("cf_user()", {
   it("calls the user endpoint", {
-    captured <- NULL
-    local_mocked_bindings(
-      cf_request = function(endpoint, ...) {
-        captured <<- endpoint
-        list(id = "user-1", email = "x@example.com")
-      }
+    cap <- local_captured_request(
+      body = '{"success":true,"result":{"id":"user-1","email":"x@example.com"}}'
     )
+    local_mock_auth()
     res <- cf_user()
-    expect_equal(captured, "user")
+    expect_match(cap$req$url, "/user$")
     expect_equal(res$id, "user-1")
   })
 })

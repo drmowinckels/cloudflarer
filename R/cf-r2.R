@@ -31,7 +31,9 @@ cf_list_r2_buckets <- function(
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
   records <- res$buckets %||% list()
   if (as_df) cf_records_to_df(records) else records
 }
@@ -65,5 +67,7 @@ cf_get_r2_bucket <- function(
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
 }

@@ -40,11 +40,17 @@ cf_list_page_rules <- function(
   cf_check_id(zone_id)
   records <- cf_request(
     c("zones", zone_id, "pagerules"),
-    query = list(status = status, order = order, direction = direction),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_url_query(
+      status = status,
+      order = order,
+      direction = direction
+    ) |>
+    httr2::req_perform() |>
+    cf_resp()
   if (as_df) cf_records_to_df(records) else records
 }
 
@@ -78,7 +84,9 @@ cf_get_page_rule <- function(
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' Create a Page Rule
@@ -131,17 +139,19 @@ cf_create_page_rule <- function(
   status <- match.arg(status)
   cf_request(
     c("zones", zone_id, "pagerules"),
-    method = "POST",
-    body = list(
+    token = token,
+    email = email,
+    api_key = api_key
+  ) |>
+    httr2::req_method("POST") |>
+    httr2::req_body_json(list(
       targets = targets,
       actions = actions,
       priority = priority,
       status = status
-    ),
-    token = token,
-    email = email,
-    api_key = api_key
-  )
+    )) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' Update a Page Rule
@@ -183,12 +193,14 @@ cf_update_page_rule <- function(
   ))
   cf_request(
     c("zones", zone_id, "pagerules", rule_id),
-    method = "PATCH",
-    body = body,
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_method("PATCH") |>
+    httr2::req_body_json(body) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' Delete a Page Rule
@@ -213,11 +225,13 @@ cf_delete_page_rule <- function(
   cf_check_id(rule_id)
   cf_request(
     c("zones", zone_id, "pagerules", rule_id),
-    method = "DELETE",
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_method("DELETE") |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' Build a Page Rule URL-match target

@@ -196,16 +196,18 @@ For anything cloudflarer does not wrap, drop down to the generics.
 They handle auth and the envelope; you handle the path.
 
 ```{r}
-# Any REST endpoint:
-cf_request("user/tokens/verify")
-cf_request(
-  "zones/abc/dns_records",
-  method = "POST",
-  body = list(type = "A", name = "x", content = "1.2.3.4")
-)
+# Any REST endpoint: build -> pipe httr2 verbs -> perform -> unwrap
+cf_request("user/tokens/verify") |>
+  httr2::req_perform() |>
+  cf_resp()
+cf_request("zones/abc/dns_records") |>
+  httr2::req_method("POST") |>
+  httr2::req_body_json(list(type = "A", name = "x", content = "1.2.3.4")) |>
+  httr2::req_perform() |>
+  cf_resp()
 
 # Paginated REST list (returns a raw list):
-cf_request_collect("accounts/abc/access/apps", per_page = 50)
+cf_request("accounts/abc/access/apps") |> cf_collect(per_page = 50)
 
 # Any GraphQL Analytics query:
 cf_graphql(

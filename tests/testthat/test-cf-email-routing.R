@@ -24,19 +24,12 @@ describe("cf_list_email_routing_rules()", {
   })
 
   it("forwards enabled_only as a query parameter", {
-    captured <- NULL
-    local_mocked_bindings(
-      cf_request_collect = function(endpoint, query, ...) {
-        captured <<- list(endpoint = endpoint, query = query)
-        list()
-      }
-    )
+    cap <- local_captured_request()
+    local_mock_auth()
     cf_list_email_routing_rules("zone-1", enabled_only = TRUE)
-    expect_equal(
-      captured$endpoint,
-      c("zones", "zone-1", "email", "routing", "rules")
-    )
-    expect_equal(captured$query$enabled, "true")
+    expect_match(cap$req$url, "zones/zone-1/email/routing/rules")
+    query <- httr2::url_parse(cap$req$url)$query
+    expect_equal(query$enabled, "true")
   })
 
   it("rejects a non-logical enabled_only with a named message", {
@@ -68,15 +61,11 @@ describe("cf_list_email_routing_addresses()", {
   })
 
   it("forwards verified_only as a query parameter", {
-    captured <- NULL
-    local_mocked_bindings(
-      cf_request_collect = function(endpoint, query, ...) {
-        captured <<- list(endpoint = endpoint, query = query)
-        list()
-      }
-    )
+    cap <- local_captured_request()
+    local_mock_auth()
     cf_list_email_routing_addresses("acc-1", verified_only = TRUE)
-    expect_equal(captured$query$verified, "true")
+    query <- httr2::url_parse(cap$req$url)$query
+    expect_equal(query$verified, "true")
   })
 
   it("rejects a non-logical verified_only with a named message", {
