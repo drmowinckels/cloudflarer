@@ -10,12 +10,15 @@ vignette: >
 ```{r}
 #| label: setup
 #| include: false
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  eval = FALSE
-)
 library(cloudflarer)
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-vignette")
+vcr::vcr_configure(
+  dir = "_vcr",
+  match_requests_on = c("method", "uri"),
+  filter_request_headers = "Authorization"
+)
+vcr::setup_knitr(prefix = "")
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
 cloudflarer wraps the Cloudflare v4 REST API. Most users will reach
@@ -44,6 +47,7 @@ The Global API Key (legacy) also works through
 Verify the connection:
 
 ```{r}
+#| cassette: intro-sitrep
 library(cloudflarer)
 cf_sitrep()
 ```
@@ -51,6 +55,7 @@ cf_sitrep()
 ## Discovering what you can reach
 
 ```{r}
+#| cassette: intro-discover
 cf_user()
 
 cf_list_accounts()
@@ -61,6 +66,7 @@ Both helpers walk every page of results automatically. Pass
 `max_pages` to stop early while exploring:
 
 ```{r}
+#| cassette: intro-zones-page
 cf_list_zones(max_pages = 1)
 ```
 
@@ -71,6 +77,7 @@ cf_list_zones(max_pages = 1)
 `cf_delete_dns_record()` cover the CRUD lifecycle:
 
 ```{r}
+#| cassette: intro-dns
 zones <- cf_list_zones()
 zone_id <- zones$id[1]
 
@@ -95,6 +102,7 @@ cf_delete_dns_record(zone_id, "rec-1")
 Targeted purges are preferred over wipes:
 
 ```{r}
+#| cassette: intro-purge
 cf_purge_cache(zone_id, files = c(
   "https://example.com/index.html",
   "https://example.com/style.css"
@@ -107,6 +115,7 @@ cf_purge_cache(zone_id, purge_everything = TRUE)
 ## Zone settings
 
 ```{r}
+#| cassette: intro-settings
 settings <- cf_get_zone_settings(zone_id)
 settings[settings$id %in% c("ssl", "cache_level", "security_level"),
          c("id", "value")]
@@ -124,6 +133,7 @@ request for a path relative to `/client/v4`. Pipe it through the
 with `cf_resp()`:
 
 ```{r}
+#| cassette: intro-generic
 cf_request("user/tokens/verify") |>
   httr2::req_perform() |>
   cf_resp()
@@ -144,6 +154,7 @@ For paginated list endpoints, pipe the request into `cf_collect()`
 to get the raw list, then tidy it with `cf_records_to_df()`:
 
 ```{r}
+#| cassette: intro-collect
 records <- cf_request("accounts/abc123/access/apps") |>
   cf_collect(per_page = 50)
 cf_records_to_df(records)
@@ -156,6 +167,7 @@ Both HTTP-level failures and Cloudflare envelope failures
 so you can catch them with `tryCatch()`:
 
 ```{r}
+#| cassette: intro-error
 tryCatch(
   cf_get_zone("does-not-exist"),
   cloudflarer_error = function(err) {
