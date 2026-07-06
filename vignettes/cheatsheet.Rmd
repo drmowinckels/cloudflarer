@@ -10,15 +10,7 @@ vignette: >
 ```{r}
 #| label: setup
 #| include: false
-library(cloudflarer)
-Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-vignette")
-vcr::vcr_configure(
-  dir = "_vcr",
-  match_requests_on = c("method", "uri"),
-  filter_request_headers = "Authorization"
-)
-vcr::setup_knitr(prefix = "")
-knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+source("_vcr-setup.R")
 ```
 
 One-page reference of the most-used cloudflarer calls. Every list
