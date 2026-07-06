@@ -1,0 +1,23 @@
+http_interactions:
+  - request: {method: GET, uri: 'https://api.cloudflare.com/client/v4/accounts/abc123/rum/site_info/list?per_page=50&page=1'}
+    response:
+      status: 200
+      headers: {content-type: application/json}
+      body:
+        string: '{"success":true,"errors":[],"messages":[],"result":[{"site_tag":"site-1","host":"example.com"}],"result_info":{"page":1,"per_page":50,"count":1,"total_count":1,"total_pages":1}}'
+    recorded_at: 2026-05-20 18:07:49
+  - request: {method: POST, uri: 'https://api.cloudflare.com/client/v4/graphql'}
+    response:
+      status: 200
+      headers: {content-type: application/json}
+      body:
+        string: '{"data":{"viewer":{"accounts":[{"rumPageloadEventsAdaptiveGroups":[{"count":500,"dimensions":{"date":"2026-05-01"}}]}]}}}'
+    recorded_at: 2026-05-20 18:07:49
+  - request: {method: POST, uri: 'https://api.cloudflare.com/client/v4/graphql'}
+    response:
+      status: 200
+      headers: {content-type: application/json}
+      body:
+        string: '{"data":{"viewer":{"accounts":[{"rumPageloadEventsAdaptiveGroups":[{"count":300,"dimensions":{"countryName":"United States"}}]}]}}}'
+    recorded_at: 2026-05-20 18:07:49
+recorded_with: VCR-vcr/2.1.0

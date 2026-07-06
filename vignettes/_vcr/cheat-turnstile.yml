@@ -1,0 +1,16 @@
+http_interactions:
+  - request: {method: GET, uri: 'https://api.cloudflare.com/client/v4/accounts/abc123/challenges/widgets?per_page=25&page=1'}
+    response:
+      status: 200
+      headers: {content-type: application/json}
+      body:
+        string: '{"success":true,"errors":[],"messages":[],"result":[{"sitekey":"0x4AAAAAAA1","name":"comment-form","mode":"managed"}],"result_info":{"page":1,"per_page":25,"count":1,"total_count":1,"total_pages":1}}'
+    recorded_at: 2026-05-20 18:07:49
+  - request: {method: POST, uri: 'https://api.cloudflare.com/client/v4/accounts/abc123/challenges/widgets'}
+    response:
+      status: 200
+      headers: {content-type: application/json}
+      body:
+        string: '{"success":true,"errors":[],"messages":[],"result":{"sitekey":"0x4AAAAAAAnew","secret":"0x4AAAAAAAsec","name":"comment-form"}}'
+    recorded_at: 2026-05-20 18:07:49
+recorded_with: VCR-vcr/2.1.0

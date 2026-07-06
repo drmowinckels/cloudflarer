@@ -1,0 +1,30 @@
+http_interactions:
+  - request: {method: GET, uri: 'https://api.cloudflare.com/client/v4/accounts/abc123/pages/projects'}
+    response:
+      status: 200
+      headers: {content-type: application/json}
+      body:
+        string: '{"success":true,"errors":[],"messages":[],"result":[{"id":"proj-1","name":"my-project"}]}'
+    recorded_at: 2026-05-20 18:07:49
+  - request: {method: GET, uri: 'https://api.cloudflare.com/client/v4/accounts/abc123/pages/projects/my-project/deployments?per_page=25&page=1'}
+    response:
+      status: 200
+      headers: {content-type: application/json}
+      body:
+        string: '{"success":true,"errors":[],"messages":[],"result":[{"id":"dep-1","environment":"production"}],"result_info":{"page":1,"per_page":25,"count":1,"total_count":1,"total_pages":1}}'
+    recorded_at: 2026-05-20 18:07:49
+  - request: {method: GET, uri: 'https://api.cloudflare.com/client/v4/accounts/abc123/r2/buckets'}
+    response:
+      status: 200
+      headers: {content-type: application/json}
+      body:
+        string: '{"success":true,"errors":[],"messages":[],"result":{"buckets":[{"name":"assets-prod","location":"WEUR"}]}}'
+    recorded_at: 2026-05-20 18:07:49
+  - request: {method: GET, uri: 'https://api.cloudflare.com/client/v4/accounts/abc123/cfd_tunnel?is_deleted=false&per_page=50&page=1'}
+    response:
+      status: 200
+      headers: {content-type: application/json}
+      body:
+        string: '{"success":true,"errors":[],"messages":[],"result":[{"id":"tun-1","name":"prod"}],"result_info":{"page":1,"per_page":50,"count":1,"total_count":1,"total_pages":1}}'
+    recorded_at: 2026-05-20 18:07:49
+recorded_with: VCR-vcr/2.1.0

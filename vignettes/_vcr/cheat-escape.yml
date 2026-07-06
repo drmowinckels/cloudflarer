@@ -1,0 +1,30 @@
+http_interactions:
+  - request: {method: GET, uri: 'https://api.cloudflare.com/client/v4/user/tokens/verify'}
+    response:
+      status: 200
+      headers: {content-type: application/json}
+      body:
+        string: '{"success":true,"errors":[],"messages":[],"result":{"id":"tok-1","status":"active"}}'
+    recorded_at: 2026-05-20 18:07:49
+  - request: {method: POST, uri: 'https://api.cloudflare.com/client/v4/zones/abc/dns_records'}
+    response:
+      status: 200
+      headers: {content-type: application/json}
+      body:
+        string: '{"success":true,"errors":[],"messages":[],"result":{"id":"rec-new","type":"A","name":"x","content":"1.2.3.4"}}'
+    recorded_at: 2026-05-20 18:07:49
+  - request: {method: GET, uri: 'https://api.cloudflare.com/client/v4/accounts/abc/access/apps?per_page=50&page=1'}
+    response:
+      status: 200
+      headers: {content-type: application/json}
+      body:
+        string: '{"success":true,"errors":[],"messages":[],"result":[{"id":"app-1","name":"Dashboard"}],"result_info":{"page":1,"per_page":50,"count":1,"total_count":1,"total_pages":1}}'
+    recorded_at: 2026-05-20 18:07:49
+  - request: {method: POST, uri: 'https://api.cloudflare.com/client/v4/graphql'}
+    response:
+      status: 200
+      headers: {content-type: application/json}
+      body:
+        string: '{"data":{"viewer":{"zones":[{"httpRequests1dGroups":[{"dimensions":{"date":"2026-05-14"},"sum":{"requests":1000}}]}]}}}'
+    recorded_at: 2026-05-20 18:07:49
+recorded_with: VCR-vcr/2.1.0

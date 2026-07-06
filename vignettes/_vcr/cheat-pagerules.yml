@@ -1,0 +1,30 @@
+http_interactions:
+  - request: {method: GET, uri: 'https://api.cloudflare.com/client/v4/zones/abc123/pagerules'}
+    response:
+      status: 200
+      headers: {content-type: application/json}
+      body:
+        string: '{"success":true,"errors":[],"messages":[],"result":[{"id":"rule-1","status":"active","targets":[],"actions":[]}]}'
+    recorded_at: 2026-05-20 18:07:49
+  - request: {method: POST, uri: 'https://api.cloudflare.com/client/v4/zones/abc123/pagerules'}
+    response:
+      status: 200
+      headers: {content-type: application/json}
+      body:
+        string: '{"success":true,"errors":[],"messages":[],"result":{"id":"rule-new","status":"active"}}'
+    recorded_at: 2026-05-20 18:07:49
+  - request: {method: PATCH, uri: 'https://api.cloudflare.com/client/v4/zones/abc123/pagerules/rule-1'}
+    response:
+      status: 200
+      headers: {content-type: application/json}
+      body:
+        string: '{"success":true,"errors":[],"messages":[],"result":{"id":"rule-1","status":"disabled"}}'
+    recorded_at: 2026-05-20 18:07:49
+  - request: {method: DELETE, uri: 'https://api.cloudflare.com/client/v4/zones/abc123/pagerules/rule-1'}
+    response:
+      status: 200
+      headers: {content-type: application/json}
+      body:
+        string: '{"success":true,"errors":[],"messages":[],"result":{"id":"rule-1"}}'
+    recorded_at: 2026-05-20 18:07:49
+recorded_with: VCR-vcr/2.1.0
