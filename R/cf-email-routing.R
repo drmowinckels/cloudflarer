@@ -11,10 +11,16 @@
 #' @return A named list with the routing settings.
 #' @export
 #' @family email
-#' @examples
-#' \dontrun{
-#' cf_get_email_routing_settings("abc123")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette(
+#'   "cf_get_email_routing_settings",
+#'   package = "cloudflarer"
+#' )
 #' }
+#' cf_get_email_routing_settings("abc123")
+#' \dontshow{vcr::eject_cassette()}
 cf_get_email_routing_settings <- function(
   zone_id,
   token = NULL,
@@ -52,10 +58,16 @@ cf_get_email_routing_settings <- function(
 #'   `as_df = FALSE`).
 #' @export
 #' @family email
-#' @examples
-#' \dontrun{
-#' cf_list_email_routing_rules("abc123")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette(
+#'   "cf_list_email_routing_rules",
+#'   package = "cloudflarer"
+#' )
 #' }
+#' cf_list_email_routing_rules("abc123")
+#' \dontshow{vcr::eject_cassette()}
 cf_list_email_routing_rules <- function(
   zone_id,
   enabled_only = FALSE,
@@ -99,10 +111,16 @@ cf_list_email_routing_rules <- function(
 #'   `as_df = FALSE`).
 #' @export
 #' @family email
-#' @examples
-#' \dontrun{
-#' cf_list_email_routing_addresses("abc123")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette(
+#'   "cf_list_email_routing_addresses",
+#'   package = "cloudflarer"
+#' )
 #' }
+#' cf_list_email_routing_addresses("abc123")
+#' \dontshow{vcr::eject_cassette()}
 cf_list_email_routing_addresses <- function(
   account_id,
   verified_only = FALSE,

@@ -39,7 +39,15 @@ package builds on, and the entry point for calling any endpoint
 that does not yet have one.
 }
 \examples{
-\dontrun{
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette(
+  "cf_request",
+  package = "cloudflarer",
+  match_requests_on = c("method", "uri")
+)
+}
 cf_request("user/tokens/verify") |>
   httr2::req_perform() |>
   cf_resp()
@@ -55,7 +63,8 @@ cf_request(c("zones", "abc123", "dns_records")) |>
 cf_request("zones") |>
   httr2::req_url_query(status = "active") |>
   cf_collect(per_page = 50)
-}
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other requests: 

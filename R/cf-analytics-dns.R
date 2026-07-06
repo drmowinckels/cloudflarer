@@ -13,14 +13,21 @@
 #'   (int).
 #' @export
 #' @family analytics
-#' @examples
-#' \dontrun{
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette(
+#'   "cf_dns_queries",
+#'   package = "cloudflarer",
+#'   match_requests_on = c("method", "uri")
+#' )
+#' }
 #' cf_dns_queries(
 #'   "abc123",
 #'   since = Sys.Date() - 7,
 #'   until = Sys.Date()
 #' )
-#' }
+#' \dontshow{vcr::eject_cassette()}
 cf_dns_queries <- function(
   zone_id,
   since,

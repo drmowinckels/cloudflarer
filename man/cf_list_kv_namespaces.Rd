@@ -42,9 +42,14 @@ A data.frame of KV namespace records (or list when
 Returns the KV namespaces in the supplied account.
 }
 \examples{
-\dontrun{
-cf_list_kv_namespaces("abc123")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette("cf_list_kv_namespaces", package = "cloudflarer")
 }
+cf_list_kv_namespaces("abc123")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other workers: 

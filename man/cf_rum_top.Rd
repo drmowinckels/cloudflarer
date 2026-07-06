@@ -53,7 +53,15 @@ dimension (country, path, referer, browser, OS, device type,
 ...) and returns the top entries by count.
 }
 \examples{
-\dontrun{
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette(
+  "cf_rum_top",
+  package = "cloudflarer",
+  match_requests_on = c("method", "uri")
+)
+}
 cf_rum_top(
   "acc-1",
   site_tag = "abc",
@@ -62,7 +70,8 @@ cf_rum_top(
   dimension = "countryName",
   limit = 10
 )
-}
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other analytics: 

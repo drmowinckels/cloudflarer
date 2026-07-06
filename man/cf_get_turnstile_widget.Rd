@@ -34,9 +34,14 @@ A named list describing the widget.
 Get a single Turnstile widget
 }
 \examples{
-\dontrun{
-cf_get_turnstile_widget("abc123", "0x4AAA...")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette("cf_get_turnstile_widget", package = "cloudflarer")
 }
+cf_get_turnstile_widget("abc123", "0x4AAA...")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other turnstile: 

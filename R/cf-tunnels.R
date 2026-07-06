@@ -18,10 +18,13 @@
 #'   `as_df = FALSE`).
 #' @export
 #' @family tunnels
-#' @examples
-#' \dontrun{
-#' cf_list_tunnels("abc123")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_list_tunnels", package = "cloudflarer")
 #' }
+#' cf_list_tunnels("abc123")
+#' \dontshow{vcr::eject_cassette()}
 cf_list_tunnels <- function(
   account_id,
   is_deleted = FALSE,
@@ -55,10 +58,13 @@ cf_list_tunnels <- function(
 #' @return A named list describing the tunnel.
 #' @export
 #' @family tunnels
-#' @examples
-#' \dontrun{
-#' cf_get_tunnel("abc123", "tunnel-1")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_get_tunnel", package = "cloudflarer")
 #' }
+#' cf_get_tunnel("abc123", "tunnel-1")
+#' \dontshow{vcr::eject_cassette()}
 cf_get_tunnel <- function(
   account_id,
   tunnel_id,
@@ -94,10 +100,13 @@ cf_get_tunnel <- function(
 #'   `as_df = FALSE`).
 #' @export
 #' @family tunnels
-#' @examples
-#' \dontrun{
-#' cf_list_tunnel_connections("abc123", "tunnel-1")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_list_tunnel_connections", package = "cloudflarer")
 #' }
+#' cf_list_tunnel_connections("abc123", "tunnel-1")
+#' \dontshow{vcr::eject_cassette()}
 cf_list_tunnel_connections <- function(
   account_id,
   tunnel_id,

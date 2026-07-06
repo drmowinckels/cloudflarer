@@ -49,13 +49,22 @@ Requires an API token with \verb{Account Analytics: Read} (or the
 legacy Global API Key).
 }
 \examples{
-\dontrun{
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette(
+  "cf_workers_invocations",
+  package = "cloudflarer",
+  match_requests_on = c("method", "uri")
+)
+}
 cf_workers_invocations(
-  account_id,
+  "acc-1",
   since = Sys.Date() - 7,
   until = Sys.Date()
 )
-}
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other analytics: 

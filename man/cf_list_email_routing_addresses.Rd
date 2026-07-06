@@ -46,9 +46,17 @@ zone-scoped, because the same destination can be used across
 multiple routed zones.
 }
 \examples{
-\dontrun{
-cf_list_email_routing_addresses("abc123")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette(
+  "cf_list_email_routing_addresses",
+  package = "cloudflarer"
+)
 }
+cf_list_email_routing_addresses("abc123")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other email: 

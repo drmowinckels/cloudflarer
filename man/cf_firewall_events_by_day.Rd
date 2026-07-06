@@ -55,13 +55,22 @@ Key.
 Either condition unmet produces a \verb{zone ... does not have access to the path} error.
 }
 \examples{
-\dontrun{
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette(
+  "cf_firewall_events_by_day",
+  package = "cloudflarer",
+  match_requests_on = c("method", "uri")
+)
+}
 cf_firewall_events_by_day(
   "abc123",
   since = Sys.Date() - 30,
   until = Sys.Date()
 )
-}
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other analytics: 

@@ -116,8 +116,15 @@ cf_req_auth <- function(req, token = NULL, email = NULL, api_key = NULL) {
 #'
 #' @export
 #' @family requests
-#' @examples
-#' \dontrun{
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette(
+#'   "cf_request",
+#'   package = "cloudflarer",
+#'   match_requests_on = c("method", "uri")
+#' )
+#' }
 #' cf_request("user/tokens/verify") |>
 #'   httr2::req_perform() |>
 #'   cf_resp()
@@ -133,7 +140,7 @@ cf_req_auth <- function(req, token = NULL, email = NULL, api_key = NULL) {
 #' cf_request("zones") |>
 #'   httr2::req_url_query(status = "active") |>
 #'   cf_collect(per_page = 50)
-#' }
+#' \dontshow{vcr::eject_cassette()}
 cf_request <- function(endpoint, token = NULL, email = NULL, api_key = NULL) {
   cf_req(token = token, email = email, api_key = api_key) |>
     cf_req_path(endpoint)
@@ -164,12 +171,15 @@ cf_request <- function(endpoint, token = NULL, email = NULL, api_key = NULL) {
 #'
 #' @export
 #' @family requests
-#' @examples
-#' \dontrun{
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_resp", package = "cloudflarer")
+#' }
 #' cf_request("user") |>
 #'   httr2::req_perform() |>
 #'   cf_resp()
-#' }
+#' \dontshow{vcr::eject_cassette()}
 cf_resp <- function(resp) {
   cf_resp_envelope(resp)[["result"]]
 }
@@ -193,10 +203,13 @@ cf_resp <- function(resp) {
 #' @return A list of records.
 #' @export
 #' @family requests
-#' @examples
-#' \dontrun{
-#' cf_request("zones") |> cf_collect(per_page = 50)
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_collect", package = "cloudflarer")
 #' }
+#' cf_request("zones") |> cf_collect(per_page = 50)
+#' \dontshow{vcr::eject_cassette()}
 cf_collect <- function(req, per_page = 50, max_pages = Inf, ...) {
   results <- list()
   page <- 1L

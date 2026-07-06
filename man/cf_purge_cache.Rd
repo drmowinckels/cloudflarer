@@ -59,13 +59,22 @@ wipes can briefly increase origin load. Cloudflare also rate
 limits the wipe endpoint per zone.
 }
 \examples{
-\dontrun{
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette(
+  "cf_purge_cache",
+  package = "cloudflarer",
+  match_requests_on = c("method", "uri")
+)
+}
 cf_purge_cache("abc123", files = c(
   "https://example.com/index.html",
   "https://example.com/style.css"
 ))
 
 cf_purge_cache("abc123", purge_everything = TRUE)
-}
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \concept{cache}

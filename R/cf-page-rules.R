@@ -23,10 +23,13 @@
 #'   nested objects.
 #' @export
 #' @family zones
-#' @examples
-#' \dontrun{
-#' cf_list_page_rules("abc123")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_list_page_rules", package = "cloudflarer")
 #' }
+#' cf_list_page_rules("abc123")
+#' \dontshow{vcr::eject_cassette()}
 cf_list_page_rules <- function(
   zone_id,
   status = NULL,
@@ -66,10 +69,13 @@ cf_list_page_rules <- function(
 #'   `targets` and `actions`.
 #' @export
 #' @family zones
-#' @examples
-#' \dontrun{
-#' cf_get_page_rule("abc123", "rule-1")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_get_page_rule", package = "cloudflarer")
 #' }
+#' cf_get_page_rule("abc123", "rule-1")
+#' \dontshow{vcr::eject_cassette()}
 cf_get_page_rule <- function(
   zone_id,
   rule_id,
@@ -112,10 +118,17 @@ cf_get_page_rule <- function(
 #' @return A named list describing the created rule.
 #' @export
 #' @family zones
-#' @examples
-#' \dontrun{
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette(
+#'   "cf_create_page_rule",
+#'   package = "cloudflarer",
+#'   match_requests_on = c("method", "uri")
+#' )
+#' }
 #' cf_create_page_rule(
-#'   zone_id,
+#'   "abc123",
 #'   targets = list(
 #'     cf_page_rule_target("*example.com/blog/*")
 #'   ),
@@ -124,7 +137,7 @@ cf_get_page_rule <- function(
 #'     cf_page_rule_action("edge_cache_ttl", 7200)
 #'   )
 #' )
-#' }
+#' \dontshow{vcr::eject_cassette()}
 cf_create_page_rule <- function(
   zone_id,
   targets,
@@ -165,10 +178,17 @@ cf_create_page_rule <- function(
 #' @return A named list describing the updated rule.
 #' @export
 #' @family zones
-#' @examples
-#' \dontrun{
-#' cf_update_page_rule(zone_id, "rule-1", status = "disabled")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette(
+#'   "cf_update_page_rule",
+#'   package = "cloudflarer",
+#'   match_requests_on = c("method", "uri")
+#' )
 #' }
+#' cf_update_page_rule("abc123", "rule-1", status = "disabled")
+#' \dontshow{vcr::eject_cassette()}
 cf_update_page_rule <- function(
   zone_id,
   rule_id,
@@ -210,10 +230,13 @@ cf_update_page_rule <- function(
 #' @return A named list with the deleted rule's `id`.
 #' @export
 #' @family zones
-#' @examples
-#' \dontrun{
-#' cf_delete_page_rule(zone_id, "rule-1")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_delete_page_rule", package = "cloudflarer")
 #' }
+#' cf_delete_page_rule("abc123", "rule-1")
+#' \dontshow{vcr::eject_cassette()}
 cf_delete_page_rule <- function(
   zone_id,
   rule_id,

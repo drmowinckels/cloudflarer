@@ -17,10 +17,13 @@
 #'   `as_df = FALSE`).
 #' @export
 #' @family pages
-#' @examples
-#' \dontrun{
-#' cf_list_pages_projects("abc123")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_list_pages_projects", package = "cloudflarer")
 #' }
+#' cf_list_pages_projects("abc123")
+#' \dontshow{vcr::eject_cassette()}
 cf_list_pages_projects <- function(
   account_id,
   as_df = TRUE,
@@ -52,10 +55,13 @@ cf_list_pages_projects <- function(
 #'   config, domains, and the latest deployment.
 #' @export
 #' @family pages
-#' @examples
-#' \dontrun{
-#' cf_get_pages_project("abc123", "my-site")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_get_pages_project", package = "cloudflarer")
 #' }
+#' cf_get_pages_project("abc123", "my-site")
+#' \dontshow{vcr::eject_cassette()}
 cf_get_pages_project <- function(
   account_id,
   project_name,
@@ -92,10 +98,13 @@ cf_get_pages_project <- function(
 #'   `as_df = FALSE`).
 #' @export
 #' @family pages
-#' @examples
-#' \dontrun{
-#' cf_list_pages_deployments("abc123", "my-site")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_list_pages_deployments", package = "cloudflarer")
 #' }
+#' cf_list_pages_deployments("abc123", "my-site")
+#' \dontshow{vcr::eject_cassette()}
 cf_list_pages_deployments <- function(
   account_id,
   project_name,

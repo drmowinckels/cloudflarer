@@ -14,10 +14,13 @@
 #'   `as_df = FALSE`).
 #' @export
 #' @family r2
-#' @examples
-#' \dontrun{
-#' cf_list_r2_buckets("abc123")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_list_r2_buckets", package = "cloudflarer")
 #' }
+#' cf_list_r2_buckets("abc123")
+#' \dontshow{vcr::eject_cassette()}
 cf_list_r2_buckets <- function(
   account_id,
   as_df = TRUE,
@@ -49,10 +52,13 @@ cf_list_r2_buckets <- function(
 #' @return A named list describing the bucket.
 #' @export
 #' @family r2
-#' @examples
-#' \dontrun{
-#' cf_get_r2_bucket("abc123", "my-bucket")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_get_r2_bucket", package = "cloudflarer")
 #' }
+#' cf_get_r2_bucket("abc123", "my-bucket")
+#' \dontshow{vcr::eject_cassette()}
 cf_get_r2_bucket <- function(
   account_id,
   bucket_name,

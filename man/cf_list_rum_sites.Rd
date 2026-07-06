@@ -49,9 +49,14 @@ includes the beacon snippet, whether or not the site is proxied
 through Cloudflare.
 }
 \examples{
-\dontrun{
-cf_list_rum_sites("acc-1")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette("cf_list_rum_sites", package = "cloudflarer")
 }
+cf_list_rum_sites("acc-1")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other analytics: 

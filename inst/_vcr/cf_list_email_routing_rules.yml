@@ -1,0 +1,16 @@
+http_interactions:
+  - request:
+      method: GET
+      uri: https://api.cloudflare.com/client/v4/zones/abc123/email/routing/rules?per_page=50&page=1
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {"success": true, "errors": [], "messages": [],
+           "result": [{"id": "rule-1", "name": "catch-all", "enabled": true},
+                      {"id": "rule-2", "name": "support", "enabled": false}],
+           "result_info": {"page": 1, "per_page": 50, "count": 2, "total_count": 2, "total_pages": 1}}
+    recorded_at: 2026-05-20 18:07:49
+recorded_with: VCR-vcr/2.1.0

@@ -16,7 +16,14 @@ credentials successfully authenticate against the Cloudflare API.
 Use this as a first stop when debugging configuration issues.
 }
 \examples{
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette("cf_sitrep", package = "cloudflarer")
+}
 cf_sitrep()
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other authentication: 

@@ -28,14 +28,21 @@
 #'   (int).
 #' @export
 #' @family analytics
-#' @examples
-#' \dontrun{
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette(
+#'   "cf_firewall_events_by_day",
+#'   package = "cloudflarer",
+#'   match_requests_on = c("method", "uri")
+#' )
+#' }
 #' cf_firewall_events_by_day(
 #'   "abc123",
 #'   since = Sys.Date() - 30,
 #'   until = Sys.Date()
 #' )
-#' }
+#' \dontshow{vcr::eject_cassette()}
 cf_firewall_events_by_day <- function(
   zone_id,
   since,
@@ -106,8 +113,15 @@ cf_firewall_events_by_day <- function(
 #'   `dimension` and `events` (the event count).
 #' @export
 #' @family analytics
-#' @examples
-#' \dontrun{
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette(
+#'   "cf_firewall_events_top",
+#'   package = "cloudflarer",
+#'   match_requests_on = c("method", "uri")
+#' )
+#' }
 #' cf_firewall_events_top(
 #'   "abc123",
 #'   since = Sys.Date() - 7,
@@ -115,7 +129,7 @@ cf_firewall_events_by_day <- function(
 #'   dimension = "action",
 #'   limit = 10
 #' )
-#' }
+#' \dontshow{vcr::eject_cassette()}
 cf_firewall_events_top <- function(
   zone_id,
   since,

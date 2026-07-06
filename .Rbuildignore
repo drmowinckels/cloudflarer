@@ -13,6 +13,6 @@
 ^\.lintr$
 ^\.vscode$
 ^\.claude$
-^\.impeccable$
+\.impeccable
 ^tools$
 ^tests/spelling\.R$

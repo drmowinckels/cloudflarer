@@ -48,14 +48,23 @@ Convenience wrapper around the GraphQL
 (\code{date_DAY}) dimension. Returns a tidy data.frame.
 }
 \examples{
-\dontrun{
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette(
+  "cf_rum_page_views",
+  package = "cloudflarer",
+  match_requests_on = c("method", "uri")
+)
+}
 cf_rum_page_views(
   "acc-1",
   site_tag = "abc",
   since = Sys.Date() - 30,
   until = Sys.Date()
 )
-}
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other analytics: 

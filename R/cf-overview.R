@@ -35,12 +35,22 @@
 #'
 #' @export
 #' @family analytics
-#' @examples
-#' \dontrun{
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' zone_id <- "abc123"
+#' account_id <- "acc-1"
+#' site_tag <- "abc"
+#' vcr::insert_example_cassette(
+#'   "cf_zone_overview",
+#'   package = "cloudflarer",
+#'   match_requests_on = c("method", "uri")
+#' )
+#' }
 #' ov <- cf_zone_overview(zone_id, account_id = account_id, site_tag = site_tag)
 #' ov$traffic
 #' ov$summary
-#' }
+#' \dontshow{vcr::eject_cassette()}
 cf_zone_overview <- function(
   zone_id,
   since = Sys.Date() - 7,

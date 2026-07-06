@@ -52,9 +52,14 @@ Returns the Page Rules configured for a zone (URL-pattern based
 overrides for cache, SSL, security, redirects, etc.).
 }
 \examples{
-\dontrun{
-cf_list_page_rules("abc123")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette("cf_list_page_rules", package = "cloudflarer")
 }
+cf_list_page_rules("abc123")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other zones: 

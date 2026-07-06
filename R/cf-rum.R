@@ -21,10 +21,13 @@
 #'   `as_df = FALSE`).
 #' @export
 #' @family analytics
-#' @examples
-#' \dontrun{
-#' cf_list_rum_sites("acc-1")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_list_rum_sites", package = "cloudflarer")
 #' }
+#' cf_list_rum_sites("acc-1")
+#' \dontshow{vcr::eject_cassette()}
 cf_list_rum_sites <- function(
   account_id,
   order_by = NULL,
@@ -59,10 +62,13 @@ cf_list_rum_sites <- function(
 #' @return A named list describing the site.
 #' @export
 #' @family analytics
-#' @examples
-#' \dontrun{
-#' cf_get_rum_site("acc-1", "abc-tag")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_get_rum_site", package = "cloudflarer")
 #' }
+#' cf_get_rum_site("acc-1", "abc-tag")
+#' \dontshow{vcr::eject_cassette()}
 cf_get_rum_site <- function(
   account_id,
   site_tag,

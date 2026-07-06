@@ -14,10 +14,13 @@
 #'   `as_df = FALSE`).
 #' @export
 #' @family workers
-#' @examples
-#' \dontrun{
-#' cf_list_workers_scripts("abc123")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_list_workers_scripts", package = "cloudflarer")
 #' }
+#' cf_list_workers_scripts("abc123")
+#' \dontshow{vcr::eject_cassette()}
 cf_list_workers_scripts <- function(
   account_id,
   as_df = TRUE,
@@ -52,10 +55,13 @@ cf_list_workers_scripts <- function(
 #' @return A named list with the script metadata.
 #' @export
 #' @family workers
-#' @examples
-#' \dontrun{
-#' cf_get_workers_script("abc123", "my-worker")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_get_workers_script", package = "cloudflarer")
 #' }
+#' cf_get_workers_script("abc123", "my-worker")
+#' \dontshow{vcr::eject_cassette()}
 cf_get_workers_script <- function(
   account_id,
   script_name,
@@ -98,14 +104,21 @@ cf_get_workers_script <- function(
 #' @export
 #' @family analytics
 #' @family workers
-#' @examples
-#' \dontrun{
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette(
+#'   "cf_workers_invocations",
+#'   package = "cloudflarer",
+#'   match_requests_on = c("method", "uri")
+#' )
+#' }
 #' cf_workers_invocations(
-#'   account_id,
+#'   "acc-1",
 #'   since = Sys.Date() - 7,
 #'   until = Sys.Date()
 #' )
-#' }
+#' \dontshow{vcr::eject_cassette()}
 cf_workers_invocations <- function(
   account_id,
   since,

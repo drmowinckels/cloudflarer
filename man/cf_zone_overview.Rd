@@ -65,11 +65,23 @@ empty data) yields \code{NULL} for that component instead of
 aborting the whole overview.
 }
 \examples{
-\dontrun{
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+zone_id <- "abc123"
+account_id <- "acc-1"
+site_tag <- "abc"
+vcr::insert_example_cassette(
+  "cf_zone_overview",
+  package = "cloudflarer",
+  match_requests_on = c("method", "uri")
+)
+}
 ov <- cf_zone_overview(zone_id, account_id = account_id, site_tag = site_tag)
 ov$traffic
 ov$summary
-}
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other analytics: 

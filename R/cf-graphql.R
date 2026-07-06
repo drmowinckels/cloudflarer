@@ -29,8 +29,15 @@
 #'
 #' @export
 #' @family analytics
-#' @examples
-#' \dontrun{
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette(
+#'   "cf_graphql",
+#'   package = "cloudflarer",
+#'   match_requests_on = c("method", "uri")
+#' )
+#' }
 #' res <- cf_graphql(
 #'   "query Viewer($accountTag: String!) {
 #'      viewer {
@@ -64,7 +71,7 @@
 #'   since = "2026-05-01",
 #'   until = "2026-05-08"
 #' )
-#' }
+#' \dontshow{vcr::eject_cassette()}
 cf_graphql <- function(
   query,
   ...,

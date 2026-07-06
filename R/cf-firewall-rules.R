@@ -20,10 +20,13 @@
 #'   a list-column.
 #' @export
 #' @family zones
-#' @examples
-#' \dontrun{
-#' cf_list_firewall_rules("abc123")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_list_firewall_rules", package = "cloudflarer")
 #' }
+#' cf_list_firewall_rules("abc123")
+#' \dontshow{vcr::eject_cassette()}
 cf_list_firewall_rules <- function(
   zone_id,
   per_page = 50,

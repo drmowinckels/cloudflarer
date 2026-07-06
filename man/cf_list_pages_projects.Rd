@@ -40,9 +40,14 @@ projects endpoint does not accept pagination parameters
 every project in a single call.
 }
 \examples{
-\dontrun{
-cf_list_pages_projects("abc123")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette("cf_list_pages_projects", package = "cloudflarer")
 }
+cf_list_pages_projects("abc123")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other pages: 

@@ -47,13 +47,22 @@ Requires an API token with the \verb{Account Analytics: Read} (or
 has full access.
 }
 \examples{
-\dontrun{
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette(
+  "cf_dns_queries",
+  package = "cloudflarer",
+  match_requests_on = c("method", "uri")
+)
+}
 cf_dns_queries(
   "abc123",
   since = Sys.Date() - 7,
   until = Sys.Date()
 )
-}
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other analytics: 

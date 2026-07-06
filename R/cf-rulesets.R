@@ -17,10 +17,13 @@
 #'   `as_df = FALSE`).
 #' @export
 #' @family rulesets
-#' @examples
-#' \dontrun{
-#' cf_list_rulesets("abc123")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_list_rulesets", package = "cloudflarer")
 #' }
+#' cf_list_rulesets("abc123")
+#' \dontshow{vcr::eject_cassette()}
 cf_list_rulesets <- function(
   zone_id,
   as_df = TRUE,
@@ -52,10 +55,13 @@ cf_list_rulesets <- function(
 #'   is itself a list of rule objects.
 #' @export
 #' @family rulesets
-#' @examples
-#' \dontrun{
-#' cf_get_ruleset("abc123", "rs-1")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_get_ruleset", package = "cloudflarer")
 #' }
+#' cf_get_ruleset("abc123", "rs-1")
+#' \dontshow{vcr::eject_cassette()}
 cf_get_ruleset <- function(
   zone_id,
   ruleset_id,
@@ -87,10 +93,13 @@ cf_get_ruleset <- function(
 #'   `as_df = FALSE`).
 #' @export
 #' @family rulesets
-#' @examples
-#' \dontrun{
-#' cf_list_account_rulesets("acc-1")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_list_account_rulesets", package = "cloudflarer")
 #' }
+#' cf_list_account_rulesets("acc-1")
+#' \dontshow{vcr::eject_cassette()}
 cf_list_account_rulesets <- function(
   account_id,
   as_df = TRUE,
@@ -122,10 +131,13 @@ cf_list_account_rulesets <- function(
 #'   is itself a list of rule objects.
 #' @export
 #' @family rulesets
-#' @examples
-#' \dontrun{
-#' cf_get_account_ruleset("acc-1", "rs-1")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_get_account_ruleset", package = "cloudflarer")
 #' }
+#' cf_get_account_ruleset("acc-1", "rs-1")
+#' \dontshow{vcr::eject_cassette()}
 cf_get_account_ruleset <- function(
   account_id,
   ruleset_id,

@@ -29,9 +29,14 @@ size and paging cursor are added as query parameters on each
 request.
 }
 \examples{
-\dontrun{
-cf_request("zones") |> cf_collect(per_page = 50)
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette("cf_collect", package = "cloudflarer")
 }
+cf_request("zones") |> cf_collect(per_page = 50)
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other requests: 

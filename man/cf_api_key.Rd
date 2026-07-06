@@ -20,9 +20,8 @@ Cloudflare's legacy authentication scheme. Prefer creating a
 scoped API token instead; see \code{\link[=cf_token]{cf_token()}}.
 }
 \examples{
-\dontrun{
+\dontshow{Sys.setenv(CLOUDFLARE_API_KEY = "cloudflarer-example-key")}
 cf_api_key()
-}
 }
 \seealso{
 Other authentication: 

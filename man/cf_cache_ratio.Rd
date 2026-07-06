@@ -45,13 +45,22 @@ total requests/bytes, cached requests/bytes, and the derived
 cache hit ratios.
 }
 \examples{
-\dontrun{
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette(
+  "cf_cache_ratio",
+  package = "cloudflarer",
+  match_requests_on = c("method", "uri")
+)
+}
 cf_cache_ratio(
   "abc123",
   since = Sys.Date() - 7,
   until = Sys.Date()
 )
-}
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other analytics: 

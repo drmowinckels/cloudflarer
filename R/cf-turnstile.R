@@ -17,10 +17,13 @@
 #'   `as_df = FALSE`).
 #' @export
 #' @family turnstile
-#' @examples
-#' \dontrun{
-#' cf_list_turnstile_widgets("abc123")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_list_turnstile_widgets", package = "cloudflarer")
 #' }
+#' cf_list_turnstile_widgets("abc123")
+#' \dontshow{vcr::eject_cassette()}
 cf_list_turnstile_widgets <- function(
   account_id,
   per_page = 25,
@@ -52,10 +55,13 @@ cf_list_turnstile_widgets <- function(
 #' @return A named list describing the widget.
 #' @export
 #' @family turnstile
-#' @examples
-#' \dontrun{
-#' cf_get_turnstile_widget("abc123", "0x4AAA...")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_get_turnstile_widget", package = "cloudflarer")
 #' }
+#' cf_get_turnstile_widget("abc123", "0x4AAA...")
+#' \dontshow{vcr::eject_cassette()}
 cf_get_turnstile_widget <- function(
   account_id,
   sitekey,
@@ -95,15 +101,22 @@ cf_get_turnstile_widget <- function(
 #'   `sitekey` and `secret` (only shown once).
 #' @export
 #' @family turnstile
-#' @examples
-#' \dontrun{
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette(
+#'   "cf_create_turnstile_widget",
+#'   package = "cloudflarer",
+#'   match_requests_on = c("method", "uri")
+#' )
+#' }
 #' cf_create_turnstile_widget(
 #'   "abc123",
 #'   name = "comment-form",
 #'   domains = c("example.com", "www.example.com"),
 #'   mode = "managed"
 #' )
-#' }
+#' \dontshow{vcr::eject_cassette()}
 cf_create_turnstile_widget <- function(
   account_id,
   name,
@@ -146,10 +159,13 @@ cf_create_turnstile_widget <- function(
 #' @return A named list with the deleted widget's `sitekey`.
 #' @export
 #' @family turnstile
-#' @examples
-#' \dontrun{
-#' cf_delete_turnstile_widget("abc123", "0x4AAA...")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_delete_turnstile_widget", package = "cloudflarer")
 #' }
+#' cf_delete_turnstile_widget("abc123", "0x4AAA...")
+#' \dontshow{vcr::eject_cassette()}
 cf_delete_turnstile_widget <- function(
   account_id,
   sitekey,

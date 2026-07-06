@@ -19,9 +19,8 @@ Cloudflare's legacy Global API Key authentication. Defaults to
 \code{Sys.getenv("CLOUDFLARE_EMAIL")}.
 }
 \examples{
-\dontrun{
+\dontshow{Sys.setenv(CLOUDFLARE_EMAIL = "you@example.com")}
 cf_email()
-}
 }
 \seealso{
 Other authentication: 

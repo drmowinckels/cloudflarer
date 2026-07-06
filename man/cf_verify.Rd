@@ -31,9 +31,14 @@ successful return means the credential authenticates against the
 API.
 }
 \examples{
-\dontrun{
-cf_verify()
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette("cf_verify", package = "cloudflarer")
 }
+cf_verify()
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other authentication: 

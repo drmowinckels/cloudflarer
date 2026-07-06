@@ -29,9 +29,14 @@ is itself a list of rule objects.
 Get a single zone Ruleset (with its rules)
 }
 \examples{
-\dontrun{
-cf_get_ruleset("abc123", "rs-1")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette("cf_get_ruleset", package = "cloudflarer")
 }
+cf_get_ruleset("abc123", "rs-1")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other rulesets: 

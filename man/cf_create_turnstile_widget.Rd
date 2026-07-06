@@ -51,14 +51,23 @@ A named list with the created widget, including its
 Create a Turnstile widget
 }
 \examples{
-\dontrun{
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette(
+  "cf_create_turnstile_widget",
+  package = "cloudflarer",
+  match_requests_on = c("method", "uri")
+)
+}
 cf_create_turnstile_widget(
   "abc123",
   name = "comment-form",
   domains = c("example.com", "www.example.com"),
   mode = "managed"
 )
-}
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other turnstile: 

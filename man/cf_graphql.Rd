@@ -50,7 +50,15 @@ pattern used by the meetupr package. All values must be named;
 an unnamed value raises an error before the request is made.
 }
 \examples{
-\dontrun{
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette(
+  "cf_graphql",
+  package = "cloudflarer",
+  match_requests_on = c("method", "uri")
+)
+}
 res <- cf_graphql(
   "query Viewer($accountTag: String!) {
      viewer {
@@ -84,7 +92,8 @@ res <- cf_graphql(
   since = "2026-05-01",
   until = "2026-05-08"
 )
-}
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other analytics: 

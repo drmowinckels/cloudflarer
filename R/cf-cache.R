@@ -27,15 +27,22 @@
 #' @return A named list with the purge job `id`.
 #' @export
 #' @family cache
-#' @examples
-#' \dontrun{
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette(
+#'   "cf_purge_cache",
+#'   package = "cloudflarer",
+#'   match_requests_on = c("method", "uri")
+#' )
+#' }
 #' cf_purge_cache("abc123", files = c(
 #'   "https://example.com/index.html",
 #'   "https://example.com/style.css"
 #' ))
 #'
 #' cf_purge_cache("abc123", purge_everything = TRUE)
-#' }
+#' \dontshow{vcr::eject_cassette()}
 cf_purge_cache <- function(
   zone_id,
   files = NULL,

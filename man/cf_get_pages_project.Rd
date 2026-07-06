@@ -35,9 +35,14 @@ config, domains, and the latest deployment.
 Get a single Cloudflare Pages project
 }
 \examples{
-\dontrun{
-cf_get_pages_project("abc123", "my-site")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette("cf_get_pages_project", package = "cloudflarer")
 }
+cf_get_pages_project("abc123", "my-site")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other pages: 

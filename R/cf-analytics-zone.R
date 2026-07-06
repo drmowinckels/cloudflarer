@@ -25,8 +25,15 @@
 #'
 #' @export
 #' @family analytics
-#' @examples
-#' \dontrun{
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette(
+#'   "cf_zone_requests",
+#'   package = "cloudflarer",
+#'   match_requests_on = c("method", "uri")
+#' )
+#' }
 #' cf_zone_requests(
 #'   "abc123",
 #'   since = Sys.Date() - 7,
@@ -40,7 +47,7 @@
 #'   until = Sys.time(),
 #'   by    = "hour"
 #' )
-#' }
+#' \dontshow{vcr::eject_cassette()}
 cf_zone_requests <- function(
   zone_id,
   since,

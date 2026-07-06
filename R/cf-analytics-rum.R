@@ -21,15 +21,22 @@
 #'
 #' @export
 #' @family analytics
-#' @examples
-#' \dontrun{
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette(
+#'   "cf_rum_page_views",
+#'   package = "cloudflarer",
+#'   match_requests_on = c("method", "uri")
+#' )
+#' }
 #' cf_rum_page_views(
 #'   "acc-1",
 #'   site_tag = "abc",
 #'   since = Sys.Date() - 30,
 #'   until = Sys.Date()
 #' )
-#' }
+#' \dontshow{vcr::eject_cassette()}
 cf_rum_page_views <- function(
   account_id,
   site_tag,
@@ -108,8 +115,15 @@ cf_rum_page_views <- function(
 #'
 #' @export
 #' @family analytics
-#' @examples
-#' \dontrun{
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette(
+#'   "cf_rum_top",
+#'   package = "cloudflarer",
+#'   match_requests_on = c("method", "uri")
+#' )
+#' }
 #' cf_rum_top(
 #'   "acc-1",
 #'   site_tag = "abc",
@@ -118,7 +132,7 @@ cf_rum_page_views <- function(
 #'   dimension = "countryName",
 #'   limit = 10
 #' )
-#' }
+#' \dontshow{vcr::eject_cassette()}
 cf_rum_top <- function(
   account_id,
   site_tag,

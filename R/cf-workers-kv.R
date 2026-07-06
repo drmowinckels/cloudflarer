@@ -16,10 +16,13 @@
 #'   `as_df = FALSE`).
 #' @export
 #' @family workers
-#' @examples
-#' \dontrun{
-#' cf_list_kv_namespaces("abc123")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_list_kv_namespaces", package = "cloudflarer")
 #' }
+#' cf_list_kv_namespaces("abc123")
+#' \dontshow{vcr::eject_cassette()}
 cf_list_kv_namespaces <- function(
   account_id,
   per_page = 50,
@@ -51,10 +54,13 @@ cf_list_kv_namespaces <- function(
 #' @return A named list describing the namespace.
 #' @export
 #' @family workers
-#' @examples
-#' \dontrun{
-#' cf_get_kv_namespace("abc123", "ns-1")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' vcr::insert_example_cassette("cf_get_kv_namespace", package = "cloudflarer")
 #' }
+#' cf_get_kv_namespace("abc123", "ns-1")
+#' \dontshow{vcr::eject_cassette()}
 cf_get_kv_namespace <- function(
   account_id,
   namespace_id,

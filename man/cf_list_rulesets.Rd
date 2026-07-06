@@ -40,9 +40,14 @@ firewall rules, request transforms, cache rules, rate limits,
 redirects, and more.
 }
 \examples{
-\dontrun{
-cf_list_rulesets("abc123")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette("cf_list_rulesets", package = "cloudflarer")
 }
+cf_list_rulesets("abc123")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other rulesets: 

@@ -46,9 +46,14 @@ endpoint; for the newer Rulesets API use \code{\link[=cf_request]{cf_request()}}
 \verb{/zones/\{id\}/rulesets}.
 }
 \examples{
-\dontrun{
-cf_list_firewall_rules("abc123")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette("cf_list_firewall_rules", package = "cloudflarer")
 }
+cf_list_firewall_rules("abc123")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other zones: 

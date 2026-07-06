@@ -43,9 +43,14 @@ Lists the Turnstile (Cloudflare's CAPTCHA replacement) widgets
 configured in an account.
 }
 \examples{
-\dontrun{
-cf_list_turnstile_widgets("abc123")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette("cf_list_turnstile_widgets", package = "cloudflarer")
 }
+cf_list_turnstile_widgets("abc123")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other turnstile: 

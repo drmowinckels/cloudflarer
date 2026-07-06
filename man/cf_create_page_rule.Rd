@@ -50,9 +50,17 @@ target plus one cache-related action (for example
 ratio).
 }
 \examples{
-\dontrun{
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+vcr::insert_example_cassette(
+  "cf_create_page_rule",
+  package = "cloudflarer",
+  match_requests_on = c("method", "uri")
+)
+}
 cf_create_page_rule(
-  zone_id,
+  "abc123",
   targets = list(
     cf_page_rule_target("*example.com/blog/*")
   ),
@@ -61,7 +69,8 @@ cf_create_page_rule(
     cf_page_rule_action("edge_cache_ttl", 7200)
   )
 )
-}
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other zones: 

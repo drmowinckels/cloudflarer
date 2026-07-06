@@ -1,0 +1,16 @@
+http_interactions:
+  - request:
+      method: POST
+      uri: https://api.cloudflare.com/client/v4/graphql
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {"data": {"viewer": {"zones": [{"firewallEventsAdaptiveGroups": [
+            {"count": 30, "dimensions": {"action": "block"}},
+            {"count": 12, "dimensions": {"action": "challenge"}}
+          ]}]}}}
+    recorded_at: 2026-05-20 18:07:49
+recorded_with: VCR-vcr/2.1.0
