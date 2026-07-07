@@ -64,7 +64,11 @@ Other zones:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_get_zone_settings("abc123")
-} # }
+#> # A tibble: 3 × 3
+#>   id             value      editable
+#> * <chr>          <chr>      <lgl>   
+#> 1 ssl            full       TRUE    
+#> 2 cache_level    aggressive TRUE    
+#> 3 security_level medium     TRUE    
 ```

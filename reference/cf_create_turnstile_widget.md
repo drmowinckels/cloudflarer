@@ -76,12 +76,30 @@ Other turnstile:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_create_turnstile_widget(
   "abc123",
   name = "comment-form",
   domains = c("example.com", "www.example.com"),
   mode = "managed"
 )
-} # }
+#> $sitekey
+#> [1] "0x4AAA..."
+#> 
+#> $secret
+#> [1] "0x4BBB..."
+#> 
+#> $name
+#> [1] "comment-form"
+#> 
+#> $mode
+#> [1] "managed"
+#> 
+#> $domains
+#> $domains[[1]]
+#> [1] "example.com"
+#> 
+#> $domains[[2]]
+#> [1] "www.example.com"
+#> 
+#> 
 ```

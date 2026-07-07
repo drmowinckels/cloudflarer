@@ -61,7 +61,8 @@ Other zones:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-cf_delete_page_rule(zone_id, "rule-1")
-} # }
+cf_delete_page_rule("abc123", "rule-1")
+#> $id
+#> [1] "rule-1"
+#> 
 ```

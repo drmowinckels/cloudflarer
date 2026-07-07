@@ -54,7 +54,8 @@ Other dns:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_delete_dns_record("zone-1", "rec-1")
-} # }
+#> $id
+#> [1] "rec-1"
+#> 
 ```

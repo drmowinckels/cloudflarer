@@ -53,7 +53,10 @@ Other r2:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_list_r2_buckets("abc123")
-} # }
+#> # A tibble: 2 × 2
+#>   name        location
+#> * <chr>       <chr>   
+#> 1 assets-prod WEUR    
+#> 2 backups     ENAM    
 ```

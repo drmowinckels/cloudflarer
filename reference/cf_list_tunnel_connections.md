@@ -58,7 +58,10 @@ Other tunnels:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_list_tunnel_connections("abc123", "tunnel-1")
-} # }
+#> # A tibble: 2 × 3
+#>   id     colo_name is_pending_reconnect
+#> * <chr>  <chr>     <lgl>               
+#> 1 conn-1 AMS       FALSE               
+#> 2 conn-2 CDG       FALSE               
 ```

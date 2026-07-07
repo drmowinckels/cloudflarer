@@ -1,45 +1,36 @@
-# Perform a generic Cloudflare API request
+# Build an authenticated request for a Cloudflare endpoint
 
-Low-level wrapper that builds an authenticated request, performs it,
-validates the standard Cloudflare response envelope, and returns the
-`result` payload. Use this to call any endpoint that does not yet have a
-dedicated wrapper in the package.
+Returns an `httr2` request with credentials, headers, and the endpoint
+path attached, ready to be piped through `httr2` request modifiers
+([`httr2::req_method()`](https://httr2.r-lib.org/reference/req_method.html),
+[`httr2::req_url_query()`](https://httr2.r-lib.org/reference/req_url.html),
+[`httr2::req_body_json()`](https://httr2.r-lib.org/reference/req_body.html))
+and performed with
+[`httr2::req_perform()`](https://httr2.r-lib.org/reference/req_perform.html).
+Pair the performed response with
+[`cf_resp()`](http://drmowinckels.io/cloudflarer/reference/cf_resp.md)
+to unwrap the standard Cloudflare envelope, or pipe the request into
+[`cf_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_collect.md)
+to walk a paginated list endpoint. This is the base that every dedicated
+wrapper in the package builds on, and the entry point for calling any
+endpoint that does not yet have one.
 
 ## Usage
 
 ``` r
-cf_request(
-  endpoint,
-  method = "GET",
-  query = NULL,
-  body = NULL,
-  token = NULL,
-  email = NULL,
-  api_key = NULL,
-  ...
-)
+cf_request(endpoint, token = NULL, email = NULL, api_key = NULL)
 ```
 
 ## Arguments
 
 - endpoint:
 
-  Character. Path relative to the API base URL, without a leading slash
-  (for example `"zones"` or `"zones/abc123/dns_records"`). May also
-  include path segments joined by `"/"`.
-
-- method:
-
-  HTTP method as a character string. Defaults to `"GET"`.
-
-- query:
-
-  Optional named list of query parameters. `NULL` values are dropped.
-
-- body:
-
-  Optional list. When supplied, the request is sent with
-  `Content-Type: application/json`.
+  Path relative to the API base URL, without a leading slash. Either a
+  single string (for example `"zones"` or `"zones/abc123/dns_records"`)
+  or a character vector of segments
+  (`c("zones", zone_id, "dns_records")`); each segment is appended to
+  the URL path via
+  [`httr2::req_url_path_append()`](https://httr2.r-lib.org/reference/req_url.html).
 
 - token:
 
@@ -56,40 +47,61 @@ cf_request(
   Character. The Global API Key. If `NULL` (the default), reads from the
   `CLOUDFLARE_API_KEY` environment variable.
 
-- ...:
-
-  Additional arguments passed to
-  [`httr2::req_perform()`](https://httr2.r-lib.org/reference/req_perform.html).
-
 ## Value
 
-The parsed `result` element from the response. For collection endpoints
-this is typically a list of records; for single-resource endpoints it is
-a single named list.
-
-## Details
-
-The Cloudflare API wraps every response in an envelope with `success`,
-`errors`, `messages`, `result`, and (for paginated endpoints)
-`result_info`. `cf_request()` extracts `result`; errors raise a classed
-condition you can catch with
-`tryCatch(cf_request(...), cloudflarer_error = ...)`.
+An `httr2_request`.
 
 ## See also
 
 Other requests:
-[`cf_request_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_request_collect.md)
+[`cf_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_collect.md),
+[`cf_resp()`](http://drmowinckels.io/cloudflarer/reference/cf_resp.md)
 
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-cf_request("user/tokens/verify")
-cf_request("zones", query = list(per_page = 5))
-cf_request(
-  "zones/abc123/dns_records",
-  method = "POST",
-  body = list(type = "A", name = "example.com", content = "1.2.3.4")
-)
-} # }
+cf_request("user/tokens/verify") |>
+  httr2::req_perform() |>
+  cf_resp()
+#> $id
+#> [1] "tok-1"
+#> 
+#> $status
+#> [1] "active"
+#> 
+
+cf_request(c("zones", "abc123", "dns_records")) |>
+  httr2::req_method("POST") |>
+  httr2::req_body_json(
+    list(type = "A", name = "example.com", content = "192.0.2.1")
+  ) |>
+  httr2::req_perform() |>
+  cf_resp()
+#> $id
+#> [1] "rec-new"
+#> 
+#> $type
+#> [1] "A"
+#> 
+#> $name
+#> [1] "example.com"
+#> 
+#> $content
+#> [1] "192.0.2.1"
+#> 
+
+cf_request("zones") |>
+  httr2::req_url_query(status = "active") |>
+  cf_collect(per_page = 50)
+#> [[1]]
+#> [[1]]$id
+#> [1] "abc123"
+#> 
+#> [[1]]$name
+#> [1] "example.com"
+#> 
+#> [[1]]$status
+#> [1] "active"
+#> 
+#> 
 ```

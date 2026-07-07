@@ -54,7 +54,11 @@ Other workers:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_get_kv_namespace("abc123", "ns-1")
-} # }
+#> $id
+#> [1] "ns-1"
+#> 
+#> $title
+#> [1] "sessions"
+#> 
 ```

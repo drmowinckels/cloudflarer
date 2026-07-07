@@ -79,12 +79,16 @@ endpoint per zone.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_purge_cache("abc123", files = c(
   "https://example.com/index.html",
   "https://example.com/style.css"
 ))
+#> $id
+#> [1] "purge-job-1"
+#> 
 
 cf_purge_cache("abc123", purge_everything = TRUE)
-} # }
+#> $id
+#> [1] "purge-job-2"
+#> 
 ```

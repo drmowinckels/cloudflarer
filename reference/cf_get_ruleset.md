@@ -48,7 +48,30 @@ Other rulesets:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_get_ruleset("abc123", "rs-1")
-} # }
+#> $id
+#> [1] "rs-1"
+#> 
+#> $name
+#> [1] "default"
+#> 
+#> $kind
+#> [1] "zone"
+#> 
+#> $phase
+#> [1] "http_request_firewall_custom"
+#> 
+#> $rules
+#> $rules[[1]]
+#> $rules[[1]]$id
+#> [1] "rule-1"
+#> 
+#> $rules[[1]]$action
+#> [1] "block"
+#> 
+#> $rules[[1]]$expression
+#> [1] "ip.src eq 192.0.2.1"
+#> 
+#> 
+#> 
 ```

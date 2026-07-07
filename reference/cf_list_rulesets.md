@@ -57,7 +57,10 @@ Other rulesets:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_list_rulesets("abc123")
-} # }
+#> # A tibble: 2 × 4
+#>   id    name    kind    phase                        
+#> * <chr> <chr>   <chr>   <chr>                        
+#> 1 rs-1  default zone    http_request_firewall_custom 
+#> 2 rs-2  managed managed http_request_firewall_managed
 ```

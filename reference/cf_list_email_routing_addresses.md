@@ -66,7 +66,10 @@ Other email:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_list_email_routing_addresses("abc123")
-} # }
+#> # A tibble: 2 × 3
+#>   id     email            verified            
+#> * <chr>  <chr>            <chr>               
+#> 1 addr-1 you@example.com  2026-05-01T00:00:00Z
+#> 2 addr-2 team@example.com NA                  
 ```

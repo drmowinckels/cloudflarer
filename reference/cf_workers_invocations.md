@@ -86,11 +86,13 @@ Other workers:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_workers_invocations(
-  account_id,
+  "acc-1",
   since = Sys.Date() - 7,
   until = Sys.Date()
 )
-} # }
+#> # A tibble: 1 × 7
+#>   date       script      requests errors subrequests cpu_p50_us cpu_p99_us
+#>   <chr>      <chr>          <int>  <int>       <int>      <dbl>      <dbl>
+#> 1 2026-05-01 hello-world    10000      5        2000        1.2        8.5
 ```

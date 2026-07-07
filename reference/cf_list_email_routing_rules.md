@@ -31,7 +31,7 @@ cf_list_email_routing_rules(
 - per_page, max_pages:
 
   Pagination controls, see
-  [`cf_request_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_request_collect.md).
+  [`cf_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_collect.md).
 
 - as_df:
 
@@ -66,7 +66,10 @@ Other email:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_list_email_routing_rules("abc123")
-} # }
+#> # A tibble: 2 × 3
+#>   id     name      enabled
+#> * <chr>  <chr>     <lgl>  
+#> 1 rule-1 catch-all TRUE   
+#> 2 rule-2 support   FALSE  
 ```

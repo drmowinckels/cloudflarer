@@ -48,7 +48,14 @@ Other email:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_get_email_routing_settings("abc123")
-} # }
+#> $enabled
+#> [1] TRUE
+#> 
+#> $name
+#> [1] "example.com"
+#> 
+#> $status
+#> [1] "ready"
+#> 
 ```

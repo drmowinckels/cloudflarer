@@ -4,13 +4,20 @@ cloudflarer is an R wrapper around the [Cloudflare REST API
 (v4)](https://developers.cloudflare.com/api/). It provides authenticated
 request helpers, response unwrapping, paginated list collectors, and a
 generic
-[`cf_request()`](https://drmowinckels.github.io/cloudflarer/reference/cf_request.html)
+[`cf_request()`](https://drmowinckels.io/cloudflarer/reference/cf_request.html)
 function so you can call any endpoint, including ones the package does
 not wrap yet.
 
 ## Installation
 
-Install the development version from GitHub:
+Install the released version from CRAN:
+
+``` r
+
+install.packages("cloudflarer")
+```
+
+Or install the development version from GitHub:
 
 ``` r
 
@@ -69,33 +76,37 @@ Every endpoint in the [Cloudflare API
 reference](https://developers.cloudflare.com/api/) is reachable through
 the generic
 [`cf_request()`](http://drmowinckels.io/cloudflarer/reference/cf_request.md)
-helper. It handles authentication, unwraps the
-`{success, errors, result, ...}` envelope, and raises a classed
-`cloudflarer_error` for failures.
+helper, which builds an authenticated request. Pipe it through the
+`httr2` verbs you need, perform it, and unwrap the
+`{success, errors, result, ...}` envelope with
+[`cf_resp()`](http://drmowinckels.io/cloudflarer/reference/cf_resp.md)
+(which raises a classed `cloudflarer_error` on failure).
 
 ``` r
 
-cf_request("user/tokens/verify")
+cf_request("user/tokens/verify") |>
+  httr2::req_perform() |>
+  cf_resp()
 
-cf_request(
-  "zones/abc123/dns_records",
-  method = "POST",
-  body = list(
+cf_request("zones/abc123/dns_records") |>
+  httr2::req_method("POST") |>
+  httr2::req_body_json(list(
     type    = "A",
     name    = "www.example.com",
     content = "192.0.2.1",
     ttl     = 1,
     proxied = TRUE
-  )
-)
+  )) |>
+  httr2::req_perform() |>
+  cf_resp()
 ```
 
-For paginated list endpoints, use
-[`cf_request_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_request_collect.md):
+For paginated list endpoints, pipe the request into
+[`cf_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_collect.md):
 
 ``` r
 
-cf_request_collect("accounts", per_page = 50)
+cf_request("accounts") |> cf_collect(per_page = 50)
 ```
 
 ## Code of Conduct
@@ -134,8 +145,10 @@ Low-level helpers used by every wrapper. Use these directly to call
 endpoints the package does not yet provide a function for.
 
 - [`cf_request()`](http://drmowinckels.io/cloudflarer/reference/cf_request.md)
-  : Perform a generic Cloudflare API request
-- [`cf_request_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_request_collect.md)
+  : Build an authenticated request for a Cloudflare endpoint
+- [`cf_resp()`](http://drmowinckels.io/cloudflarer/reference/cf_resp.md)
+  : Unwrap the result from a Cloudflare response
+- [`cf_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_collect.md)
   : Collect every page of a paginated endpoint
 - [`cf_graphql()`](http://drmowinckels.io/cloudflarer/reference/cf_graphql.md)
   : Run a Cloudflare GraphQL Analytics query

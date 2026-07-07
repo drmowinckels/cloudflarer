@@ -35,12 +35,12 @@ cf_list_zones(
 - per_page:
 
   Page size, see
-  [`cf_request_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_request_collect.md).
+  [`cf_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_collect.md).
 
 - max_pages:
 
   Maximum pages to retrieve, see
-  [`cf_request_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_request_collect.md).
+  [`cf_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_collect.md).
 
 - as_df:
 
@@ -85,8 +85,15 @@ Other zones:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_list_zones()
+#> # A tibble: 2 × 3
+#>   id     name        status
+#> * <chr>  <chr>       <chr> 
+#> 1 abc123 example.com active
+#> 2 def456 example.org active
 cf_list_zones(name = "example.com")
-} # }
+#> # A tibble: 1 × 3
+#>   id     name        status
+#> * <chr>  <chr>       <chr> 
+#> 1 abc123 example.com active
 ```

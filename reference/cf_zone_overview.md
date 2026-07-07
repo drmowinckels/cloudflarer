@@ -103,9 +103,17 @@ Other analytics:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 ov <- cf_zone_overview(zone_id, account_id = account_id, site_tag = site_tag)
 ov$traffic
+#> # A tibble: 1 × 6
+#>   date       requests   bytes pageviews threats uniques
+#>   <chr>         <int>   <dbl>     <int>   <int>   <int>
+#> 1 2026-05-01     1000 2000000       500      10     300
 ov$summary
-} # }
+#> # A tibble: 1 × 11
+#>   since      until      requests bytes pageviews uniques threats cache_hit_ratio
+#>   <chr>      <chr>         <int> <dbl>     <int>   <int>   <int>           <dbl>
+#> 1 2026-06-30 2026-07-07     1000   2e6       500     300      10             0.8
+#> # ℹ 3 more variables: bandwidth_hit_ratio <dbl>, dns_queries <int>,
+#> #   firewall_events <int>
 ```

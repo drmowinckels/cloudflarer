@@ -63,7 +63,17 @@ Other zones:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_get_zone_setting("abc123", "ssl")
-} # }
+#> $id
+#> [1] "ssl"
+#> 
+#> $value
+#> [1] "full"
+#> 
+#> $modified_on
+#> [1] "2026-05-01T00:00:00Z"
+#> 
+#> $editable
+#> [1] TRUE
+#> 
 ```

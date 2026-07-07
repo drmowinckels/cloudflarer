@@ -77,12 +77,14 @@ Other analytics:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_rum_page_views(
   "acc-1",
   site_tag = "abc",
   since = Sys.Date() - 30,
   until = Sys.Date()
 )
-} # }
+#> # A tibble: 1 × 2
+#>   date       pageviews
+#>   <chr>          <int>
+#> 1 2026-05-01       500
 ```

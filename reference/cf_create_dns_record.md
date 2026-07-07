@@ -93,7 +93,6 @@ Other dns:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_create_dns_record(
   "zone-1",
   type    = "A",
@@ -101,5 +100,19 @@ cf_create_dns_record(
   content = "192.0.2.1",
   proxied = TRUE
 )
-} # }
+#> $id
+#> [1] "rec-new"
+#> 
+#> $type
+#> [1] "A"
+#> 
+#> $name
+#> [1] "www.example.com"
+#> 
+#> $content
+#> [1] "192.0.2.1"
+#> 
+#> $proxied
+#> [1] TRUE
+#> 
 ```

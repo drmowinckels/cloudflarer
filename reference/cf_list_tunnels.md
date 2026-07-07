@@ -31,7 +31,7 @@ cf_list_tunnels(
 - per_page, max_pages:
 
   Pagination controls, see
-  [`cf_request_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_request_collect.md).
+  [`cf_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_collect.md).
 
 - as_df:
 
@@ -66,7 +66,10 @@ Other tunnels:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_list_tunnels("abc123")
-} # }
+#> # A tibble: 2 × 3
+#>   id       name    status 
+#> * <chr>    <chr>   <chr>  
+#> 1 tunnel-1 prod    healthy
+#> 2 tunnel-2 staging down   
 ```

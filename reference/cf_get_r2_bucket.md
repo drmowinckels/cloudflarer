@@ -51,7 +51,14 @@ Other r2:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_get_r2_bucket("abc123", "my-bucket")
-} # }
+#> $name
+#> [1] "my-bucket"
+#> 
+#> $location
+#> [1] "WEUR"
+#> 
+#> $creation_date
+#> [1] "2026-05-20T18:07:49Z"
+#> 
 ```

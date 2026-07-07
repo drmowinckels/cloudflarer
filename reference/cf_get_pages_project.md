@@ -53,7 +53,14 @@ Other pages:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_get_pages_project("abc123", "my-site")
-} # }
+#> $name
+#> [1] "my-site"
+#> 
+#> $subdomain
+#> [1] "my-site.pages.dev"
+#> 
+#> $production_branch
+#> [1] "main"
+#> 
 ```

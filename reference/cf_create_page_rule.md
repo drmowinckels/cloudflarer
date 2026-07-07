@@ -84,9 +84,8 @@ Other zones:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_create_page_rule(
-  zone_id,
+  "abc123",
   targets = list(
     cf_page_rule_target("*example.com/blog/*")
   ),
@@ -95,5 +94,46 @@ cf_create_page_rule(
     cf_page_rule_action("edge_cache_ttl", 7200)
   )
 )
-} # }
+#> $id
+#> [1] "rule-new"
+#> 
+#> $status
+#> [1] "active"
+#> 
+#> $priority
+#> [1] 1
+#> 
+#> $targets
+#> $targets[[1]]
+#> $targets[[1]]$target
+#> [1] "url"
+#> 
+#> $targets[[1]]$constraint
+#> $targets[[1]]$constraint$operator
+#> [1] "matches"
+#> 
+#> $targets[[1]]$constraint$value
+#> [1] "*example.com/blog/*"
+#> 
+#> 
+#> 
+#> 
+#> $actions
+#> $actions[[1]]
+#> $actions[[1]]$id
+#> [1] "cache_level"
+#> 
+#> $actions[[1]]$value
+#> [1] "cache_everything"
+#> 
+#> 
+#> $actions[[2]]
+#> $actions[[2]]$id
+#> [1] "edge_cache_ttl"
+#> 
+#> $actions[[2]]$value
+#> [1] 7200
+#> 
+#> 
+#> 
 ```

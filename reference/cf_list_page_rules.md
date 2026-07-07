@@ -82,7 +82,9 @@ Other zones:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_list_page_rules("abc123")
-} # }
+#> # A tibble: 1 × 5
+#>   id     status priority targets    actions   
+#> * <chr>  <chr>     <int> <I<list>>  <I<list>> 
+#> 1 rule-1 active        1 <list [1]> <list [1]>
 ```

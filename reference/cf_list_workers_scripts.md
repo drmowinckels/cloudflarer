@@ -56,7 +56,10 @@ Other workers:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_list_workers_scripts("abc123")
-} # }
+#> # A tibble: 2 × 2
+#>   id           created_on          
+#> * <chr>        <chr>               
+#> 1 my-worker    2026-01-01T00:00:00Z
+#> 2 other-worker 2026-01-02T00:00:00Z
 ```

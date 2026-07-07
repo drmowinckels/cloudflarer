@@ -25,7 +25,7 @@ cf_list_kv_namespaces(
 - per_page, max_pages:
 
   Pagination controls, see
-  [`cf_request_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_request_collect.md).
+  [`cf_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_collect.md).
 
 - as_df:
 
@@ -63,7 +63,10 @@ Other workers:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_list_kv_namespaces("abc123")
-} # }
+#> # A tibble: 2 × 2
+#>   id    title        
+#> * <chr> <chr>        
+#> 1 ns-1  sessions     
+#> 2 ns-2  feature-flags
 ```

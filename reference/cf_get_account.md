@@ -41,7 +41,14 @@ Other accounts:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_get_account("abc123")
-} # }
+#> $id
+#> [1] "abc123"
+#> 
+#> $name
+#> [1] "Example Org"
+#> 
+#> $type
+#> [1] "standard"
+#> 
 ```

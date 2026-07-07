@@ -82,16 +82,32 @@ list.</p>
 <span><span class="co"># CLOUDFLARE_API_KEY=...</span></span>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/drmowinckels/cloudflarer" class="external-link">cloudflarer</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/cf_sitrep.html">cf_sitrep</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/cf_sitrep.html">cf_sitrep</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">cloudflarer sitrep</span> <span style="color: #00BBBB;">──────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Package version: <span style="color: #0000BB;">0.0.0.9000</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Using API token (`CLOUDFLARE_API_TOKEN`).</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Credentials verified against the Cloudflare API.</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="discover-what-you-can-reach">Discover what you can reach<a class="anchor" aria-label="anchor" href="#discover-what-you-can-reach"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cf_user.html">cf_user</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $id</span></span>
+<span><span class="co">#&gt; [1] "user-1"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $email</span></span>
+<span><span class="co">#&gt; [1] "you@example.com"</span></span>
 <span><span class="fu"><a href="../reference/cf_list_accounts.html">cf_list_accounts</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;       id        name</span></span>
+<span><span class="co">#&gt; 1 abc123 Example Org</span></span>
 <span><span class="fu"><a href="../reference/cf_list_zones.html">cf_list_zones</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/cf_list_zones.html">cf_list_zones</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"example.com"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co">#&gt;       id        name status</span></span>
+<span><span class="co">#&gt; 1 abc123 example.com active</span></span>
+<span><span class="fu"><a href="../reference/cf_list_zones.html">cf_list_zones</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"example.com"</span><span class="op">)</span></span>
+<span><span class="co">#&gt;       id        name status</span></span>
+<span><span class="co">#&gt; 1 abc123 example.com active</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="quick-overview-of-a-zone">Quick overview of a zone<a class="anchor" aria-label="anchor" href="#quick-overview-of-a-zone"></a>
@@ -101,7 +117,22 @@ list.</p>
 <span><span class="va">zone_id</span>    <span class="op">&lt;-</span> <span class="va">zones</span><span class="op">$</span><span class="va">id</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
 <span><span class="va">account_id</span> <span class="op">&lt;-</span> <span class="va">zones</span><span class="op">$</span><span class="va">account</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">id</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/cf_zone_overview.html">cf_zone_overview</a></span><span class="op">(</span><span class="va">zone_id</span>, account_id <span class="op">=</span> <span class="va">account_id</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/cf_zone_overview.html">cf_zone_overview</a></span><span class="op">(</span><span class="va">zone_id</span>, account_id <span class="op">=</span> <span class="va">account_id</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Zone overview</span> <span style="color: #00BBBB;">───────────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Window: <span style="color: #0000BB;">"2026-06-30"</span> to <span style="color: #0000BB;">"2026-07-07"</span></span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; → Requests:        <span style="color: #0000BB;">"1,000"</span></span></span>
+<span><span class="co">#&gt; → Page views:      <span style="color: #0000BB;">"500"</span></span></span>
+<span><span class="co">#&gt; → Uniques:         <span style="color: #0000BB;">"300"</span></span></span>
+<span><span class="co">#&gt; → Bandwidth:       <span style="color: #0000BB;">"1.9 MB"</span></span></span>
+<span><span class="co">#&gt; → Threats:         <span style="color: #0000BB;">"10"</span></span></span>
+<span><span class="co">#&gt; → Cache hit (req): <span style="color: #0000BB;">"80.0%"</span></span></span>
+<span><span class="co">#&gt; → Cache hit (BW):  <span style="color: #0000BB;">"75.0%"</span></span></span>
+<span><span class="co">#&gt; → DNS queries:     <span style="color: #0000BB;">"1,234"</span></span></span>
+<span><span class="co">#&gt; → Firewall events: <span style="color: #0000BB;">"42"</span></span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `$traffic`, `$cache`, `$dns`, `$firewall`, `$top_countries` for per-day breakdowns.</span></span></code></pre></div>
 <p><code><a href="../reference/cf_zone_overview.html">cf_zone_overview()</a></code> pulls traffic, cache ratio, DNS
 queries, firewall events, and RUM top countries into one tidy bundle.
 Each component is wrapped so a missing permission or Pro-only feature
@@ -113,17 +144,31 @@ call.</p>
 </h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cf_zone_requests.html">cf_zone_requests</a></span><span class="op">(</span><span class="va">zone_id</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">7</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"day"</span><span class="op">)</span></span>
+<span><span class="co">#&gt;         date requests bytes pageviews threats uniques</span></span>
+<span><span class="co">#&gt; 1 2026-05-01     1000 2e+06       500      10     300</span></span>
 <span><span class="fu"><a href="../reference/cf_zone_requests.html">cf_zone_requests</a></span><span class="op">(</span><span class="va">zone_id</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">12</span> <span class="op">*</span> <span class="fl">3600</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"hour"</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                   date requests bytes pageviews threats uniques</span></span>
+<span><span class="co">#&gt; 1 2026-05-01T00:00:00Z       50 1e+05        25       1      20</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/cf_cache_ratio.html">cf_cache_ratio</a></span><span class="op">(</span><span class="va">zone_id</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">7</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;         date requests cached_requests bytes cached_bytes request_hit_ratio</span></span>
+<span><span class="co">#&gt; 1 2026-05-01     1000             800 2e+06      1500000               0.8</span></span>
+<span><span class="co">#&gt;   bandwidth_hit_ratio</span></span>
+<span><span class="co">#&gt; 1                0.75</span></span>
 <span><span class="fu"><a href="../reference/cf_dns_queries.html">cf_dns_queries</a></span><span class="op">(</span><span class="va">zone_id</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">7</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;         date queries</span></span>
+<span><span class="co">#&gt; 1 2026-05-01    1234</span></span>
 <span></span>
 <span><span class="co"># Pro+ only:</span></span>
 <span><span class="fu"><a href="../reference/cf_firewall_events_by_day.html">cf_firewall_events_by_day</a></span><span class="op">(</span><span class="va">zone_id</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">7</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;         date events</span></span>
+<span><span class="co">#&gt; 1 2026-05-01     42</span></span>
 <span><span class="fu"><a href="../reference/cf_firewall_events_top.html">cf_firewall_events_top</a></span><span class="op">(</span></span>
 <span>  <span class="va">zone_id</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">7</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  dimension <span class="op">=</span> <span class="st">"action"</span>, limit <span class="op">=</span> <span class="fl">10</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt;   action events</span></span>
+<span><span class="co">#&gt; 1  block     30</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="web-analytics-rum">Web Analytics (RUM)<a class="anchor" aria-label="anchor" href="#web-analytics-rum"></a>
@@ -134,30 +179,59 @@ call.</p>
 <span></span>
 <span><span class="fu"><a href="../reference/cf_rum_page_views.html">cf_rum_page_views</a></span><span class="op">(</span><span class="va">account_id</span>, <span class="va">site_tag</span>,</span>
 <span>                  since <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">30</span>, until <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;         date pageviews</span></span>
+<span><span class="co">#&gt; 1 2026-05-01       500</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/cf_rum_top.html">cf_rum_top</a></span><span class="op">(</span><span class="va">account_id</span>, <span class="va">site_tag</span>,</span>
 <span>           since <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">30</span>, until <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>           dimension <span class="op">=</span> <span class="st">"countryName"</span>, limit <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
+<span>           dimension <span class="op">=</span> <span class="st">"countryName"</span>, limit <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="co">#&gt;     countryName count</span></span>
+<span><span class="co">#&gt; 1 United States   300</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="dns-records">DNS records<a class="anchor" aria-label="anchor" href="#dns-records"></a>
 </h2>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cf_list_dns_records.html">cf_list_dns_records</a></span><span class="op">(</span><span class="va">zone_id</span>, type <span class="op">=</span> <span class="st">"A"</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      id type        name   content proxied</span></span>
+<span><span class="co">#&gt; 1 rec-1    A example.com 192.0.2.1    TRUE</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/cf_create_dns_record.html">cf_create_dns_record</a></span><span class="op">(</span></span>
 <span>  <span class="va">zone_id</span>, type <span class="op">=</span> <span class="st">"A"</span>, name <span class="op">=</span> <span class="st">"blog"</span>,</span>
 <span>  content <span class="op">=</span> <span class="st">"192.0.2.5"</span>, proxied <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
+<span><span class="co">#&gt; $id</span></span>
+<span><span class="co">#&gt; [1] "rec-new"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $type</span></span>
+<span><span class="co">#&gt; [1] "A"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $name</span></span>
+<span><span class="co">#&gt; [1] "blog.example.com"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content</span></span>
+<span><span class="co">#&gt; [1] "192.0.2.5"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $proxied</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/cf_update_dns_record.html">cf_update_dns_record</a></span><span class="op">(</span><span class="va">zone_id</span>, <span class="st">"rec-1"</span>, content <span class="op">=</span> <span class="st">"192.0.2.99"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/cf_delete_dns_record.html">cf_delete_dns_record</a></span><span class="op">(</span><span class="va">zone_id</span>, <span class="st">"rec-1"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co">#&gt; $id</span></span>
+<span><span class="co">#&gt; [1] "rec-1"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content</span></span>
+<span><span class="co">#&gt; [1] "192.0.2.99"</span></span>
+<span><span class="fu"><a href="../reference/cf_delete_dns_record.html">cf_delete_dns_record</a></span><span class="op">(</span><span class="va">zone_id</span>, <span class="st">"rec-1"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $id</span></span>
+<span><span class="co">#&gt; [1] "rec-1"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="page-rules">Page Rules<a class="anchor" aria-label="anchor" href="#page-rules"></a>
 </h2>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cf_list_page_rules.html">cf_list_page_rules</a></span><span class="op">(</span><span class="va">zone_id</span><span class="op">)</span></span>
+<span><span class="co">#&gt;       id status targets actions</span></span>
+<span><span class="co">#&gt; 1 rule-1 active</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/cf_create_page_rule.html">cf_create_page_rule</a></span><span class="op">(</span></span>
 <span>  <span class="va">zone_id</span>,</span>
@@ -167,9 +241,21 @@ call.</p>
 <span>    <span class="fu"><a href="../reference/cf_page_rule_action.html">cf_page_rule_action</a></span><span class="op">(</span><span class="st">"edge_cache_ttl"</span>, <span class="fl">7200</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
+<span><span class="co">#&gt; $id</span></span>
+<span><span class="co">#&gt; [1] "rule-new"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $status</span></span>
+<span><span class="co">#&gt; [1] "active"</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/cf_update_page_rule.html">cf_update_page_rule</a></span><span class="op">(</span><span class="va">zone_id</span>, <span class="st">"rule-1"</span>, status <span class="op">=</span> <span class="st">"disabled"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/cf_delete_page_rule.html">cf_delete_page_rule</a></span><span class="op">(</span><span class="va">zone_id</span>, <span class="st">"rule-1"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co">#&gt; $id</span></span>
+<span><span class="co">#&gt; [1] "rule-1"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $status</span></span>
+<span><span class="co">#&gt; [1] "disabled"</span></span>
+<span><span class="fu"><a href="../reference/cf_delete_page_rule.html">cf_delete_page_rule</a></span><span class="op">(</span><span class="va">zone_id</span>, <span class="st">"rule-1"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $id</span></span>
+<span><span class="co">#&gt; [1] "rule-1"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="cache-purging">Cache purging<a class="anchor" aria-label="anchor" href="#cache-purging"></a>
@@ -179,66 +265,134 @@ call.</p>
 <span>  <span class="st">"https://example.com/index.html"</span>,</span>
 <span>  <span class="st">"https://example.com/style.css"</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $id</span></span>
+<span><span class="co">#&gt; [1] "purge-1"</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/cf_purge_cache.html">cf_purge_cache</a></span><span class="op">(</span><span class="va">zone_id</span>, prefixes <span class="op">=</span> <span class="st">"example.com/blog"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $id</span></span>
+<span><span class="co">#&gt; [1] "purge-2"</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/cf_purge_cache.html">cf_purge_cache</a></span><span class="op">(</span><span class="va">zone_id</span>, purge_everything <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/cf_purge_cache.html">cf_purge_cache</a></span><span class="op">(</span><span class="va">zone_id</span>, purge_everything <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $id</span></span>
+<span><span class="co">#&gt; [1] "purge-3"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="zone-settings">Zone settings<a class="anchor" aria-label="anchor" href="#zone-settings"></a>
 </h2>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cf_get_zone_settings.html">cf_get_zone_settings</a></span><span class="op">(</span><span class="va">zone_id</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/cf_get_zone_setting.html">cf_get_zone_setting</a></span><span class="op">(</span><span class="va">zone_id</span>, <span class="st">"ssl"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co">#&gt;            id      value editable</span></span>
+<span><span class="co">#&gt; 1         ssl       full     TRUE</span></span>
+<span><span class="co">#&gt; 2 cache_level aggressive     TRUE</span></span>
+<span><span class="fu"><a href="../reference/cf_get_zone_setting.html">cf_get_zone_setting</a></span><span class="op">(</span><span class="va">zone_id</span>, <span class="st">"ssl"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $id</span></span>
+<span><span class="co">#&gt; [1] "ssl"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $value</span></span>
+<span><span class="co">#&gt; [1] "full"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $editable</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="email-routing">Email Routing<a class="anchor" aria-label="anchor" href="#email-routing"></a>
 </h2>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cf_get_email_routing_settings.html">cf_get_email_routing_settings</a></span><span class="op">(</span><span class="va">zone_id</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $enabled</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $name</span></span>
+<span><span class="co">#&gt; [1] "example.com"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $status</span></span>
+<span><span class="co">#&gt; [1] "ready"</span></span>
 <span><span class="fu"><a href="../reference/cf_list_email_routing_rules.html">cf_list_email_routing_rules</a></span><span class="op">(</span><span class="va">zone_id</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/cf_list_email_routing_addresses.html">cf_list_email_routing_addresses</a></span><span class="op">(</span><span class="va">account_id</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co">#&gt;     id      name enabled matchers</span></span>
+<span><span class="co">#&gt; 1 er-1 catch-all    TRUE</span></span>
+<span><span class="fu"><a href="../reference/cf_list_email_routing_addresses.html">cf_list_email_routing_addresses</a></span><span class="op">(</span><span class="va">account_id</span><span class="op">)</span></span>
+<span><span class="co">#&gt;       id           email             verified</span></span>
+<span><span class="co">#&gt; 1 addr-1 you@example.com 2026-05-01T00:00:00Z</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="turnstile-captcha-replacement">Turnstile (CAPTCHA replacement)<a class="anchor" aria-label="anchor" href="#turnstile-captcha-replacement"></a>
 </h2>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cf_list_turnstile_widgets.html">cf_list_turnstile_widgets</a></span><span class="op">(</span><span class="va">account_id</span><span class="op">)</span></span>
+<span><span class="co">#&gt;       sitekey         name    mode</span></span>
+<span><span class="co">#&gt; 1 0x4AAAAAAA1 comment-form managed</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/cf_create_turnstile_widget.html">cf_create_turnstile_widget</a></span><span class="op">(</span></span>
 <span>  <span class="va">account_id</span>,</span>
 <span>  name <span class="op">=</span> <span class="st">"comment-form"</span>,</span>
 <span>  domains <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"example.com"</span>, <span class="st">"www.example.com"</span><span class="op">)</span>,</span>
 <span>  mode <span class="op">=</span> <span class="st">"managed"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; $sitekey</span></span>
+<span><span class="co">#&gt; [1] "0x4AAAAAAAnew"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $secret</span></span>
+<span><span class="co">#&gt; [1] "0x4AAAAAAAsec"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $name</span></span>
+<span><span class="co">#&gt; [1] "comment-form"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="workers">Workers<a class="anchor" aria-label="anchor" href="#workers"></a>
 </h2>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cf_list_workers_scripts.html">cf_list_workers_scripts</a></span><span class="op">(</span><span class="va">account_id</span><span class="op">)</span></span>
+<span><span class="co">#&gt;            id</span></span>
+<span><span class="co">#&gt; 1 hello-world</span></span>
+<span><span class="co">#&gt; 2     resizer</span></span>
 <span><span class="fu"><a href="../reference/cf_workers_invocations.html">cf_workers_invocations</a></span><span class="op">(</span><span class="va">account_id</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">7</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/cf_list_kv_namespaces.html">cf_list_kv_namespaces</a></span><span class="op">(</span><span class="va">account_id</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co">#&gt;         date      script requests errors subrequests cpu_p50_us cpu_p99_us</span></span>
+<span><span class="co">#&gt; 1 2026-05-01 hello-world    10000      5        2000        1.2        8.5</span></span>
+<span><span class="fu"><a href="../reference/cf_list_kv_namespaces.html">cf_list_kv_namespaces</a></span><span class="op">(</span><span class="va">account_id</span><span class="op">)</span></span>
+<span><span class="co">#&gt;     id title</span></span>
+<span><span class="co">#&gt; 1 ns-1 cache</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="pages-r2-tunnels">Pages, R2, Tunnels<a class="anchor" aria-label="anchor" href="#pages-r2-tunnels"></a>
 </h2>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cf_list_pages_projects.html">cf_list_pages_projects</a></span><span class="op">(</span><span class="va">account_id</span><span class="op">)</span></span>
+<span><span class="co">#&gt;       id       name</span></span>
+<span><span class="co">#&gt; 1 proj-1 my-project</span></span>
 <span><span class="fu"><a href="../reference/cf_list_pages_deployments.html">cf_list_pages_deployments</a></span><span class="op">(</span><span class="va">account_id</span>, <span class="st">"my-project"</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      id environment</span></span>
+<span><span class="co">#&gt; 1 dep-1  production</span></span>
 <span><span class="fu"><a href="../reference/cf_list_r2_buckets.html">cf_list_r2_buckets</a></span><span class="op">(</span><span class="va">account_id</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/cf_list_tunnels.html">cf_list_tunnels</a></span><span class="op">(</span><span class="va">account_id</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co">#&gt;          name location</span></span>
+<span><span class="co">#&gt; 1 assets-prod     WEUR</span></span>
+<span><span class="fu"><a href="../reference/cf_list_tunnels.html">cf_list_tunnels</a></span><span class="op">(</span><span class="va">account_id</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      id name</span></span>
+<span><span class="co">#&gt; 1 tun-1 prod</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="firewall-rulesets">Firewall + Rulesets<a class="anchor" aria-label="anchor" href="#firewall-rulesets"></a>
 </h2>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cf_list_firewall_rules.html">cf_list_firewall_rules</a></span><span class="op">(</span><span class="va">zone_id</span><span class="op">)</span></span>
+<span><span class="co">#&gt;     id description filter</span></span>
+<span><span class="co">#&gt; 1 fw-1  block bots</span></span>
 <span></span>
 <span><span class="co"># Modern rulesets surface:</span></span>
 <span><span class="fu"><a href="../reference/cf_list_rulesets.html">cf_list_rulesets</a></span><span class="op">(</span><span class="va">zone_id</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/cf_get_ruleset.html">cf_get_ruleset</a></span><span class="op">(</span><span class="va">zone_id</span>, <span class="va">ruleset_id</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/cf_list_account_rulesets.html">cf_list_account_rulesets</a></span><span class="op">(</span><span class="va">account_id</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co">#&gt;     id    name kind</span></span>
+<span><span class="co">#&gt; 1 rs-1 default zone</span></span>
+<span><span class="fu"><a href="../reference/cf_get_ruleset.html">cf_get_ruleset</a></span><span class="op">(</span><span class="va">zone_id</span>, <span class="st">"rs-1"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $id</span></span>
+<span><span class="co">#&gt; [1] "rs-1"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $name</span></span>
+<span><span class="co">#&gt; [1] "default"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $rules</span></span>
+<span><span class="co">#&gt; list()</span></span>
+<span><span class="fu"><a href="../reference/cf_list_account_rulesets.html">cf_list_account_rulesets</a></span><span class="op">(</span><span class="va">account_id</span><span class="op">)</span></span>
+<span><span class="co">#&gt;         id    name    kind</span></span>
+<span><span class="co">#&gt; 1 rs-acc-1 managed managed</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="escape-hatches">Escape hatches<a class="anchor" aria-label="anchor" href="#escape-hatches"></a>
@@ -246,16 +400,40 @@ call.</p>
 <p>For anything cloudflarer does not wrap, drop down to the generics.
 They handle auth and the envelope; you handle the path.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Any REST endpoint:</span></span>
-<span><span class="fu"><a href="../reference/cf_request.html">cf_request</a></span><span class="op">(</span><span class="st">"user/tokens/verify"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/cf_request.html">cf_request</a></span><span class="op">(</span></span>
-<span>  <span class="st">"zones/abc/dns_records"</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"POST"</span>,</span>
-<span>  body <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"A"</span>, name <span class="op">=</span> <span class="st">"x"</span>, content <span class="op">=</span> <span class="st">"1.2.3.4"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Any REST endpoint: build -&gt; pipe httr2 verbs -&gt; perform -&gt; unwrap</span></span>
+<span><span class="fu"><a href="../reference/cf_request.html">cf_request</a></span><span class="op">(</span><span class="st">"user/tokens/verify"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">httr2</span><span class="fu">::</span><span class="fu"><a href="https://httr2.r-lib.org/reference/req_perform.html" class="external-link">req_perform</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cf_resp.html">cf_resp</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $id</span></span>
+<span><span class="co">#&gt; [1] "tok-1"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $status</span></span>
+<span><span class="co">#&gt; [1] "active"</span></span>
+<span><span class="fu"><a href="../reference/cf_request.html">cf_request</a></span><span class="op">(</span><span class="st">"zones/abc/dns_records"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">httr2</span><span class="fu">::</span><span class="fu"><a href="https://httr2.r-lib.org/reference/req_method.html" class="external-link">req_method</a></span><span class="op">(</span><span class="st">"POST"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">httr2</span><span class="fu">::</span><span class="fu"><a href="https://httr2.r-lib.org/reference/req_body.html" class="external-link">req_body_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"A"</span>, name <span class="op">=</span> <span class="st">"x"</span>, content <span class="op">=</span> <span class="st">"192.0.2.1"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">httr2</span><span class="fu">::</span><span class="fu"><a href="https://httr2.r-lib.org/reference/req_perform.html" class="external-link">req_perform</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cf_resp.html">cf_resp</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $id</span></span>
+<span><span class="co">#&gt; [1] "rec-new"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $type</span></span>
+<span><span class="co">#&gt; [1] "A"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $name</span></span>
+<span><span class="co">#&gt; [1] "x"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content</span></span>
+<span><span class="co">#&gt; [1] "192.0.2.1"</span></span>
 <span></span>
 <span><span class="co"># Paginated REST list (returns a raw list):</span></span>
-<span><span class="fu"><a href="../reference/cf_request_collect.html">cf_request_collect</a></span><span class="op">(</span><span class="st">"accounts/abc/access/apps"</span>, per_page <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/cf_request.html">cf_request</a></span><span class="op">(</span><span class="st">"accounts/abc/access/apps"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/cf_collect.html">cf_collect</a></span><span class="op">(</span>per_page <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [[1]]</span></span>
+<span><span class="co">#&gt; [[1]]$id</span></span>
+<span><span class="co">#&gt; [1] "app-1"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[1]]$name</span></span>
+<span><span class="co">#&gt; [1] "Dashboard"</span></span>
 <span></span>
 <span><span class="co"># Any GraphQL Analytics query:</span></span>
 <span><span class="fu"><a href="../reference/cf_graphql.html">cf_graphql</a></span><span class="op">(</span></span>
@@ -266,7 +444,21 @@ They handle auth and the envelope; you handle the path.</p>
 <span><span class="st">    ) { dimensions { date } sum { requests } } } }</span></span>
 <span><span class="st">  }"</span>,</span>
 <span>  zoneTag <span class="op">=</span> <span class="va">zone_id</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; $data</span></span>
+<span><span class="co">#&gt; $data$viewer</span></span>
+<span><span class="co">#&gt; $data$viewer$zones</span></span>
+<span><span class="co">#&gt; $data$viewer$zones[[1]]</span></span>
+<span><span class="co">#&gt; $data$viewer$zones[[1]]$httpRequests1dGroups</span></span>
+<span><span class="co">#&gt; $data$viewer$zones[[1]]$httpRequests1dGroups[[1]]</span></span>
+<span><span class="co">#&gt; $data$viewer$zones[[1]]$httpRequests1dGroups[[1]]$dimensions</span></span>
+<span><span class="co">#&gt; $data$viewer$zones[[1]]$httpRequests1dGroups[[1]]$dimensions$date</span></span>
+<span><span class="co">#&gt; [1] "2026-05-14"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $data$viewer$zones[[1]]$httpRequests1dGroups[[1]]$sum</span></span>
+<span><span class="co">#&gt; $data$viewer$zones[[1]]$httpRequests1dGroups[[1]]$sum$requests</span></span>
+<span><span class="co">#&gt; [1] 1000</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="error-handling">Error handling<a class="anchor" aria-label="anchor" href="#error-handling"></a>
@@ -281,7 +473,11 @@ classed condition:</p>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"Cloudflare said: "</span>, <span class="fu"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">conditionMessage</a></span><span class="op">(</span><span class="va">err</span><span class="op">)</span><span class="op">)</span></span>
 <span>    <span class="cn">NULL</span></span>
 <span>  <span class="op">}</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Cloudflare said: Cloudflare API request failed.</span></span>
+<span><span class="co">#&gt; [7003] Could not route to /zones/does-not-exist, perhaps your object identifier</span></span>
+<span><span class="co">#&gt; is invalid?</span></span>
+<span><span class="co">#&gt; NULL</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

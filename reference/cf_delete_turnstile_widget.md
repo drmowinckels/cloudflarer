@@ -53,7 +53,8 @@ Other turnstile:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_delete_turnstile_widget("abc123", "0x4AAA...")
-} # }
+#> $sitekey
+#> [1] "0x4AAA..."
+#> 
 ```

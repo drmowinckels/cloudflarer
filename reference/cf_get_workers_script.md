@@ -57,7 +57,14 @@ Other workers:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_get_workers_script("abc123", "my-worker")
-} # }
+#> $id
+#> [1] "my-worker"
+#> 
+#> $created_on
+#> [1] "2026-01-01T00:00:00Z"
+#> 
+#> $usage_model
+#> [1] "standard"
+#> 
 ```

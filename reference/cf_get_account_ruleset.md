@@ -54,7 +54,30 @@ Other rulesets:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_get_account_ruleset("acc-1", "rs-1")
-} # }
+#> $id
+#> [1] "rs-1"
+#> 
+#> $name
+#> [1] "Cloudflare Managed Ruleset"
+#> 
+#> $kind
+#> [1] "managed"
+#> 
+#> $phase
+#> [1] "http_request_firewall_managed"
+#> 
+#> $rules
+#> $rules[[1]]
+#> $rules[[1]]$id
+#> [1] "rule-1"
+#> 
+#> $rules[[1]]$action
+#> [1] "execute"
+#> 
+#> $rules[[1]]$expression
+#> [1] "true"
+#> 
+#> 
+#> 
 ```

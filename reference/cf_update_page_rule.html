@@ -131,9 +131,41 @@ variable.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="fu">cf_update_page_rule</span><span class="op">(</span><span class="va">zone_id</span>, <span class="st">"rule-1"</span>, status <span class="op">=</span> <span class="st">"disabled"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">cf_update_page_rule</span><span class="op">(</span><span class="st">"abc123"</span>, <span class="st">"rule-1"</span>, status <span class="op">=</span> <span class="st">"disabled"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $id</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "rule-1"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $status</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "disabled"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $priority</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $targets</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $targets[[1]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $targets[[1]]$target</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "url"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $targets[[1]]$constraint</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $targets[[1]]$constraint$operator</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "matches"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $targets[[1]]$constraint$value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "*example.com/blog/*"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $actions</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $actions[[1]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $actions[[1]]$id</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "cache_level"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $actions[[1]]$value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "cache_everything"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

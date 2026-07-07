@@ -80,7 +80,6 @@ Other analytics:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 res <- cf_graphql(
   "query Viewer($accountTag: String!) {
      viewer {
@@ -92,6 +91,11 @@ res <- cf_graphql(
   accountTag = "abc123"
 )
 res$data$viewer$accounts
+#> [[1]]
+#> [[1]]$accountTag
+#> [1] "abc123"
+#> 
+#> 
 
 res <- cf_graphql(
   "
@@ -114,5 +118,4 @@ res <- cf_graphql(
   since = "2026-05-01",
   until = "2026-05-08"
 )
-} # }
 ```

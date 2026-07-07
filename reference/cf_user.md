@@ -23,7 +23,26 @@ A named list of user fields, including `id`, `email`, `first_name`,
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_user()
-} # }
+#> $id
+#> [1] "7c5dae5552338874e5053f2534d2767a"
+#> 
+#> $email
+#> [1] "user@example.com"
+#> 
+#> $first_name
+#> [1] "Ada"
+#> 
+#> $last_name
+#> [1] "Lovelace"
+#> 
+#> $telephone
+#> NULL
+#> 
+#> $country
+#> [1] "GB"
+#> 
+#> $organizations
+#> list()
+#> 
 ```

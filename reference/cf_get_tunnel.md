@@ -52,7 +52,14 @@ Other tunnels:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_get_tunnel("abc123", "tunnel-1")
-} # }
+#> $id
+#> [1] "tunnel-1"
+#> 
+#> $name
+#> [1] "prod"
+#> 
+#> $status
+#> [1] "healthy"
+#> 
 ```

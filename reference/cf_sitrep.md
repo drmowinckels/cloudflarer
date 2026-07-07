@@ -34,6 +34,6 @@ cf_sitrep()
 #> 
 #> ── cloudflarer sitrep ──────────────────────────────────────────────────────────
 #> ℹ Package version: 0.0.0.9000
-#> ✖ No Cloudflare credentials found in the environment.
-#> ℹ Set `CLOUDFLARE_API_TOKEN`, or both `CLOUDFLARE_EMAIL` and `CLOUDFLARE_API_KEY`.
+#> ✔ Using API token (`CLOUDFLARE_API_TOKEN`).
+#> ✔ Credentials verified against the Cloudflare API.
 ```

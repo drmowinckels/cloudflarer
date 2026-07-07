@@ -27,8 +27,10 @@ Low-level helpers used by every wrapper. Use these directly to call
 endpoints the package does not yet provide a function for.
 
 - [`cf_request()`](http://drmowinckels.io/cloudflarer/reference/cf_request.md)
-  : Perform a generic Cloudflare API request
-- [`cf_request_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_request_collect.md)
+  : Build an authenticated request for a Cloudflare endpoint
+- [`cf_resp()`](http://drmowinckels.io/cloudflarer/reference/cf_resp.md)
+  : Unwrap the result from a Cloudflare response
+- [`cf_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_collect.md)
   : Collect every page of a paginated endpoint
 - [`cf_graphql()`](http://drmowinckels.io/cloudflarer/reference/cf_graphql.md)
   : Run a Cloudflare GraphQL Analytics query

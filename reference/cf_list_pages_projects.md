@@ -56,7 +56,10 @@ Other pages:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_list_pages_projects("abc123")
-} # }
+#> # A tibble: 2 × 2
+#>   name    subdomain        
+#> * <chr>   <chr>            
+#> 1 my-site my-site.pages.dev
+#> 2 docs    docs.pages.dev   
 ```

@@ -61,7 +61,14 @@ Other analytics:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_get_rum_site("acc-1", "abc-tag")
-} # }
+#> $site_tag
+#> [1] "abc-tag"
+#> 
+#> $host
+#> [1] "example.com"
+#> 
+#> $created
+#> [1] "2026-05-01T00:00:00Z"
+#> 
 ```

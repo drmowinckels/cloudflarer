@@ -101,7 +101,20 @@ Other dns:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_update_dns_record("zone-1", "rec-1", content = "192.0.2.2")
-} # }
+#> $id
+#> [1] "rec-1"
+#> 
+#> $type
+#> [1] "A"
+#> 
+#> $name
+#> [1] "example.com"
+#> 
+#> $content
+#> [1] "192.0.2.2"
+#> 
+#> $proxied
+#> [1] TRUE
+#> 
 ```

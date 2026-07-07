@@ -32,7 +32,7 @@ cf_list_rum_sites(
 - per_page, max_pages:
 
   Pagination controls, see
-  [`cf_request_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_request_collect.md).
+  [`cf_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_collect.md).
 
 - as_df:
 
@@ -77,7 +77,10 @@ Other analytics:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_list_rum_sites("acc-1")
-} # }
+#> # A tibble: 2 × 3
+#>   site_tag host        created             
+#> * <chr>    <chr>       <chr>               
+#> 1 abc-tag  example.com 2026-05-01T00:00:00Z
+#> 2 def-tag  example.org 2026-05-02T00:00:00Z
 ```

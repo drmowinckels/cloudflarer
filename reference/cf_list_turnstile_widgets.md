@@ -26,7 +26,7 @@ cf_list_turnstile_widgets(
 - per_page, max_pages:
 
   Pagination controls, see
-  [`cf_request_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_request_collect.md).
+  [`cf_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_collect.md).
 
 - as_df:
 
@@ -63,7 +63,10 @@ Other turnstile:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_list_turnstile_widgets("abc123")
-} # }
+#> # A tibble: 2 × 3
+#>   sitekey     name         mode     
+#> * <chr>       <chr>        <chr>    
+#> 1 0x4AAAAAAA1 comment-form managed  
+#> 2 0x4AAAAAAA2 signup-form  invisible
 ```

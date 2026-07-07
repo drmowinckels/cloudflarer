@@ -74,11 +74,13 @@ Other analytics:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_dns_queries(
   "abc123",
   since = Sys.Date() - 7,
   until = Sys.Date()
 )
-} # }
+#> # A tibble: 1 × 2
+#>   date       queries
+#>   <chr>        <int>
+#> 1 2026-05-01    1234
 ```

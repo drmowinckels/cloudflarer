@@ -65,7 +65,10 @@ Other pages:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_list_pages_deployments("abc123", "my-site")
-} # }
+#> # A tibble: 2 × 3
+#>   id    environment created_on          
+#> * <chr> <chr>       <chr>               
+#> 1 dep-1 production  2026-05-20T18:07:49Z
+#> 2 dep-2 preview     2026-05-19T10:03:11Z
 ```

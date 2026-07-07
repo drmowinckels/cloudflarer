@@ -66,12 +66,12 @@
 
 
 <dt id="arg-per-page">per_page<a class="anchor" aria-label="anchor" href="#arg-per-page"></a></dt>
-<dd><p>Page size, see <code><a href="cf_request_collect.html">cf_request_collect()</a></code>.</p></dd>
+<dd><p>Page size, see <code><a href="cf_collect.html">cf_collect()</a></code>.</p></dd>
 
 
 <dt id="arg-max-pages">max_pages<a class="anchor" aria-label="anchor" href="#arg-max-pages"></a></dt>
 <dd><p>Maximum number of pages to retrieve, see
-<code><a href="cf_request_collect.html">cf_request_collect()</a></code>.</p></dd>
+<code><a href="cf_collect.html">cf_collect()</a></code>.</p></dd>
 
 
 <dt id="arg-as-df">as_df<a class="anchor" aria-label="anchor" href="#arg-as-df"></a></dt>
@@ -109,9 +109,12 @@ variable.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="fu">cf_list_accounts</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">cf_list_accounts</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   id     name       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">*</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> abc123 Example Org</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> def456 Second Org </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

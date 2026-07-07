@@ -35,7 +35,9 @@ Other authentication:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-cf_token()
-} # }
+withr::with_envvar(
+  c(CLOUDFLARE_API_TOKEN = "cloudflarer-example"),
+  cf_token()
+)
+#> [1] "cloudflarer-example"
 ```

@@ -80,13 +80,16 @@ Other analytics:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_zone_requests(
   "abc123",
   since = Sys.Date() - 7,
   until = Sys.Date(),
   by    = "day"
 )
+#> # A tibble: 1 × 6
+#>   date       requests   bytes pageviews threats uniques
+#>   <chr>         <int>   <dbl>     <int>   <int>   <int>
+#> 1 2026-05-01     1000 2000000       500      10     300
 
 cf_zone_requests(
   "abc123",
@@ -94,5 +97,8 @@ cf_zone_requests(
   until = Sys.time(),
   by    = "hour"
 )
-} # }
+#> # A tibble: 1 × 6
+#>   date                 requests  bytes pageviews threats uniques
+#>   <chr>                   <int>  <dbl>     <int>   <int>   <int>
+#> 1 2026-05-01T00:00:00Z       50 100000        25       1      20
 ```

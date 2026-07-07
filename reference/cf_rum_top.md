@@ -84,7 +84,6 @@ Other analytics:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_rum_top(
   "acc-1",
   site_tag = "abc",
@@ -93,5 +92,9 @@ cf_rum_top(
   dimension = "countryName",
   limit = 10
 )
-} # }
+#> # A tibble: 2 × 2
+#>   countryName   count
+#>   <chr>         <int>
+#> 1 United States   300
+#> 2 Germany         120
 ```

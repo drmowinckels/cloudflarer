@@ -51,7 +51,14 @@ Other zones:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_get_zone("abc123")
-} # }
+#> $id
+#> [1] "abc123"
+#> 
+#> $name
+#> [1] "example.com"
+#> 
+#> $status
+#> [1] "active"
+#> 
 ```

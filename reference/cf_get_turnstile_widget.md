@@ -53,7 +53,14 @@ Other turnstile:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_get_turnstile_widget("abc123", "0x4AAA...")
-} # }
+#> $sitekey
+#> [1] "0x4AAA..."
+#> 
+#> $name
+#> [1] "comment-form"
+#> 
+#> $mode
+#> [1] "managed"
+#> 
 ```

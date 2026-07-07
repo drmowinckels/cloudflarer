@@ -54,7 +54,20 @@ Other dns:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_get_dns_record("zone-1", "rec-1")
-} # }
+#> $id
+#> [1] "rec-1"
+#> 
+#> $type
+#> [1] "A"
+#> 
+#> $name
+#> [1] "example.com"
+#> 
+#> $content
+#> [1] "192.0.2.1"
+#> 
+#> $proxied
+#> [1] TRUE
+#> 
 ```

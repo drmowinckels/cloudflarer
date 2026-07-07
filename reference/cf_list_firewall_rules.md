@@ -29,7 +29,7 @@ cf_list_firewall_rules(
 - per_page, max_pages:
 
   Pagination controls, see
-  [`cf_request_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_request_collect.md).
+  [`cf_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_collect.md).
 
 - as_df:
 
@@ -75,7 +75,10 @@ Other zones:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_list_firewall_rules("abc123")
-} # }
+#> # A tibble: 2 × 4
+#>   id     action    paused filter          
+#> * <chr>  <chr>     <lgl>  <I<list>>       
+#> 1 rule-1 block     FALSE  <named list [2]>
+#> 2 rule-2 challenge FALSE  <named list [2]>
 ```

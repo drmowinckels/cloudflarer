@@ -29,5 +29,5 @@ Other authentication:
 
 ``` r
 cf_has_auth()
-#> [1] FALSE
+#> [1] TRUE
 ```

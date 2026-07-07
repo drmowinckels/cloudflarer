@@ -55,7 +55,39 @@ Other zones:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_get_page_rule("abc123", "rule-1")
-} # }
+#> $id
+#> [1] "rule-1"
+#> 
+#> $status
+#> [1] "active"
+#> 
+#> $priority
+#> [1] 1
+#> 
+#> $targets
+#> $targets[[1]]
+#> $targets[[1]]$target
+#> [1] "url"
+#> 
+#> $targets[[1]]$constraint
+#> $targets[[1]]$constraint$operator
+#> [1] "matches"
+#> 
+#> $targets[[1]]$constraint$value
+#> [1] "*example.com/blog/*"
+#> 
+#> 
+#> 
+#> 
+#> $actions
+#> $actions[[1]]
+#> $actions[[1]]$id
+#> [1] "cache_level"
+#> 
+#> $actions[[1]]$value
+#> [1] "cache_everything"
+#> 
+#> 
+#> 
 ```

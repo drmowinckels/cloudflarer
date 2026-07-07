@@ -77,7 +77,6 @@ Other analytics:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_firewall_events_top(
   "abc123",
   since = Sys.Date() - 7,
@@ -85,5 +84,9 @@ cf_firewall_events_top(
   dimension = "action",
   limit = 10
 )
-} # }
+#> # A tibble: 2 × 2
+#>   action    events
+#>   <chr>      <int>
+#> 1 block         30
+#> 2 challenge     12
 ```

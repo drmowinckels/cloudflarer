@@ -35,12 +35,12 @@ cf_list_dns_records(
 - per_page:
 
   Page size, see
-  [`cf_request_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_request_collect.md).
+  [`cf_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_collect.md).
 
 - max_pages:
 
   Maximum pages to retrieve, see
-  [`cf_request_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_request_collect.md).
+  [`cf_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_collect.md).
 
 - as_df:
 
@@ -78,8 +78,15 @@ Other dns:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_list_dns_records("abc123")
+#> # A tibble: 2 × 5
+#>   id    type  name            content     proxied
+#> * <chr> <chr> <chr>           <chr>       <lgl>  
+#> 1 rec-1 A     example.com     192.0.2.1   TRUE   
+#> 2 rec-2 CNAME www.example.com example.com TRUE   
 cf_list_dns_records("abc123", type = "A")
-} # }
+#> # A tibble: 1 × 5
+#>   id    type  name        content   proxied
+#> * <chr> <chr> <chr>       <chr>     <lgl>  
+#> 1 rec-1 A     example.com 192.0.2.1 TRUE   
 ```

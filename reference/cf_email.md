@@ -35,7 +35,9 @@ Other authentication:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-cf_email()
-} # }
+withr::with_envvar(
+  c(CLOUDFLARE_EMAIL = "you@example.com"),
+  cf_email()
+)
+#> [1] "you@example.com"
 ```

@@ -71,11 +71,14 @@ Other analytics:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_cache_ratio(
   "abc123",
   since = Sys.Date() - 7,
   until = Sys.Date()
 )
-} # }
+#> # A tibble: 1 × 7
+#>   date       requests cached_requests   bytes cached_bytes request_hit_ratio
+#>   <chr>         <int>           <int>   <dbl>        <dbl>             <dbl>
+#> 1 2026-05-01     1000             800 2000000      1500000               0.8
+#> # ℹ 1 more variable: bandwidth_hit_ratio <dbl>
 ```

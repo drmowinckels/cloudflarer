@@ -81,11 +81,13 @@ Other analytics:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_firewall_events_by_day(
   "abc123",
   since = Sys.Date() - 30,
   until = Sys.Date()
 )
-} # }
+#> # A tibble: 1 × 2
+#>   date       events
+#>   <chr>       <int>
+#> 1 2026-05-01     42
 ```

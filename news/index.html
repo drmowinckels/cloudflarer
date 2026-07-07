@@ -43,12 +43,31 @@
 <h2 class="pkg-version" data-toc-text="0.0.0.9000" id="cloudflarer-0009000">cloudflarer 0.0.0.9000<a class="anchor" aria-label="anchor" href="#cloudflarer-0009000"></a></h2>
 <ul><li>Initial scaffold of the package.</li>
 </ul><div class="section level3">
+<h3 id="hardening-0-0-0-9000">Hardening<a class="anchor" aria-label="anchor" href="#hardening-0-0-0-9000"></a></h3>
+<ul><li>
+<code><a href="../reference/cf_verify.html">cf_verify()</a></code> no longer crashes with an <code>NA</code>-in-<code>if</code> error when no credentials are configured. It now falls through to <code>/user</code> so the underlying credential helpers raise the documented “No Cloudflare credentials found” message.</li>
+<li>
+<code><a href="../reference/cf_verify.html">cf_verify()</a></code> honours the same credential precedence as the request layer: explicitly-passed <code>email</code>/<code>api_key</code> now verify against <code>/user</code> even when a <code>CLOUDFLARE_API_TOKEN</code> is present in the environment, instead of silently verifying the env token.</li>
+<li>
+<code><a href="../reference/cf_records_to_df.html">cf_records_to_df()</a></code> no longer silently truncates numeric data when records mix integer and double values for the same field. Mixed <code>integer + double</code> columns widen to <code>double</code>; otherwise incompatible mixed scalar types fall back to a list-column. Classed scalar values (<code>Date</code>, <code>POSIXct</code>) are kept in a list-column rather than being stripped to bare numerics.</li>
+<li>
+<code><a href="../reference/cf_records_to_df.html">cf_records_to_df()</a></code> validates that <code>records</code> is a list of named lists and aborts with a clear message otherwise.</li>
+<li>
+<code><a href="../reference/cf_zone_overview.html">cf_zone_overview()</a></code> now only swallows <code>cloudflarer_error</code> conditions per its documented contract. Programmer errors and other unexpected exceptions propagate instead of being silently reduced to <code>NULL</code>.</li>
+<li>Every endpoint wrapper that interpolates an identifier into a URL path now validates the identifier via the new internal <code>cf_check_id()</code> helper, replacing confusing API or routing errors with a single useful message.</li>
+<li>Boolean Cloudflare query parameters are now serialized consistently through an internal <code>cf_query_bool()</code> helper, and boolean flags that are only sent when <code>TRUE</code> (for example <code>enabled_only</code>, <code>verified_only</code>) are validated up front through the shared <code>cf_check_flag()</code> helper so bad input raises the same clear, argument-named message everywhere.</li>
+<li>Endpoint wrappers no longer assemble request paths with <code><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0()</a></code>. Each wrapper passes its path as a character vector of segments (<code>c("zones", zone_id, "dns_records")</code>) that is appended through <code><a href="https://httr2.r-lib.org/reference/req_url.html" class="external-link">httr2::req_url_path_append()</a></code>, so every segment is URL-encoded by <code>httr2</code> rather than string-concatenated.</li>
+<li>
+<code>format_graphql_error()</code> escapes braces after assembling the full message, so a brace appearing in the GraphQL <code>path</code> segment can no longer confuse <code>cli</code>’s interpolation.</li>
+<li>Response-envelope access uses <code>[["result"]]</code> instead of <code>$result</code>, avoiding R’s partial name matching against <code>result_info</code> on the unusual case where an envelope omits <code>result</code>.</li>
+</ul></div>
+<div class="section level3">
 <h3 id="core-0-0-0-9000">Core<a class="anchor" aria-label="anchor" href="#core-0-0-0-9000"></a></h3>
-<ul><li>Core request helpers: <code>cf_req()</code>, <code><a href="../reference/cf_request.html">cf_request()</a></code>, <code><a href="../reference/cf_request_collect.html">cf_request_collect()</a></code>.</li>
+<ul><li>Composable request layer built on <code>httr2</code>. <code><a href="../reference/cf_request.html">cf_request()</a></code> builds an authenticated request for an endpoint and returns it; callers pipe on the <code>httr2</code> verbs they need (<code>req_method()</code>, <code>req_url_query()</code>, <code>req_body_json()</code>), perform it, and unwrap the Cloudflare envelope with <code><a href="../reference/cf_resp.html">cf_resp()</a></code>. <code><a href="../reference/cf_collect.html">cf_collect()</a></code> walks a paginated list endpoint from such a request. This lets users mix the package’s helpers with plain <code>httr2</code> to call anything the package does not wrap, instead of routing everything through one argument-heavy function.</li>
 <li>Two-mode authentication: API token via <code>CLOUDFLARE_API_TOKEN</code>, or legacy Global API Key via <code>CLOUDFLARE_EMAIL</code> + <code>CLOUDFLARE_API_KEY</code>. The active mode is reported by <code><a href="../reference/cf_auth_mode.html">cf_auth_mode()</a></code>.</li>
 <li>Authentication helpers: <code><a href="../reference/cf_token.html">cf_token()</a></code>, <code><a href="../reference/cf_email.html">cf_email()</a></code>, <code><a href="../reference/cf_api_key.html">cf_api_key()</a></code>, <code><a href="../reference/cf_has_auth.html">cf_has_auth()</a></code>, <code><a href="../reference/cf_verify.html">cf_token_verify()</a></code>, <code><a href="../reference/cf_verify.html">cf_verify()</a></code>.</li>
 <li>Diagnostic helper <code><a href="../reference/cf_sitrep.html">cf_sitrep()</a></code> reports the active mode and verifies the configured credentials against the live API.</li>
-<li>All REST API failures, whether HTTP-level or envelope-level (<code>success: false</code>), raise a classed <code>cloudflarer_error</code> condition that can be caught with <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code>.</li>
+<li>All REST API failures that reach the API, whether HTTP-level or envelope-level (<code>success: false</code>), raise a classed <code>cloudflarer_error</code> condition that can be caught with <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code>. Transport-level failures (DNS, connection refused, timeout) surface as the underlying <code>httr2</code> error.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="data-frame-defaults-0-0-0-9000">Data frame defaults<a class="anchor" aria-label="anchor" href="#data-frame-defaults-0-0-0-9000"></a></h3>

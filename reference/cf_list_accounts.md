@@ -25,12 +25,12 @@ cf_list_accounts(
 - per_page:
 
   Page size, see
-  [`cf_request_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_request_collect.md).
+  [`cf_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_collect.md).
 
 - max_pages:
 
   Maximum number of pages to retrieve, see
-  [`cf_request_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_request_collect.md).
+  [`cf_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_collect.md).
 
 - as_df:
 
@@ -65,7 +65,10 @@ Other accounts:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 cf_list_accounts()
-} # }
+#> # A tibble: 2 × 2
+#>   id     name       
+#> * <chr>  <chr>      
+#> 1 abc123 Example Org
+#> 2 def456 Second Org 
 ```
