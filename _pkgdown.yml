@@ -47,6 +47,19 @@ reference:
       - contains("ruleset")
   - title: Cache
     contents: cf_purge_cache
+  - title: Healthchecks
+    contents:
+      - contains("healthcheck")
+  - title: SSL/TLS
+    desc: |
+      Certificate packs (universal/advanced/custom) and SSL-for-SaaS custom hostnames.
+    contents:
+      - contains("certificate_pack")
+      - contains("custom_hostname")
+  - title: D1 (serverless SQL)
+    contents:
+      - contains("d1_database")
+      - cf_d1_query
   - title: Workers
     contents:
       - cf_list_workers_scripts

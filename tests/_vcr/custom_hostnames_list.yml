@@ -1,0 +1,50 @@
+http_interactions:
+  - request:
+      method: GET
+      uri: https://api.cloudflare.com/client/v4/zones/zone-1/custom_hostnames?per_page=50&page=1
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {
+            "success": true,
+            "errors": [],
+            "messages": [],
+            "result": [
+              {
+                "id": "ch-1",
+                "hostname": "shop.customer.com",
+                "status": "active",
+                "ssl": {
+                  "id": "ssl-1",
+                  "type": "dv",
+                  "method": "txt",
+                  "status": "active"
+                },
+                "created_at": "2026-01-01T00:00:00Z"
+              },
+              {
+                "id": "ch-2",
+                "hostname": "blog.customer.com",
+                "status": "pending",
+                "ssl": {
+                  "id": "ssl-2",
+                  "type": "dv",
+                  "method": "http",
+                  "status": "pending_validation"
+                },
+                "created_at": "2026-02-01T00:00:00Z"
+              }
+            ],
+            "result_info": {
+              "page": 1,
+              "per_page": 50,
+              "count": 2,
+              "total_count": 2,
+              "total_pages": 1
+            }
+          }
+    recorded_at: 2026-05-22 00:00:00
+recorded_with: VCR-vcr/2.1.0

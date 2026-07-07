@@ -1,0 +1,36 @@
+http_interactions:
+  - request:
+      method: GET
+      uri: https://api.cloudflare.com/client/v4/zones/zone-1/healthchecks/hc-1
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {
+            "success": true,
+            "errors": [],
+            "messages": [],
+            "result": {
+              "id": "hc-1",
+              "name": "api-prod",
+              "address": "api.example.com",
+              "type": "HTTPS",
+              "status": "healthy",
+              "suspended": false,
+              "interval": 60,
+              "retries": 2,
+              "timeout": 5,
+              "http_config": {
+                "method": "GET",
+                "path": "/health",
+                "port": 443,
+                "expected_codes": ["200"],
+                "follow_redirects": false,
+                "allow_insecure": false
+              }
+            }
+          }
+    recorded_at: 2026-05-22 00:00:00
+recorded_with: VCR-vcr/2.1.0

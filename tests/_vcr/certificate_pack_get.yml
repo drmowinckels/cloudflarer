@@ -1,0 +1,34 @@
+http_interactions:
+  - request:
+      method: GET
+      uri: https://api.cloudflare.com/client/v4/zones/zone-1/ssl/certificate_packs/pack-1
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {
+            "success": true,
+            "errors": [],
+            "messages": [],
+            "result": {
+              "id": "pack-1",
+              "type": "advanced",
+              "hosts": ["example.com", "www.example.com"],
+              "primary_certificate": "cert-1",
+              "certificates": [
+                {
+                  "id": "cert-1",
+                  "status": "active",
+                  "expires_on": "2027-01-01T00:00:00Z"
+                }
+              ],
+              "status": "active",
+              "validation_method": "txt",
+              "validity_days": 365,
+              "certificate_authority": "lets_encrypt"
+            }
+          }
+    recorded_at: 2026-05-22 00:00:00
+recorded_with: VCR-vcr/2.1.0
