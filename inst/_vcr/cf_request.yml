@@ -19,7 +19,7 @@ http_interactions:
         content-type: application/json
       body:
         string: |
-          {"success": true, "errors": [], "messages": [], "result": {"id": "rec-new", "type": "A", "name": "example.com", "content": "1.2.3.4"}}
+          {"success": true, "errors": [], "messages": [], "result": {"id": "rec-new", "type": "A", "name": "example.com", "content": "192.0.2.1"}}
     recorded_at: 2026-05-20 18:07:49
   - request:
       method: GET

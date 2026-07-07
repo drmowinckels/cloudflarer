@@ -71,7 +71,7 @@ describe("cf_create_dns_record()", {
   it("drops NULL optional fields from the body", {
     cap <- local_captured_request()
     local_mock_auth()
-    cf_create_dns_record("zone-1", "A", "x", "1.2.3.4")
+    cf_create_dns_record("zone-1", "A", "x", "192.0.2.1")
     body <- cap$req$body$data
     expect_false("proxied" %in% names(body))
     expect_false("priority" %in% names(body))

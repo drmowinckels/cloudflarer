@@ -23,7 +23,7 @@ http_interactions:
                   {"type": "literal", "field": "to", "value": "hello@example.com"}
                 ],
                 "actions": [
-                  {"type": "forward", "value": ["me@gmail.com"]}
+                  {"type": "forward", "value": ["me@example.com"]}
                 ]
               },
               {
@@ -34,7 +34,7 @@ http_interactions:
                 "priority": 100,
                 "matchers": [{"type": "all"}],
                 "actions": [
-                  {"type": "forward", "value": ["backup@gmail.com"]}
+                  {"type": "forward", "value": ["backup@example.com"]}
                 ]
               }
             ],

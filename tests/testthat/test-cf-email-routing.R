@@ -57,7 +57,7 @@ describe("cf_list_email_routing_addresses()", {
     })
     expect_s3_class(df, "data.frame")
     expect_equal(nrow(df), 2L)
-    expect_equal(df$email, c("me@gmail.com", "backup@gmail.com"))
+    expect_equal(df$email, c("me@example.com", "backup@example.com"))
   })
 
   it("forwards verified_only as a query parameter", {
@@ -81,6 +81,6 @@ describe("cf_list_email_routing_addresses()", {
       res <- cf_list_email_routing_addresses("acc-1", as_df = FALSE)
     })
     expect_type(res, "list")
-    expect_equal(res[[1]]$email, "me@gmail.com")
+    expect_equal(res[[1]]$email, "me@example.com")
   })
 })

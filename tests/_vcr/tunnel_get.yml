@@ -18,7 +18,7 @@ http_interactions:
               "status": "healthy",
               "remote_config": false,
               "connections": [
-                {"id": "conn-1", "origin_ip": "1.2.3.4", "is_pending_reconnect": false}
+                {"id": "conn-1", "origin_ip": "192.0.2.1", "is_pending_reconnect": false}
               ]
             }
           }

@@ -57,7 +57,7 @@ cf_request("user/tokens/verify") |>
 cf_request(c("zones", "abc123", "dns_records")) |>
   httr2::req_method("POST") |>
   httr2::req_body_json(
-    list(type = "A", name = "example.com", content = "1.2.3.4")
+    list(type = "A", name = "example.com", content = "192.0.2.1")
   ) |>
   httr2::req_perform() |>
   cf_resp()

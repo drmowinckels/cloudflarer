@@ -11,7 +11,7 @@ http_interactions:
       status: 200
       headers: {content-type: application/json}
       body:
-        string: '{"success":true,"errors":[],"messages":[],"result":{"id":"rec-new","type":"A","name":"x","content":"1.2.3.4"}}'
+        string: '{"success":true,"errors":[],"messages":[],"result":{"id":"rec-new","type":"A","name":"x","content":"192.0.2.1"}}'
     recorded_at: 2026-05-20 18:07:49
   - request: {method: GET, uri: 'https://api.cloudflare.com/client/v4/accounts/abc/access/apps?per_page=50&page=1'}
     response:

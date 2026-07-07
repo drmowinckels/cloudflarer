@@ -16,7 +16,7 @@ http_interactions:
               {
                 "id": "addr-1",
                 "tag": "tag-1",
-                "email": "me@gmail.com",
+                "email": "me@example.com",
                 "verified": "2026-01-01T00:00:00Z",
                 "created": "2026-01-01T00:00:00Z",
                 "modified": "2026-01-01T00:00:00Z"
@@ -24,7 +24,7 @@ http_interactions:
               {
                 "id": "addr-2",
                 "tag": "tag-2",
-                "email": "backup@gmail.com",
+                "email": "backup@example.com",
                 "verified": "2026-02-01T00:00:00Z",
                 "created": "2026-02-01T00:00:00Z",
                 "modified": "2026-02-01T00:00:00Z"

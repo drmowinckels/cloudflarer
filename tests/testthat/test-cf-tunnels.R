@@ -40,7 +40,7 @@ describe("cf_list_tunnel_connections()", {
     })
     expect_s3_class(df, "data.frame")
     expect_equal(nrow(df), 2L)
-    expect_equal(df$origin_ip, c("1.2.3.4", "1.2.3.5"))
+    expect_equal(df$origin_ip, c("192.0.2.1", "192.0.2.2"))
   })
 
   it("returns a list when as_df = FALSE", {

@@ -212,7 +212,7 @@ cf_request("user/tokens/verify") |>
   cf_resp()
 cf_request("zones/abc/dns_records") |>
   httr2::req_method("POST") |>
-  httr2::req_body_json(list(type = "A", name = "x", content = "1.2.3.4")) |>
+  httr2::req_body_json(list(type = "A", name = "x", content = "192.0.2.1")) |>
   httr2::req_perform() |>
   cf_resp()
 
