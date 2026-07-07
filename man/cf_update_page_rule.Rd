@@ -52,7 +52,9 @@ Targets and actions are full replacements when supplied.
 \examples{
 \dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 \dontshow{
-Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+}
 vcr::insert_example_cassette(
   "cf_update_page_rule",
   package = "cloudflarer",

@@ -19,7 +19,9 @@
 #' @family rulesets
 #' @examplesIf requireNamespace("vcr", quietly = TRUE)
 #' \dontshow{
-#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
 #' vcr::insert_example_cassette("cf_list_rulesets", package = "cloudflarer")
 #' }
 #' cf_list_rulesets("abc123")
@@ -57,7 +59,9 @@ cf_list_rulesets <- function(
 #' @family rulesets
 #' @examplesIf requireNamespace("vcr", quietly = TRUE)
 #' \dontshow{
-#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
 #' vcr::insert_example_cassette("cf_get_ruleset", package = "cloudflarer")
 #' }
 #' cf_get_ruleset("abc123", "rs-1")
@@ -95,7 +99,9 @@ cf_get_ruleset <- function(
 #' @family rulesets
 #' @examplesIf requireNamespace("vcr", quietly = TRUE)
 #' \dontshow{
-#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
 #' vcr::insert_example_cassette("cf_list_account_rulesets", package = "cloudflarer")
 #' }
 #' cf_list_account_rulesets("acc-1")
@@ -133,7 +139,9 @@ cf_list_account_rulesets <- function(
 #' @family rulesets
 #' @examplesIf requireNamespace("vcr", quietly = TRUE)
 #' \dontshow{
-#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
 #' vcr::insert_example_cassette("cf_get_account_ruleset", package = "cloudflarer")
 #' }
 #' cf_get_account_ruleset("acc-1", "rs-1")

@@ -55,9 +55,11 @@ cf_has_auth <- function() {
 #' @return A character scalar with the API token.
 #' @export
 #' @family authentication
-#' @examples
-#' \dontshow{Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")}
-#' cf_token()
+#' @examplesIf requireNamespace("withr", quietly = TRUE)
+#' withr::with_envvar(
+#'   c(CLOUDFLARE_API_TOKEN = "cloudflarer-example"),
+#'   cf_token()
+#' )
 cf_token <- function(token = NULL) {
   token <- token %||% Sys.getenv("CLOUDFLARE_API_TOKEN", unset = "")
   if (!is_nonempty_string(token)) {
@@ -82,9 +84,11 @@ cf_token <- function(token = NULL) {
 #' @return A character scalar with the email address.
 #' @export
 #' @family authentication
-#' @examples
-#' \dontshow{Sys.setenv(CLOUDFLARE_EMAIL = "you@example.com")}
-#' cf_email()
+#' @examplesIf requireNamespace("withr", quietly = TRUE)
+#' withr::with_envvar(
+#'   c(CLOUDFLARE_EMAIL = "you@example.com"),
+#'   cf_email()
+#' )
 cf_email <- function(email = NULL) {
   email <- email %||% Sys.getenv("CLOUDFLARE_EMAIL", unset = "")
   if (!is_nonempty_string(email)) {
@@ -109,9 +113,11 @@ cf_email <- function(email = NULL) {
 #' @return A character scalar with the API key.
 #' @export
 #' @family authentication
-#' @examples
-#' \dontshow{Sys.setenv(CLOUDFLARE_API_KEY = "cloudflarer-example-key")}
-#' cf_api_key()
+#' @examplesIf requireNamespace("withr", quietly = TRUE)
+#' withr::with_envvar(
+#'   c(CLOUDFLARE_API_KEY = "cloudflarer-example-key"),
+#'   cf_api_key()
+#' )
 cf_api_key <- function(api_key = NULL) {
   api_key <- api_key %||% Sys.getenv("CLOUDFLARE_API_KEY", unset = "")
   if (!is_nonempty_string(api_key)) {
@@ -141,7 +147,9 @@ cf_api_key <- function(api_key = NULL) {
 #' @family authentication
 #' @examplesIf requireNamespace("vcr", quietly = TRUE)
 #' \dontshow{
-#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
 #' vcr::insert_example_cassette("cf_verify", package = "cloudflarer")
 #' }
 #' cf_verify()

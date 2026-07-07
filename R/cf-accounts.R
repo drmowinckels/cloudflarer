@@ -19,7 +19,9 @@
 #' @family accounts
 #' @examplesIf requireNamespace("vcr", quietly = TRUE)
 #' \dontshow{
-#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
 #' vcr::insert_example_cassette("cf_list_accounts", package = "cloudflarer")
 #' }
 #' cf_list_accounts()
@@ -56,7 +58,9 @@ cf_list_accounts <- function(
 #' @family accounts
 #' @examplesIf requireNamespace("vcr", quietly = TRUE)
 #' \dontshow{
-#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
 #' vcr::insert_example_cassette("cf_get_account", package = "cloudflarer")
 #' }
 #' cf_get_account("abc123")

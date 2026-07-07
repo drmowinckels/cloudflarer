@@ -16,7 +16,9 @@
 #' @family workers
 #' @examplesIf requireNamespace("vcr", quietly = TRUE)
 #' \dontshow{
-#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
 #' vcr::insert_example_cassette("cf_list_workers_scripts", package = "cloudflarer")
 #' }
 #' cf_list_workers_scripts("abc123")
@@ -57,7 +59,9 @@ cf_list_workers_scripts <- function(
 #' @family workers
 #' @examplesIf requireNamespace("vcr", quietly = TRUE)
 #' \dontshow{
-#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
 #' vcr::insert_example_cassette("cf_get_workers_script", package = "cloudflarer")
 #' }
 #' cf_get_workers_script("abc123", "my-worker")
@@ -106,7 +110,9 @@ cf_get_workers_script <- function(
 #' @family workers
 #' @examplesIf requireNamespace("vcr", quietly = TRUE)
 #' \dontshow{
-#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
 #' vcr::insert_example_cassette(
 #'   "cf_workers_invocations",
 #'   package = "cloudflarer",

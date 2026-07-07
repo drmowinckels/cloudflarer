@@ -20,7 +20,9 @@
 #' @family tunnels
 #' @examplesIf requireNamespace("vcr", quietly = TRUE)
 #' \dontshow{
-#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
 #' vcr::insert_example_cassette("cf_list_tunnels", package = "cloudflarer")
 #' }
 #' cf_list_tunnels("abc123")
@@ -60,7 +62,9 @@ cf_list_tunnels <- function(
 #' @family tunnels
 #' @examplesIf requireNamespace("vcr", quietly = TRUE)
 #' \dontshow{
-#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
 #' vcr::insert_example_cassette("cf_get_tunnel", package = "cloudflarer")
 #' }
 #' cf_get_tunnel("abc123", "tunnel-1")
@@ -102,7 +106,9 @@ cf_get_tunnel <- function(
 #' @family tunnels
 #' @examplesIf requireNamespace("vcr", quietly = TRUE)
 #' \dontshow{
-#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
 #' vcr::insert_example_cassette("cf_list_tunnel_connections", package = "cloudflarer")
 #' }
 #' cf_list_tunnel_connections("abc123", "tunnel-1")

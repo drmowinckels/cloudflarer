@@ -42,7 +42,9 @@ every project in a single call.
 \examples{
 \dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 \dontshow{
-Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+}
 vcr::insert_example_cassette("cf_list_pages_projects", package = "cloudflarer")
 }
 cf_list_pages_projects("abc123")

@@ -54,7 +54,9 @@ overrides for cache, SSL, security, redirects, etc.).
 \examples{
 \dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 \dontshow{
-Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+}
 vcr::insert_example_cassette("cf_list_page_rules", package = "cloudflarer")
 }
 cf_list_page_rules("abc123")

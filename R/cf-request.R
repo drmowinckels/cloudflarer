@@ -118,7 +118,9 @@ cf_req_auth <- function(req, token = NULL, email = NULL, api_key = NULL) {
 #' @family requests
 #' @examplesIf requireNamespace("vcr", quietly = TRUE)
 #' \dontshow{
-#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
 #' vcr::insert_example_cassette(
 #'   "cf_request",
 #'   package = "cloudflarer",
@@ -173,7 +175,9 @@ cf_request <- function(endpoint, token = NULL, email = NULL, api_key = NULL) {
 #' @family requests
 #' @examplesIf requireNamespace("vcr", quietly = TRUE)
 #' \dontshow{
-#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
 #' vcr::insert_example_cassette("cf_resp", package = "cloudflarer")
 #' }
 #' cf_request("user") |>
@@ -205,7 +209,9 @@ cf_resp <- function(resp) {
 #' @family requests
 #' @examplesIf requireNamespace("vcr", quietly = TRUE)
 #' \dontshow{
-#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
 #' vcr::insert_example_cassette("cf_collect", package = "cloudflarer")
 #' }
 #' cf_request("zones") |> cf_collect(per_page = 50)

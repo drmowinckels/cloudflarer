@@ -57,7 +57,9 @@ Either condition unmet produces a \verb{zone ... does not have access to the pat
 \examples{
 \dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 \dontshow{
-Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+}
 vcr::insert_example_cassette(
   "cf_firewall_events_by_day",
   package = "cloudflarer",

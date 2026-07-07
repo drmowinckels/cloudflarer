@@ -1,111 +1,50 @@
-# Recording vcr cassettes for examples and vignettes
+# vcr cassettes for examples and vignettes
 
-The examples and vignettes make live Cloudflare API calls. To let them
-run offline in CI and `R CMD check`, their HTTP interactions are
-replayed from [`vcr`](https://docs.ropensci.org/vcr/) cassettes. The
-cassettes are recorded once, against a real account, then committed and
-replayed forever after.
+The examples and vignettes make live Cloudflare API calls, so they are
+replayed offline from [`vcr`](https://docs.ropensci.org/vcr/) cassettes
+during CI and `R CMD check`.
 
-This is a two-step flow: **record** (needs your credentials, done
-locally) then **flip** (drop `\dontrun{}` / `eval = FALSE` and add the
-cassette wrappers). Until you record, examples stay in `\dontrun{}` and
-vignettes stay `eval = FALSE`, so the check stays green.
+## The cassettes are synthetic and hand-maintained
 
-## 1. Record
+The committed cassettes under `inst/_vcr/` (examples) and
+`vignettes/_vcr/` (vignettes) hold **synthetic** data — `example.com`,
+`192.0.2.x`, placeholder ids like `abc123` / `acc-1`. Nothing
+account-specific ships. This is deliberate: the repo is public and
+CRAN-bound, and real fixtures would leak zone names, DNS records, IPs,
+and Email Routing **destination addresses (PII)**.
 
-With valid credentials in your environment (`CLOUDFLARE_API_TOKEN`, or
-`CLOUDFLARE_EMAIL` + `CLOUDFLARE_API_KEY`):
+To add or change a cassette, edit the YAML by hand. The shape is a list
+of `http_interactions`, each a `request` (`method` + `uri`) and a
+`response` with a JSON `body.string`; copy an existing file. The `uri`
+must match exactly what the wrapper builds (paginated list endpoints
+append `?<filters>&per_page=<n>&page=1`); POST/PATCH match on method +
+uri only. After editing, confirm it replays:
+
+```r
+devtools::run_examples()                 # examples, credentials unset
+rmarkdown::render("vignettes/<name>.Rmd") # a vignette
+```
+
+A cassette that does not match the request fails loudly (`R CMD check`
+errors), so mismatches never pass silently.
+
+## Wiring
+
+- **Examples** use `vcr::insert_example_cassette("<fn>", package =
+"cloudflarer")` / `vcr::eject_cassette()` inside `\dontshow{}` (see any
+  exported function). The cassette file stem is the function name.
+- **Vignettes** call `vcr::setup_knitr(prefix = "")` in their setup chunk
+  (shared in `vignettes/_vcr-setup.R`); each HTTP chunk sets a `cassette`
+  option naming its `vignettes/_vcr/<name>.yml`.
+
+## Optional: recording real fixtures
+
+`tools/record-cassettes.R` can record against your live account **as a
+starting point only**. It writes to `tools/_recorded/` (git-ignored) and
+never touches the committed cassettes. Its output contains real account
+data including PII — **scrub every real value to a synthetic placeholder
+before copying anything into `inst/_vcr/` or `vignettes/_vcr/`.**
 
 ```sh
 Rscript tools/record-cassettes.R
 ```
-
-This discovers your first account and zone, exercises each documented
-call inside a named cassette, and writes YAML to `inst/_vcr/` (examples)
-and `vignettes/_vcr/` (vignettes). Real identifiers, tokens, emails, and
-keys are scrubbed to the placeholders the examples use (`abc123`,
-`acc-1`, `<<TOKEN>>`, ...), so nothing account-specific is committed.
-
-Re-record after an API change with `RECORD=all Rscript
-tools/record-cassettes.R`.
-
-Inspect the generated cassettes before committing. Then run the script a
-second time — vcr should replay cleanly, confirming the cassettes work.
-
-## 2. Flip
-
-Once the cassettes exist, switch the examples and vignettes from
-illustrative to executed.
-
-### Examples
-
-Replace the `\dontrun{}` wrapper with an `insert_example_cassette()` /
-`eject_cassette()` pair hidden in `\dontshow{}`. The cassette name is the
-file stem under `inst/_vcr/` (see `tools/record-cassettes.R` for the
-names).
-
-Before:
-
-```r
-#' @examples
-#' \dontrun{
-#' cf_get_zone("abc123")
-#' }
-```
-
-After:
-
-```r
-#' @examples
-#' \dontshow{vcr::insert_example_cassette("cf_get_zone", package = "cloudflarer")}
-#' cf_get_zone("abc123")
-#' \dontshow{vcr::eject_cassette()}
-```
-
-The example must use the same placeholder identifiers the cassette was
-scrubbed to (`"abc123"` for a zone, `"acc-1"` for an account), or the
-replay will not match the recorded request URI.
-
-`insert_example_cassette()` records (`record = "once"`) when run from the
-source tree and replays (`record = "none"`) from the installed package,
-so a missing cassette fails the check loudly rather than calling the
-network.
-
-### Vignettes
-
-In the setup chunk, drop `eval = FALSE`, set a placeholder token, and
-enable the knitr hook:
-
-```r
-#| label: setup
-#| include: false
-library(cloudflarer)
-library(vcr)
-Sys.setenv(CLOUDFLARE_API_TOKEN = "<<TOKEN>>")
-vcr::vcr_configure(dir = "_vcr", filter_request_headers = "Authorization")
-vcr::setup_knitr()
-knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
-```
-
-Then tag each chunk that performs HTTP with the matching cassette name:
-
-````
-```{r}
-#| cassette: intro-discover
-cf_user()
-cf_list_accounts()
-cf_list_zones()
-```
-````
-
-Chunks that only manipulate already-fetched data (subsetting, `head()`,
-`tryCatch()` over an in-memory object) need no cassette.
-
-## 3. Verify
-
-```sh
-Rscript -e 'devtools::check(args = c("--no-manual", "--as-cran"))'
-```
-
-Examples and vignettes now execute against the cassettes; the check
-should stay `0 errors, 0 warnings, 0 notes`.

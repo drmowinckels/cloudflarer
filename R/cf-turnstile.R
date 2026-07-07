@@ -19,7 +19,9 @@
 #' @family turnstile
 #' @examplesIf requireNamespace("vcr", quietly = TRUE)
 #' \dontshow{
-#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
 #' vcr::insert_example_cassette("cf_list_turnstile_widgets", package = "cloudflarer")
 #' }
 #' cf_list_turnstile_widgets("abc123")
@@ -57,7 +59,9 @@ cf_list_turnstile_widgets <- function(
 #' @family turnstile
 #' @examplesIf requireNamespace("vcr", quietly = TRUE)
 #' \dontshow{
-#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
 #' vcr::insert_example_cassette("cf_get_turnstile_widget", package = "cloudflarer")
 #' }
 #' cf_get_turnstile_widget("abc123", "0x4AAA...")
@@ -103,7 +107,9 @@ cf_get_turnstile_widget <- function(
 #' @family turnstile
 #' @examplesIf requireNamespace("vcr", quietly = TRUE)
 #' \dontshow{
-#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
 #' vcr::insert_example_cassette(
 #'   "cf_create_turnstile_widget",
 #'   package = "cloudflarer",
@@ -161,7 +167,9 @@ cf_create_turnstile_widget <- function(
 #' @family turnstile
 #' @examplesIf requireNamespace("vcr", quietly = TRUE)
 #' \dontshow{
-#' Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
 #' vcr::insert_example_cassette("cf_delete_turnstile_widget", package = "cloudflarer")
 #' }
 #' cf_delete_turnstile_widget("abc123", "0x4AAA...")

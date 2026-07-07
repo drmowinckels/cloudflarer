@@ -39,7 +39,9 @@ Returns the R2 object-storage buckets in the supplied account.
 \examples{
 \dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 \dontshow{
-Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+}
 vcr::insert_example_cassette("cf_list_r2_buckets", package = "cloudflarer")
 }
 cf_list_r2_buckets("abc123")

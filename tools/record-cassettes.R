@@ -1,29 +1,25 @@
 #!/usr/bin/env Rscript
 
-# Record vcr cassettes for cloudflarer's examples and vignettes.
+# OPTIONAL live cassette recorder for cloudflarer.
 #
-# Run this ONCE, locally, with valid Cloudflare credentials in your
-# environment (CLOUDFLARE_API_TOKEN, or CLOUDFLARE_EMAIL +
-# CLOUDFLARE_API_KEY). Each documented API call is performed inside a
-# named vcr cassette, capturing the real responses to disk. CI and
-# `R CMD check` then replay those cassettes offline, so the examples
-# and vignettes execute without network access or credentials.
+# The cassettes committed under inst/_vcr/ and vignettes/_vcr/ are
+# hand-authored with SYNTHETIC data (example.com, 192.0.2.x) so no real
+# account data ever ships. You do NOT need to run this script to build,
+# check, or develop the package.
+#
+# Run it only if you want real recorded fixtures as a starting point.
+# It records against your live account into a scratch directory
+# (tools/_recorded/, git-ignored) and NEVER touches the committed
+# cassettes. Recorded responses contain REAL account data -- zone names,
+# DNS records, IP addresses, and Email Routing destination ADDRESSES
+# (PII). You MUST scrub every real value to a synthetic placeholder
+# before copying anything into inst/_vcr/ or vignettes/_vcr/. See
+# tools/RECORDING.md.
 #
 #   Rscript tools/record-cassettes.R
 #
-# Cassettes are written to:
-#   inst/_vcr/       replayed by @examples via insert_example_cassette()
-#   vignettes/_vcr/  replayed by vignette chunks via setup_knitr()
-#
-# Real account identifiers are discovered from your account and then
-# scrubbed to the stable placeholders the examples/vignettes use
-# (see `placeholders` below), so nothing account-specific is written
-# to the committed cassettes. Re-run with RECORD="all" to overwrite
-# existing cassettes after an API change.
-#
-# After recording, apply the flip described in tools/RECORDING.md
-# (drop `\dontrun{}`/`eval = FALSE`, add the cassette wrappers) and
-# commit the cassettes together with those edits.
+# Needs valid credentials in the environment (CLOUDFLARE_API_TOKEN, or
+# CLOUDFLARE_EMAIL + CLOUDFLARE_API_KEY).
 
 record <- Sys.getenv("RECORD", unset = "once")
 
@@ -40,8 +36,16 @@ if (!cf_has_auth()) {
   )
 }
 
-example_dir <- "inst/_vcr"
-vignette_dir <- "vignettes/_vcr"
+message(
+  "WARNING: recording against your LIVE account. Output goes to ",
+  "tools/_recorded/ and contains real data (zone names, DNS, IPs, ",
+  "Email Routing addresses / PII). Scrub before copying into the ",
+  "committed inst/_vcr or vignettes/_vcr cassettes."
+)
+
+# Scratch output only: never write into the committed synthetic cassettes.
+example_dir <- "tools/_recorded/inst"
+vignette_dir <- "tools/_recorded/vignettes"
 dir.create(example_dir, showWarnings = FALSE, recursive = TRUE)
 dir.create(vignette_dir, showWarnings = FALSE, recursive = TRUE)
 
@@ -172,9 +176,11 @@ cassette(
 )
 
 message(
-  "\nDone. Review the cassettes under ",
+  "\nDone. Recorded to ",
   example_dir,
   " and ",
   vignette_dir,
-  ", then apply the flip in tools/RECORDING.md."
+  ". SCRUB all real account data to synthetic placeholders before ",
+  "copying any cassette into inst/_vcr or vignettes/_vcr. See ",
+  "tools/RECORDING.md."
 )

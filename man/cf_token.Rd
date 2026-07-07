@@ -20,8 +20,12 @@ the \code{CLOUDFLARE_API_TOKEN} environment variable. See
 on creating a token and storing it safely.
 }
 \examples{
-\dontshow{Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")}
-cf_token()
+\dontshow{if (requireNamespace("withr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+withr::with_envvar(
+  c(CLOUDFLARE_API_TOKEN = "cloudflarer-example"),
+  cf_token()
+)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other authentication: 
