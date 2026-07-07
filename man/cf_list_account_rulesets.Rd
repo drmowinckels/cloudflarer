@@ -38,9 +38,16 @@ Returns the rulesets configured at the account level (typically
 the curated managed rulesets you can deploy with overrides).
 }
 \examples{
-\dontrun{
-cf_list_account_rulesets("acc-1")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 }
+vcr::insert_example_cassette("cf_list_account_rulesets", package = "cloudflarer")
+}
+cf_list_account_rulesets("acc-1")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other rulesets: 

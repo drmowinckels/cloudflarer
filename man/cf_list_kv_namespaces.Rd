@@ -18,7 +18,7 @@ cf_list_kv_namespaces(
 \item{account_id}{Character. Cloudflare account identifier.}
 
 \item{per_page, max_pages}{Pagination controls, see
-\code{\link[=cf_request_collect]{cf_request_collect()}}.}
+\code{\link[=cf_collect]{cf_collect()}}.}
 
 \item{as_df}{Logical. When \code{TRUE} (the default), returns a
 data.frame via \code{\link[=cf_records_to_df]{cf_records_to_df()}}. Set to \code{FALSE} for the
@@ -42,9 +42,16 @@ A data.frame of KV namespace records (or list when
 Returns the KV namespaces in the supplied account.
 }
 \examples{
-\dontrun{
-cf_list_kv_namespaces("abc123")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 }
+vcr::insert_example_cassette("cf_list_kv_namespaces", package = "cloudflarer")
+}
+cf_list_kv_namespaces("abc123")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other workers: 

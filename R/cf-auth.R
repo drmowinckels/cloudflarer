@@ -55,10 +55,11 @@ cf_has_auth <- function() {
 #' @return A character scalar with the API token.
 #' @export
 #' @family authentication
-#' @examples
-#' \dontrun{
-#' cf_token()
-#' }
+#' @examplesIf requireNamespace("withr", quietly = TRUE)
+#' withr::with_envvar(
+#'   c(CLOUDFLARE_API_TOKEN = "cloudflarer-example"),
+#'   cf_token()
+#' )
 cf_token <- function(token = NULL) {
   token <- token %||% Sys.getenv("CLOUDFLARE_API_TOKEN", unset = "")
   if (!is_nonempty_string(token)) {
@@ -83,10 +84,11 @@ cf_token <- function(token = NULL) {
 #' @return A character scalar with the email address.
 #' @export
 #' @family authentication
-#' @examples
-#' \dontrun{
-#' cf_email()
-#' }
+#' @examplesIf requireNamespace("withr", quietly = TRUE)
+#' withr::with_envvar(
+#'   c(CLOUDFLARE_EMAIL = "you@example.com"),
+#'   cf_email()
+#' )
 cf_email <- function(email = NULL) {
   email <- email %||% Sys.getenv("CLOUDFLARE_EMAIL", unset = "")
   if (!is_nonempty_string(email)) {
@@ -111,10 +113,11 @@ cf_email <- function(email = NULL) {
 #' @return A character scalar with the API key.
 #' @export
 #' @family authentication
-#' @examples
-#' \dontrun{
-#' cf_api_key()
-#' }
+#' @examplesIf requireNamespace("withr", quietly = TRUE)
+#' withr::with_envvar(
+#'   c(CLOUDFLARE_API_KEY = "cloudflarer-example-key"),
+#'   cf_api_key()
+#' )
 cf_api_key <- function(api_key = NULL) {
   api_key <- api_key %||% Sys.getenv("CLOUDFLARE_API_KEY", unset = "")
   if (!is_nonempty_string(api_key)) {
@@ -142,21 +145,36 @@ cf_api_key <- function(api_key = NULL) {
 #' @return A named list. The shape depends on the auth mode.
 #' @export
 #' @family authentication
-#' @examples
-#' \dontrun{
-#' cf_verify()
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 #' }
+#' vcr::insert_example_cassette("cf_verify", package = "cloudflarer")
+#' }
+#' cf_verify()
+#' \dontshow{vcr::eject_cassette()}
 cf_verify <- function(token = NULL, email = NULL, api_key = NULL) {
-  if (!is.null(token) || cf_auth_mode() == "token") {
-    return(cf_request("user/tokens/verify", token = token))
+  req <- if (!is.null(token)) {
+    cf_request("user/tokens/verify", token = token)
+  } else if (!is.null(email) || !is.null(api_key)) {
+    cf_request("user", email = email, api_key = api_key)
+  } else if (isTRUE(cf_auth_mode() == "token")) {
+    cf_request("user/tokens/verify")
+  } else {
+    cf_request("user")
   }
-  cf_request("user", email = email, api_key = api_key)
+  req |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' @rdname cf_verify
 #' @export
 cf_token_verify <- function(token = NULL) {
-  cf_request("user/tokens/verify", token = token)
+  cf_request("user/tokens/verify", token = token) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 is_nonempty_string <- function(x) {

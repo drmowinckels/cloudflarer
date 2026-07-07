@@ -1,0 +1,9 @@
+http_interactions:
+  - request: {method: GET, uri: 'https://api.cloudflare.com/client/v4/zones/does-not-exist'}
+    response:
+      status: 400
+      headers: {content-type: application/json}
+      body:
+        string: '{"success":false,"errors":[{"code":7003,"message":"Could not route to /zones/does-not-exist, perhaps your object identifier is invalid?"}],"messages":[],"result":null}'
+    recorded_at: 2026-05-20 18:07:49
+recorded_with: VCR-vcr/2.1.0

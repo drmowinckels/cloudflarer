@@ -35,9 +35,16 @@ A named list describing the site.
 Get a single Web Analytics (RUM) site
 }
 \examples{
-\dontrun{
-cf_get_rum_site("acc-1", "abc-tag")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 }
+vcr::insert_example_cassette("cf_get_rum_site", package = "cloudflarer")
+}
+cf_get_rum_site("acc-1", "abc-tag")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other analytics: 

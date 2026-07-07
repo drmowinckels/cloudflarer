@@ -37,9 +37,16 @@ A data.frame of Workers script records (or list when
 Returns the Workers scripts deployed in the supplied account.
 }
 \examples{
-\dontrun{
-cf_list_workers_scripts("abc123")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 }
+vcr::insert_example_cassette("cf_list_workers_scripts", package = "cloudflarer")
+}
+cf_list_workers_scripts("abc123")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other workers: 

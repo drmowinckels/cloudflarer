@@ -45,14 +45,11 @@ describe("cf_create_turnstile_widget()", {
     expect_equal(w$secret, "0x4AAAAAAAAAsec")
   })
 
-  it("forwards the body to cf_request", {
-    captured <- NULL
-    local_mocked_bindings(
-      cf_request = function(endpoint, method, body, ...) {
-        captured <<- list(endpoint = endpoint, method = method, body = body)
-        list(sitekey = "x")
-      }
+  it("forwards the body to the request", {
+    cap <- local_captured_request(
+      body = '{"success":true,"result":{"sitekey":"x"}}'
     )
+    local_mock_auth()
     cf_create_turnstile_widget(
       "acc-1",
       name = "form",
@@ -60,12 +57,13 @@ describe("cf_create_turnstile_widget()", {
       mode = "invisible",
       bot_fight_mode = TRUE
     )
-    expect_equal(captured$endpoint, "accounts/acc-1/challenges/widgets")
-    expect_equal(captured$method, "POST")
-    expect_equal(captured$body$name, "form")
-    expect_equal(captured$body$domains, list("a.com", "b.com"))
-    expect_equal(captured$body$mode, "invisible")
-    expect_true(captured$body$bot_fight_mode)
+    expect_match(cap$req$url, "accounts/acc-1/challenges/widgets$")
+    expect_equal(cap$req$method, "POST")
+    body <- cap$req$body$data
+    expect_equal(body$name, "form")
+    expect_equal(body$domains, list("a.com", "b.com"))
+    expect_equal(body$mode, "invisible")
+    expect_true(body$bot_fight_mode)
   })
 
   it("rejects unknown modes", {

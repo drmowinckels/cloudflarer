@@ -18,7 +18,8 @@ reference:
       Low-level helpers used by every wrapper. Use these directly to call endpoints the package does not yet provide a function for.
     contents:
       - cf_request
-      - cf_request_collect
+      - cf_resp
+      - cf_collect
       - cf_graphql
   - title: User
     contents: cf_user

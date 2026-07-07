@@ -26,9 +26,16 @@ A named list describing the account.
 Get a single account
 }
 \examples{
-\dontrun{
-cf_get_account("abc123")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 }
+vcr::insert_example_cassette("cf_get_account", package = "cloudflarer")
+}
+cf_get_account("abc123")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other accounts: 

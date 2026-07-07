@@ -22,7 +22,7 @@ cf_list_email_routing_rules(
 return only enabled rules.}
 
 \item{per_page, max_pages}{Pagination controls, see
-\code{\link[=cf_request_collect]{cf_request_collect()}}.}
+\code{\link[=cf_collect]{cf_collect()}}.}
 
 \item{as_df}{Logical. When \code{TRUE} (the default), returns a
 data.frame via \code{\link[=cf_records_to_df]{cf_records_to_df()}}.}
@@ -46,9 +46,19 @@ Returns the address-matching rules that decide how incoming
 emails are forwarded.
 }
 \examples{
-\dontrun{
-cf_list_email_routing_rules("abc123")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 }
+vcr::insert_example_cassette(
+  "cf_list_email_routing_rules",
+  package = "cloudflarer"
+)
+}
+cf_list_email_routing_rules("abc123")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other email: 

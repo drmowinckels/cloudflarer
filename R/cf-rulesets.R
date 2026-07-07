@@ -17,10 +17,15 @@
 #'   `as_df = FALSE`).
 #' @export
 #' @family rulesets
-#' @examples
-#' \dontrun{
-#' cf_list_rulesets("abc123")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 #' }
+#' vcr::insert_example_cassette("cf_list_rulesets", package = "cloudflarer")
+#' }
+#' cf_list_rulesets("abc123")
+#' \dontshow{vcr::eject_cassette()}
 cf_list_rulesets <- function(
   zone_id,
   as_df = TRUE,
@@ -28,12 +33,15 @@ cf_list_rulesets <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
   records <- cf_request(
-    paste0("zones/", zone_id, "/rulesets"),
+    c("zones", zone_id, "rulesets"),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
   if (as_df) cf_records_to_df(records) else records
 }
 
@@ -49,10 +57,15 @@ cf_list_rulesets <- function(
 #'   is itself a list of rule objects.
 #' @export
 #' @family rulesets
-#' @examples
-#' \dontrun{
-#' cf_get_ruleset("abc123", "rs-1")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 #' }
+#' vcr::insert_example_cassette("cf_get_ruleset", package = "cloudflarer")
+#' }
+#' cf_get_ruleset("abc123", "rs-1")
+#' \dontshow{vcr::eject_cassette()}
 cf_get_ruleset <- function(
   zone_id,
   ruleset_id,
@@ -60,12 +73,16 @@ cf_get_ruleset <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
+  cf_check_id(ruleset_id)
   cf_request(
-    paste0("zones/", zone_id, "/rulesets/", ruleset_id),
+    c("zones", zone_id, "rulesets", ruleset_id),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' List Rulesets for an account
@@ -80,10 +97,15 @@ cf_get_ruleset <- function(
 #'   `as_df = FALSE`).
 #' @export
 #' @family rulesets
-#' @examples
-#' \dontrun{
-#' cf_list_account_rulesets("acc-1")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 #' }
+#' vcr::insert_example_cassette("cf_list_account_rulesets", package = "cloudflarer")
+#' }
+#' cf_list_account_rulesets("acc-1")
+#' \dontshow{vcr::eject_cassette()}
 cf_list_account_rulesets <- function(
   account_id,
   as_df = TRUE,
@@ -91,12 +113,15 @@ cf_list_account_rulesets <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(account_id)
   records <- cf_request(
-    paste0("accounts/", account_id, "/rulesets"),
+    c("accounts", account_id, "rulesets"),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
   if (as_df) cf_records_to_df(records) else records
 }
 
@@ -112,10 +137,15 @@ cf_list_account_rulesets <- function(
 #'   is itself a list of rule objects.
 #' @export
 #' @family rulesets
-#' @examples
-#' \dontrun{
-#' cf_get_account_ruleset("acc-1", "rs-1")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 #' }
+#' vcr::insert_example_cassette("cf_get_account_ruleset", package = "cloudflarer")
+#' }
+#' cf_get_account_ruleset("acc-1", "rs-1")
+#' \dontshow{vcr::eject_cassette()}
 cf_get_account_ruleset <- function(
   account_id,
   ruleset_id,
@@ -123,10 +153,14 @@ cf_get_account_ruleset <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(account_id)
+  cf_check_id(ruleset_id)
   cf_request(
-    paste0("accounts/", account_id, "/rulesets/", ruleset_id),
+    c("accounts", account_id, "rulesets", ruleset_id),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
 }

@@ -2,33 +2,16 @@
 % Please edit documentation in R/cf-request.R
 \name{cf_request}
 \alias{cf_request}
-\title{Perform a generic Cloudflare API request}
+\title{Build an authenticated request for a Cloudflare endpoint}
 \usage{
-cf_request(
-  endpoint,
-  method = "GET",
-  query = NULL,
-  body = NULL,
-  token = NULL,
-  email = NULL,
-  api_key = NULL,
-  ...
-)
+cf_request(endpoint, token = NULL, email = NULL, api_key = NULL)
 }
 \arguments{
-\item{endpoint}{Character. Path relative to the API base URL,
-without a leading slash (for example \code{"zones"} or
-\code{"zones/abc123/dns_records"}). May also include path segments
-joined by \code{"/"}.}
-
-\item{method}{HTTP method as a character string. Defaults to
-\code{"GET"}.}
-
-\item{query}{Optional named list of query parameters.
-\code{NULL} values are dropped.}
-
-\item{body}{Optional list. When supplied, the request is sent
-with \code{Content-Type: application/json}.}
+\item{endpoint}{Path relative to the API base URL, without a
+leading slash. Either a single string (for example \code{"zones"} or
+\code{"zones/abc123/dns_records"}) or a character vector of segments
+(\code{c("zones", zone_id, "dns_records")}); each segment is appended
+to the URL path via \code{\link[httr2:req_url]{httr2::req_url_path_append()}}.}
 
 \item{token}{Character. An API token. If \code{NULL} (the default),
 the value of \code{Sys.getenv("CLOUDFLARE_API_TOKEN")} is used.}
@@ -39,40 +22,55 @@ reads from the \code{CLOUDFLARE_EMAIL} environment variable.}
 \item{api_key}{Character. The Global API Key. If \code{NULL} (the
 default), reads from the \code{CLOUDFLARE_API_KEY} environment
 variable.}
-
-\item{...}{Additional arguments passed to \code{\link[httr2:req_perform]{httr2::req_perform()}}.}
 }
 \value{
-The parsed \code{result} element from the response.
-For collection endpoints this is typically a list of records;
-for single-resource endpoints it is a single named list.
+An \code{httr2_request}.
 }
 \description{
-Low-level wrapper that builds an authenticated request, performs
-it, validates the standard Cloudflare response envelope, and
-returns the \code{result} payload. Use this to call any endpoint that
-does not yet have a dedicated wrapper in the package.
-}
-\details{
-The Cloudflare API wraps every response in an envelope with
-\code{success}, \code{errors}, \code{messages}, \code{result}, and (for paginated
-endpoints) \code{result_info}. \code{cf_request()} extracts \code{result};
-errors raise a classed condition you can catch with
-\code{tryCatch(cf_request(...), cloudflarer_error = ...)}.
+Returns an \code{httr2} request with credentials, headers, and the
+endpoint path attached, ready to be piped through \code{httr2} request
+modifiers (\code{\link[httr2:req_method]{httr2::req_method()}}, \code{\link[httr2:req_url]{httr2::req_url_query()}},
+\code{\link[httr2:req_body]{httr2::req_body_json()}}) and performed with
+\code{\link[httr2:req_perform]{httr2::req_perform()}}. Pair the performed response with
+\code{\link[=cf_resp]{cf_resp()}} to unwrap the standard Cloudflare envelope, or pipe
+the request into \code{\link[=cf_collect]{cf_collect()}} to walk a paginated list
+endpoint. This is the base that every dedicated wrapper in the
+package builds on, and the entry point for calling any endpoint
+that does not yet have one.
 }
 \examples{
-\dontrun{
-cf_request("user/tokens/verify")
-cf_request("zones", query = list(per_page = 5))
-cf_request(
-  "zones/abc123/dns_records",
-  method = "POST",
-  body = list(type = "A", name = "example.com", content = "1.2.3.4")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+}
+vcr::insert_example_cassette(
+  "cf_request",
+  package = "cloudflarer",
+  match_requests_on = c("method", "uri")
 )
 }
+cf_request("user/tokens/verify") |>
+  httr2::req_perform() |>
+  cf_resp()
+
+cf_request(c("zones", "abc123", "dns_records")) |>
+  httr2::req_method("POST") |>
+  httr2::req_body_json(
+    list(type = "A", name = "example.com", content = "192.0.2.1")
+  ) |>
+  httr2::req_perform() |>
+  cf_resp()
+
+cf_request("zones") |>
+  httr2::req_url_query(status = "active") |>
+  cf_collect(per_page = 50)
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other requests: 
-\code{\link{cf_request_collect}()}
+\code{\link{cf_collect}()},
+\code{\link{cf_resp}()}
 }
 \concept{requests}

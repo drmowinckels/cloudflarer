@@ -12,4 +12,7 @@
 ^CRAN-SUBMISSION$
 ^\.lintr$
 ^\.vscode$
+^\.claude$
+\.impeccable
+^tools$
 ^tests/spelling\.R$

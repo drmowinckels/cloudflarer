@@ -34,9 +34,16 @@ A named list describing the bucket.
 Get a single R2 bucket
 }
 \examples{
-\dontrun{
-cf_get_r2_bucket("abc123", "my-bucket")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 }
+vcr::insert_example_cassette("cf_get_r2_bucket", package = "cloudflarer")
+}
+cf_get_r2_bucket("abc123", "my-bucket")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other r2: 

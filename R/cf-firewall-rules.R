@@ -7,7 +7,7 @@
 #'
 #' @param zone_id Character. Cloudflare zone identifier.
 #' @param per_page,max_pages Pagination controls, see
-#'   [cf_request_collect()].
+#'   [cf_collect()].
 #' @param as_df Logical. When `TRUE` (the default), returns a
 #'   data.frame via [cf_records_to_df()]. Set to `FALSE` for the
 #'   raw nested list.
@@ -20,10 +20,15 @@
 #'   a list-column.
 #' @export
 #' @family zones
-#' @examples
-#' \dontrun{
-#' cf_list_firewall_rules("abc123")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 #' }
+#' vcr::insert_example_cassette("cf_list_firewall_rules", package = "cloudflarer")
+#' }
+#' cf_list_firewall_rules("abc123")
+#' \dontshow{vcr::eject_cassette()}
 cf_list_firewall_rules <- function(
   zone_id,
   per_page = 50,
@@ -33,13 +38,13 @@ cf_list_firewall_rules <- function(
   email = NULL,
   api_key = NULL
 ) {
-  records <- cf_request_collect(
-    paste0("zones/", zone_id, "/firewall/rules"),
-    per_page = per_page,
-    max_pages = max_pages,
+  cf_check_id(zone_id)
+  records <- cf_request(
+    c("zones", zone_id, "firewall", "rules"),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    cf_collect(per_page = per_page, max_pages = max_pages)
   if (as_df) cf_records_to_df(records) else records
 }

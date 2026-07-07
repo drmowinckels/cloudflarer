@@ -44,9 +44,16 @@ Returns the recent deployments (build history) for a Pages
 project, ordered by date descending.
 }
 \examples{
-\dontrun{
-cf_list_pages_deployments("abc123", "my-site")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 }
+vcr::insert_example_cassette("cf_list_pages_deployments", package = "cloudflarer")
+}
+cf_list_pages_deployments("abc123", "my-site")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other pages: 

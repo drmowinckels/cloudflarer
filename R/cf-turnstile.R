@@ -5,7 +5,7 @@
 #'
 #' @param account_id Character. Cloudflare account identifier.
 #' @param per_page,max_pages Pagination controls, see
-#'   [cf_request_collect()].
+#'   [cf_collect()].
 #' @param as_df Logical. When `TRUE` (the default), returns a
 #'   data.frame via [cf_records_to_df()]. Set to `FALSE` for the
 #'   raw nested list.
@@ -17,10 +17,15 @@
 #'   `as_df = FALSE`).
 #' @export
 #' @family turnstile
-#' @examples
-#' \dontrun{
-#' cf_list_turnstile_widgets("abc123")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 #' }
+#' vcr::insert_example_cassette("cf_list_turnstile_widgets", package = "cloudflarer")
+#' }
+#' cf_list_turnstile_widgets("abc123")
+#' \dontshow{vcr::eject_cassette()}
 cf_list_turnstile_widgets <- function(
   account_id,
   per_page = 25,
@@ -30,14 +35,14 @@ cf_list_turnstile_widgets <- function(
   email = NULL,
   api_key = NULL
 ) {
-  records <- cf_request_collect(
-    paste0("accounts/", account_id, "/challenges/widgets"),
-    per_page = per_page,
-    max_pages = max_pages,
+  cf_check_id(account_id)
+  records <- cf_request(
+    c("accounts", account_id, "challenges", "widgets"),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    cf_collect(per_page = per_page, max_pages = max_pages)
   if (as_df) cf_records_to_df(records) else records
 }
 
@@ -52,10 +57,15 @@ cf_list_turnstile_widgets <- function(
 #' @return A named list describing the widget.
 #' @export
 #' @family turnstile
-#' @examples
-#' \dontrun{
-#' cf_get_turnstile_widget("abc123", "0x4AAA...")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 #' }
+#' vcr::insert_example_cassette("cf_get_turnstile_widget", package = "cloudflarer")
+#' }
+#' cf_get_turnstile_widget("abc123", "0x4AAA...")
+#' \dontshow{vcr::eject_cassette()}
 cf_get_turnstile_widget <- function(
   account_id,
   sitekey,
@@ -63,12 +73,16 @@ cf_get_turnstile_widget <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(account_id)
+  cf_check_id(sitekey)
   cf_request(
-    paste0("accounts/", account_id, "/challenges/widgets/", sitekey),
+    c("accounts", account_id, "challenges", "widgets", sitekey),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' Create a Turnstile widget
@@ -91,15 +105,24 @@ cf_get_turnstile_widget <- function(
 #'   `sitekey` and `secret` (only shown once).
 #' @export
 #' @family turnstile
-#' @examples
-#' \dontrun{
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
+#' vcr::insert_example_cassette(
+#'   "cf_create_turnstile_widget",
+#'   package = "cloudflarer",
+#'   match_requests_on = c("method", "uri")
+#' )
+#' }
 #' cf_create_turnstile_widget(
 #'   "abc123",
 #'   name = "comment-form",
 #'   domains = c("example.com", "www.example.com"),
 #'   mode = "managed"
 #' )
-#' }
+#' \dontshow{vcr::eject_cassette()}
 cf_create_turnstile_widget <- function(
   account_id,
   name,
@@ -115,21 +138,24 @@ cf_create_turnstile_widget <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(account_id)
   mode <- match.arg(mode)
   cf_request(
-    paste0("accounts/", account_id, "/challenges/widgets"),
-    method = "POST",
-    body = list(
+    c("accounts", account_id, "challenges", "widgets"),
+    token = token,
+    email = email,
+    api_key = api_key
+  ) |>
+    httr2::req_method("POST") |>
+    httr2::req_body_json(list(
       name = name,
       domains = as.list(domains),
       mode = mode,
       bot_fight_mode = bot_fight_mode,
       region = region
-    ),
-    token = token,
-    email = email,
-    api_key = api_key
-  )
+    )) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' Delete a Turnstile widget
@@ -139,10 +165,15 @@ cf_create_turnstile_widget <- function(
 #' @return A named list with the deleted widget's `sitekey`.
 #' @export
 #' @family turnstile
-#' @examples
-#' \dontrun{
-#' cf_delete_turnstile_widget("abc123", "0x4AAA...")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 #' }
+#' vcr::insert_example_cassette("cf_delete_turnstile_widget", package = "cloudflarer")
+#' }
+#' cf_delete_turnstile_widget("abc123", "0x4AAA...")
+#' \dontshow{vcr::eject_cassette()}
 cf_delete_turnstile_widget <- function(
   account_id,
   sitekey,
@@ -150,11 +181,15 @@ cf_delete_turnstile_widget <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(account_id)
+  cf_check_id(sitekey)
   cf_request(
-    paste0("accounts/", account_id, "/challenges/widgets/", sitekey),
-    method = "DELETE",
+    c("accounts", account_id, "challenges", "widgets", sitekey),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_method("DELETE") |>
+    httr2::req_perform() |>
+    cf_resp()
 }

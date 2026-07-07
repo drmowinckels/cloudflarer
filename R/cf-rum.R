@@ -9,7 +9,7 @@
 #' @param order_by Optional column name to sort by, for example
 #'   `"created"` or `"host"`.
 #' @param per_page,max_pages Pagination controls, see
-#'   [cf_request_collect()].
+#'   [cf_collect()].
 #' @param as_df Logical. When `TRUE` (the default), returns a
 #'   data.frame via [cf_records_to_df()]. Set to `FALSE` to get the
 #'   raw nested list.
@@ -21,10 +21,15 @@
 #'   `as_df = FALSE`).
 #' @export
 #' @family analytics
-#' @examples
-#' \dontrun{
-#' cf_list_rum_sites("acc-1")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 #' }
+#' vcr::insert_example_cassette("cf_list_rum_sites", package = "cloudflarer")
+#' }
+#' cf_list_rum_sites("acc-1")
+#' \dontshow{vcr::eject_cassette()}
 cf_list_rum_sites <- function(
   account_id,
   order_by = NULL,
@@ -35,15 +40,15 @@ cf_list_rum_sites <- function(
   email = NULL,
   api_key = NULL
 ) {
-  records <- cf_request_collect(
-    paste0("accounts/", account_id, "/rum/site_info/list"),
-    query = list(order_by = order_by),
-    per_page = per_page,
-    max_pages = max_pages,
+  cf_check_id(account_id)
+  records <- cf_request(
+    c("accounts", account_id, "rum", "site_info", "list"),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_url_query(order_by = order_by) |>
+    cf_collect(per_page = per_page, max_pages = max_pages)
   if (as_df) cf_records_to_df(records) else records
 }
 
@@ -59,10 +64,15 @@ cf_list_rum_sites <- function(
 #' @return A named list describing the site.
 #' @export
 #' @family analytics
-#' @examples
-#' \dontrun{
-#' cf_get_rum_site("acc-1", "abc-tag")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 #' }
+#' vcr::insert_example_cassette("cf_get_rum_site", package = "cloudflarer")
+#' }
+#' cf_get_rum_site("acc-1", "abc-tag")
+#' \dontshow{vcr::eject_cassette()}
 cf_get_rum_site <- function(
   account_id,
   site_tag,
@@ -70,10 +80,14 @@ cf_get_rum_site <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(account_id)
+  cf_check_id(site_tag)
   cf_request(
-    paste0("accounts/", account_id, "/rum/site_info/", site_tag),
+    c("accounts", account_id, "rum", "site_info", site_tag),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
 }

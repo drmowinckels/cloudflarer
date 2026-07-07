@@ -29,8 +29,17 @@
 #'
 #' @export
 #' @family analytics
-#' @examples
-#' \dontrun{
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
+#' vcr::insert_example_cassette(
+#'   "cf_graphql",
+#'   package = "cloudflarer",
+#'   match_requests_on = c("method", "uri")
+#' )
+#' }
 #' res <- cf_graphql(
 #'   "query Viewer($accountTag: String!) {
 #'      viewer {
@@ -64,7 +73,7 @@
 #'   since = "2026-05-01",
 #'   until = "2026-05-08"
 #' )
-#' }
+#' \dontshow{vcr::eject_cassette()}
 cf_graphql <- function(
   query,
   ...,
@@ -149,7 +158,6 @@ cf_graphql_envelope <- function(resp, .envir = parent.frame()) {
 
 format_graphql_error <- function(e) {
   msg <- e$message %||% "Unknown error"
-  msg <- gsub("\\{", "{{", gsub("\\}", "}}", msg))
   if (length(e$path)) {
     msg <- paste0(
       msg,
@@ -158,7 +166,7 @@ format_graphql_error <- function(e) {
       ")"
     )
   }
-  msg
+  gsub("\\{", "{{", gsub("\\}", "}}", msg))
 }
 
 validate_graphql_variables <- function(variables, .envir = parent.frame()) {

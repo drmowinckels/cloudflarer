@@ -11,22 +11,33 @@
 #' @return A named list with the routing settings.
 #' @export
 #' @family email
-#' @examples
-#' \dontrun{
-#' cf_get_email_routing_settings("abc123")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 #' }
+#' vcr::insert_example_cassette(
+#'   "cf_get_email_routing_settings",
+#'   package = "cloudflarer"
+#' )
+#' }
+#' cf_get_email_routing_settings("abc123")
+#' \dontshow{vcr::eject_cassette()}
 cf_get_email_routing_settings <- function(
   zone_id,
   token = NULL,
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
   cf_request(
-    paste0("zones/", zone_id, "/email/routing"),
+    c("zones", zone_id, "email", "routing"),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' List Email Routing rules for a zone
@@ -38,7 +49,7 @@ cf_get_email_routing_settings <- function(
 #' @param enabled_only Logical. When `TRUE`, asks the API to
 #'   return only enabled rules.
 #' @param per_page,max_pages Pagination controls, see
-#'   [cf_request_collect()].
+#'   [cf_collect()].
 #' @param as_df Logical. When `TRUE` (the default), returns a
 #'   data.frame via [cf_records_to_df()].
 #' @inheritParams cf_token
@@ -49,10 +60,18 @@ cf_get_email_routing_settings <- function(
 #'   `as_df = FALSE`).
 #' @export
 #' @family email
-#' @examples
-#' \dontrun{
-#' cf_list_email_routing_rules("abc123")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 #' }
+#' vcr::insert_example_cassette(
+#'   "cf_list_email_routing_rules",
+#'   package = "cloudflarer"
+#' )
+#' }
+#' cf_list_email_routing_rules("abc123")
+#' \dontshow{vcr::eject_cassette()}
 cf_list_email_routing_rules <- function(
   zone_id,
   enabled_only = FALSE,
@@ -63,16 +82,16 @@ cf_list_email_routing_rules <- function(
   email = NULL,
   api_key = NULL
 ) {
-  query <- if (enabled_only) list(enabled = "true") else NULL
-  records <- cf_request_collect(
-    paste0("zones/", zone_id, "/email/routing/rules"),
-    query = query,
-    per_page = per_page,
-    max_pages = max_pages,
+  cf_check_id(zone_id)
+  cf_check_flag(enabled_only)
+  records <- cf_request(
+    c("zones", zone_id, "email", "routing", "rules"),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_url_query(enabled = if (enabled_only) "true" else NULL) |>
+    cf_collect(per_page = per_page, max_pages = max_pages)
   if (as_df) cf_records_to_df(records) else records
 }
 
@@ -96,10 +115,18 @@ cf_list_email_routing_rules <- function(
 #'   `as_df = FALSE`).
 #' @export
 #' @family email
-#' @examples
-#' \dontrun{
-#' cf_list_email_routing_addresses("abc123")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 #' }
+#' vcr::insert_example_cassette(
+#'   "cf_list_email_routing_addresses",
+#'   package = "cloudflarer"
+#' )
+#' }
+#' cf_list_email_routing_addresses("abc123")
+#' \dontshow{vcr::eject_cassette()}
 cf_list_email_routing_addresses <- function(
   account_id,
   verified_only = FALSE,
@@ -110,15 +137,15 @@ cf_list_email_routing_addresses <- function(
   email = NULL,
   api_key = NULL
 ) {
-  query <- if (verified_only) list(verified = "true") else NULL
-  records <- cf_request_collect(
-    paste0("accounts/", account_id, "/email/routing/addresses"),
-    query = query,
-    per_page = per_page,
-    max_pages = max_pages,
+  cf_check_id(account_id)
+  cf_check_flag(verified_only)
+  records <- cf_request(
+    c("accounts", account_id, "email", "routing", "addresses"),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_url_query(verified = if (verified_only) "true" else NULL) |>
+    cf_collect(per_page = per_page, max_pages = max_pages)
   if (as_df) cf_records_to_df(records) else records
 }

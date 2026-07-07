@@ -66,9 +66,20 @@ as non-\code{NULL}. Use a \code{PUT}-style replace via \code{\link[=cf_request]{
 you need to overwrite the entire record.
 }
 \examples{
-\dontrun{
-cf_update_dns_record("zone-1", "rec-1", content = "192.0.2.2")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 }
+vcr::insert_example_cassette(
+  "cf_update_dns_record",
+  package = "cloudflarer",
+  match_requests_on = c("method", "uri")
+)
+}
+cf_update_dns_record("zone-1", "rec-1", content = "192.0.2.2")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other dns: 

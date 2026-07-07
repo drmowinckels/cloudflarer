@@ -48,7 +48,17 @@ Groups \code{firewallEventsAdaptiveGroups} by a single dimension
 and returns the top entries by count.
 }
 \examples{
-\dontrun{
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+}
+vcr::insert_example_cassette(
+  "cf_firewall_events_top",
+  package = "cloudflarer",
+  match_requests_on = c("method", "uri")
+)
+}
 cf_firewall_events_top(
   "abc123",
   since = Sys.Date() - 7,
@@ -56,7 +66,8 @@ cf_firewall_events_top(
   dimension = "action",
   limit = 10
 )
-}
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other analytics: 

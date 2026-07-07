@@ -23,10 +23,15 @@
 #'   nested objects.
 #' @export
 #' @family zones
-#' @examples
-#' \dontrun{
-#' cf_list_page_rules("abc123")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 #' }
+#' vcr::insert_example_cassette("cf_list_page_rules", package = "cloudflarer")
+#' }
+#' cf_list_page_rules("abc123")
+#' \dontshow{vcr::eject_cassette()}
 cf_list_page_rules <- function(
   zone_id,
   status = NULL,
@@ -37,13 +42,20 @@ cf_list_page_rules <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
   records <- cf_request(
-    paste0("zones/", zone_id, "/pagerules"),
-    query = list(status = status, order = order, direction = direction),
+    c("zones", zone_id, "pagerules"),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_url_query(
+      status = status,
+      order = order,
+      direction = direction
+    ) |>
+    httr2::req_perform() |>
+    cf_resp()
   if (as_df) cf_records_to_df(records) else records
 }
 
@@ -59,10 +71,15 @@ cf_list_page_rules <- function(
 #'   `targets` and `actions`.
 #' @export
 #' @family zones
-#' @examples
-#' \dontrun{
-#' cf_get_page_rule("abc123", "rule-1")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 #' }
+#' vcr::insert_example_cassette("cf_get_page_rule", package = "cloudflarer")
+#' }
+#' cf_get_page_rule("abc123", "rule-1")
+#' \dontshow{vcr::eject_cassette()}
 cf_get_page_rule <- function(
   zone_id,
   rule_id,
@@ -70,12 +87,16 @@ cf_get_page_rule <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
+  cf_check_id(rule_id)
   cf_request(
-    paste0("zones/", zone_id, "/pagerules/", rule_id),
+    c("zones", zone_id, "pagerules", rule_id),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' Create a Page Rule
@@ -101,10 +122,19 @@ cf_get_page_rule <- function(
 #' @return A named list describing the created rule.
 #' @export
 #' @family zones
-#' @examples
-#' \dontrun{
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
+#' vcr::insert_example_cassette(
+#'   "cf_create_page_rule",
+#'   package = "cloudflarer",
+#'   match_requests_on = c("method", "uri")
+#' )
+#' }
 #' cf_create_page_rule(
-#'   zone_id,
+#'   "abc123",
 #'   targets = list(
 #'     cf_page_rule_target("*example.com/blog/*")
 #'   ),
@@ -113,7 +143,7 @@ cf_get_page_rule <- function(
 #'     cf_page_rule_action("edge_cache_ttl", 7200)
 #'   )
 #' )
-#' }
+#' \dontshow{vcr::eject_cassette()}
 cf_create_page_rule <- function(
   zone_id,
   targets,
@@ -124,20 +154,23 @@ cf_create_page_rule <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
   status <- match.arg(status)
   cf_request(
-    paste0("zones/", zone_id, "/pagerules"),
-    method = "POST",
-    body = list(
+    c("zones", zone_id, "pagerules"),
+    token = token,
+    email = email,
+    api_key = api_key
+  ) |>
+    httr2::req_method("POST") |>
+    httr2::req_body_json(list(
       targets = targets,
       actions = actions,
       priority = priority,
       status = status
-    ),
-    token = token,
-    email = email,
-    api_key = api_key
-  )
+    )) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' Update a Page Rule
@@ -151,10 +184,19 @@ cf_create_page_rule <- function(
 #' @return A named list describing the updated rule.
 #' @export
 #' @family zones
-#' @examples
-#' \dontrun{
-#' cf_update_page_rule(zone_id, "rule-1", status = "disabled")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 #' }
+#' vcr::insert_example_cassette(
+#'   "cf_update_page_rule",
+#'   package = "cloudflarer",
+#'   match_requests_on = c("method", "uri")
+#' )
+#' }
+#' cf_update_page_rule("abc123", "rule-1", status = "disabled")
+#' \dontshow{vcr::eject_cassette()}
 cf_update_page_rule <- function(
   zone_id,
   rule_id,
@@ -166,6 +208,8 @@ cf_update_page_rule <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
+  cf_check_id(rule_id)
   if (!is.null(status)) {
     status <- match.arg(status, c("active", "disabled"))
   }
@@ -176,13 +220,15 @@ cf_update_page_rule <- function(
     status = status
   ))
   cf_request(
-    paste0("zones/", zone_id, "/pagerules/", rule_id),
-    method = "PATCH",
-    body = body,
+    c("zones", zone_id, "pagerules", rule_id),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_method("PATCH") |>
+    httr2::req_body_json(body) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' Delete a Page Rule
@@ -192,10 +238,15 @@ cf_update_page_rule <- function(
 #' @return A named list with the deleted rule's `id`.
 #' @export
 #' @family zones
-#' @examples
-#' \dontrun{
-#' cf_delete_page_rule(zone_id, "rule-1")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 #' }
+#' vcr::insert_example_cassette("cf_delete_page_rule", package = "cloudflarer")
+#' }
+#' cf_delete_page_rule("abc123", "rule-1")
+#' \dontshow{vcr::eject_cassette()}
 cf_delete_page_rule <- function(
   zone_id,
   rule_id,
@@ -203,13 +254,17 @@ cf_delete_page_rule <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
+  cf_check_id(rule_id)
   cf_request(
-    paste0("zones/", zone_id, "/pagerules/", rule_id),
-    method = "DELETE",
+    c("zones", zone_id, "pagerules", rule_id),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_method("DELETE") |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' Build a Page Rule URL-match target

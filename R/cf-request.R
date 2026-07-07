@@ -90,119 +90,143 @@ cf_req_auth <- function(req, token = NULL, email = NULL, api_key = NULL) {
   )
 }
 
-#' Perform a generic Cloudflare API request
+#' Build an authenticated request for a Cloudflare endpoint
 #'
-#' Low-level wrapper that builds an authenticated request, performs
-#' it, validates the standard Cloudflare response envelope, and
-#' returns the `result` payload. Use this to call any endpoint that
-#' does not yet have a dedicated wrapper in the package.
+#' Returns an `httr2` request with credentials, headers, and the
+#' endpoint path attached, ready to be piped through `httr2` request
+#' modifiers ([httr2::req_method()], [httr2::req_url_query()],
+#' [httr2::req_body_json()]) and performed with
+#' [httr2::req_perform()]. Pair the performed response with
+#' [cf_resp()] to unwrap the standard Cloudflare envelope, or pipe
+#' the request into [cf_collect()] to walk a paginated list
+#' endpoint. This is the base that every dedicated wrapper in the
+#' package builds on, and the entry point for calling any endpoint
+#' that does not yet have one.
 #'
-#' The Cloudflare API wraps every response in an envelope with
-#' `success`, `errors`, `messages`, `result`, and (for paginated
-#' endpoints) `result_info`. `cf_request()` extracts `result`;
-#' errors raise a classed condition you can catch with
-#' `tryCatch(cf_request(...), cloudflarer_error = ...)`.
-#'
-#' @param endpoint Character. Path relative to the API base URL,
-#'   without a leading slash (for example `"zones"` or
-#'   `"zones/abc123/dns_records"`). May also include path segments
-#'   joined by `"/"`.
-#' @param method HTTP method as a character string. Defaults to
-#'   `"GET"`.
-#' @param query Optional named list of query parameters.
-#'   `NULL` values are dropped.
-#' @param body Optional list. When supplied, the request is sent
-#'   with `Content-Type: application/json`.
-#' @param ... Additional arguments passed to [httr2::req_perform()].
+#' @param endpoint Path relative to the API base URL, without a
+#'   leading slash. Either a single string (for example `"zones"` or
+#'   `"zones/abc123/dns_records"`) or a character vector of segments
+#'   (`c("zones", zone_id, "dns_records")`); each segment is appended
+#'   to the URL path via [httr2::req_url_path_append()].
 #' @inheritParams cf_token
 #' @inheritParams cf_email
 #' @inheritParams cf_api_key
 #'
-#' @return The parsed `result` element from the response.
-#'   For collection endpoints this is typically a list of records;
-#'   for single-resource endpoints it is a single named list.
+#' @return An `httr2_request`.
 #'
 #' @export
 #' @family requests
-#' @examples
-#' \dontrun{
-#' cf_request("user/tokens/verify")
-#' cf_request("zones", query = list(per_page = 5))
-#' cf_request(
-#'   "zones/abc123/dns_records",
-#'   method = "POST",
-#'   body = list(type = "A", name = "example.com", content = "1.2.3.4")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
+#' vcr::insert_example_cassette(
+#'   "cf_request",
+#'   package = "cloudflarer",
+#'   match_requests_on = c("method", "uri")
 #' )
 #' }
-cf_request <- function(
-  endpoint,
-  method = "GET",
-  query = NULL,
-  body = NULL,
-  token = NULL,
-  email = NULL,
-  api_key = NULL,
-  ...
-) {
-  resp <- cf_perform(
-    endpoint,
-    method = method,
-    query = query,
-    body = body,
-    token = token,
-    email = email,
-    api_key = api_key,
-    ...
-  )
-  cf_resp_envelope(resp)$result
+#' cf_request("user/tokens/verify") |>
+#'   httr2::req_perform() |>
+#'   cf_resp()
+#'
+#' cf_request(c("zones", "abc123", "dns_records")) |>
+#'   httr2::req_method("POST") |>
+#'   httr2::req_body_json(
+#'     list(type = "A", name = "example.com", content = "192.0.2.1")
+#'   ) |>
+#'   httr2::req_perform() |>
+#'   cf_resp()
+#'
+#' cf_request("zones") |>
+#'   httr2::req_url_query(status = "active") |>
+#'   cf_collect(per_page = 50)
+#' \dontshow{vcr::eject_cassette()}
+cf_request <- function(endpoint, token = NULL, email = NULL, api_key = NULL) {
+  cf_req(token = token, email = email, api_key = api_key) |>
+    cf_req_path(endpoint)
+}
+
+#' Unwrap the result from a Cloudflare response
+#'
+#' Validates the standard Cloudflare envelope on a performed
+#' response and returns its `result` payload. Typically the terminal
+#' step of a request pipeline built with [cf_request()] and
+#' [httr2::req_perform()].
+#'
+#' The Cloudflare API wraps every response in an envelope with
+#' `success`, `errors`, `messages`, `result`, and (for paginated
+#' endpoints) `result_info`. API-level failures -- both HTTP error
+#' statuses and envelope errors (HTTP 200 with `success: false`) --
+#' raise a classed condition you can catch with
+#' `tryCatch(..., cloudflarer_error = ...)`. Transport-level failures
+#' that never reach the API (DNS resolution, connection refused,
+#' timeout) surface as the underlying `httr2` error instead.
+#'
+#' @param resp An `httr2_response`, typically from
+#'   `cf_request(...) |> httr2::req_perform()`.
+#'
+#' @return The parsed `result` element from the response. For
+#'   single-resource endpoints this is a named list; for collection
+#'   endpoints it is a list of records.
+#'
+#' @export
+#' @family requests
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
+#' vcr::insert_example_cassette("cf_resp", package = "cloudflarer")
+#' }
+#' cf_request("user") |>
+#'   httr2::req_perform() |>
+#'   cf_resp()
+#' \dontshow{vcr::eject_cassette()}
+cf_resp <- function(resp) {
+  cf_resp_envelope(resp)[["result"]]
 }
 
 #' Collect every page of a paginated endpoint
 #'
-#' Iterates through all pages of a Cloudflare list endpoint and
-#' concatenates the `result` arrays into a single list.
+#' Given a request built with [cf_request()] (optionally with query
+#' filters piped on), walks every page of a Cloudflare list endpoint
+#' and concatenates the `result` arrays into a single list. Page
+#' size and paging cursor are added as query parameters on each
+#' request.
 #'
-#' @inheritParams cf_request
+#' @param req An `httr2_request` from [cf_request()].
 #' @param per_page Integer page size. Cloudflare caps most endpoints
 #'   at 50; some allow up to 1000.
 #' @param max_pages Optional integer. Stop after collecting this
 #'   many pages. Useful for exploratory calls against large
 #'   accounts. `Inf` (the default) collects everything.
+#' @param ... Additional arguments passed to [httr2::req_perform()].
 #'
 #' @return A list of records.
 #' @export
 #' @family requests
-#' @examples
-#' \dontrun{
-#' cf_request_collect("zones", per_page = 50)
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 #' }
-cf_request_collect <- function(
-  endpoint,
-  query = NULL,
-  per_page = 50,
-  max_pages = Inf,
-  token = NULL,
-  email = NULL,
-  api_key = NULL,
-  ...
-) {
-  query <- c(query, list(per_page = per_page))
+#' vcr::insert_example_cassette("cf_collect", package = "cloudflarer")
+#' }
+#' cf_request("zones") |> cf_collect(per_page = 50)
+#' \dontshow{vcr::eject_cassette()}
+cf_collect <- function(req, per_page = 50, max_pages = Inf, ...) {
   results <- list()
   page <- 1L
   repeat {
-    query$page <- page
-    resp <- cf_perform(
-      endpoint,
-      method = "GET",
-      query = query,
-      body = NULL,
-      token = token,
-      email = email,
-      api_key = api_key,
-      ...
-    )
-    env <- cf_resp_envelope(resp)
-    results <- c(results, env$result)
+    env <- req |>
+      httr2::req_url_query(per_page = per_page, page = page) |>
+      httr2::req_perform(...) |>
+      cf_resp_envelope()
+    if (!is.null(env[["result"]])) {
+      results <- c(results, env[["result"]])
+    }
     total_pages <- env$result_info$total_pages %||% 1L
     if (page >= total_pages || page >= max_pages) {
       break
@@ -210,33 +234,6 @@ cf_request_collect <- function(
     page <- page + 1L
   }
   results
-}
-
-#' Build and perform a request, returning the raw response
-#' @keywords internal
-#' @noRd
-cf_perform <- function(
-  endpoint,
-  method = "GET",
-  query = NULL,
-  body = NULL,
-  token = NULL,
-  email = NULL,
-  api_key = NULL,
-  ...
-) {
-  req <- cf_req(token = token, email = email, api_key = api_key) |>
-    cf_req_path(endpoint) |>
-    httr2::req_method(method)
-
-  query <- drop_nulls(query)
-  if (length(query)) {
-    req <- rlang::inject(httr2::req_url_query(req, !!!query))
-  }
-  if (!is.null(body)) {
-    req <- httr2::req_body_json(req, body)
-  }
-  httr2::req_perform(req, ...)
 }
 
 #' Parse the standard Cloudflare envelope
@@ -283,22 +280,6 @@ cf_resp_envelope <- function(resp) {
   body
 }
 
-#' Format the `errors` array from a Cloudflare envelope into
-#' user-readable strings. Exposed as a helper for `cf_resp_envelope()`
-#' and any caller that wants to inspect the raw error list.
-#' @keywords internal
-#' @noRd
-cf_error_body <- function(resp) {
-  body <- tryCatch(
-    httr2::resp_body_json(resp, simplifyVector = FALSE),
-    error = function(e) NULL
-  )
-  if (is.null(body) || !length(body$errors)) {
-    return("Cloudflare returned an error with no parseable details.")
-  }
-  format_cf_errors(body$errors)
-}
-
 #' Raise a classed error from a parsed envelope
 #' @keywords internal
 #' @noRd
@@ -339,7 +320,7 @@ format_cf_error <- function(err) {
 }
 
 cf_req_path <- function(req, endpoint) {
-  parts <- strsplit(endpoint, "/", fixed = TRUE)[[1]]
+  parts <- unlist(strsplit(endpoint, "/", fixed = TRUE), use.names = FALSE)
   parts <- parts[nzchar(parts)]
   if (!length(parts)) {
     return(req)

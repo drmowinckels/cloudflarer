@@ -1,0 +1,16 @@
+http_interactions:
+  - request:
+      method: POST
+      uri: https://api.cloudflare.com/client/v4/accounts/abc123/challenges/widgets
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {"success": true, "errors": [], "messages": [],
+           "result": {"sitekey": "0x4AAA...", "secret": "0x4BBB...",
+                      "name": "comment-form", "mode": "managed",
+                      "domains": ["example.com", "www.example.com"]}}
+    recorded_at: 2026-05-20 18:07:49
+recorded_with: VCR-vcr/2.1.0

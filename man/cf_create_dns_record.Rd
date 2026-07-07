@@ -61,7 +61,17 @@ A named list describing the created record.
 Create a DNS record
 }
 \examples{
-\dontrun{
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+}
+vcr::insert_example_cassette(
+  "cf_create_dns_record",
+  package = "cloudflarer",
+  match_requests_on = c("method", "uri")
+)
+}
 cf_create_dns_record(
   "zone-1",
   type    = "A",
@@ -69,7 +79,8 @@ cf_create_dns_record(
   content = "192.0.2.1",
   proxied = TRUE
 )
-}
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other dns: 

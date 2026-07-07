@@ -13,14 +13,23 @@
 #'   (int).
 #' @export
 #' @family analytics
-#' @examples
-#' \dontrun{
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
+#' vcr::insert_example_cassette(
+#'   "cf_dns_queries",
+#'   package = "cloudflarer",
+#'   match_requests_on = c("method", "uri")
+#' )
+#' }
 #' cf_dns_queries(
 #'   "abc123",
 #'   since = Sys.Date() - 7,
 #'   until = Sys.Date()
 #' )
-#' }
+#' \dontshow{vcr::eject_cassette()}
 cf_dns_queries <- function(
   zone_id,
   since,
@@ -30,6 +39,7 @@ cf_dns_queries <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
   query <- "
   query DnsDaily($zoneTag: String!, $since: Time!, $until: Time!,
                  $limit: Int!) {

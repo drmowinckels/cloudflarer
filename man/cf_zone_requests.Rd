@@ -52,7 +52,17 @@ bin and columns for requests, bytes, page views, threats, and
 unique visitors.
 }
 \examples{
-\dontrun{
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+}
+vcr::insert_example_cassette(
+  "cf_zone_requests",
+  package = "cloudflarer",
+  match_requests_on = c("method", "uri")
+)
+}
 cf_zone_requests(
   "abc123",
   since = Sys.Date() - 7,
@@ -66,7 +76,8 @@ cf_zone_requests(
   until = Sys.time(),
   by    = "hour"
 )
-}
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other analytics: 

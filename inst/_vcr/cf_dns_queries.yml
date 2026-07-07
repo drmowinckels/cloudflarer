@@ -1,0 +1,15 @@
+http_interactions:
+  - request:
+      method: POST
+      uri: https://api.cloudflare.com/client/v4/graphql
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {"data": {"viewer": {"zones": [{"dnsAnalyticsAdaptiveGroups": [
+            {"count": 1234, "dimensions": {"date": "2026-05-01"}}
+          ]}]}}}
+    recorded_at: 2026-05-20 18:07:49
+recorded_with: VCR-vcr/2.1.0

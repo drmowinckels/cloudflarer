@@ -27,15 +27,24 @@
 #' @return A named list with the purge job `id`.
 #' @export
 #' @family cache
-#' @examples
-#' \dontrun{
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
+#' vcr::insert_example_cassette(
+#'   "cf_purge_cache",
+#'   package = "cloudflarer",
+#'   match_requests_on = c("method", "uri")
+#' )
+#' }
 #' cf_purge_cache("abc123", files = c(
 #'   "https://example.com/index.html",
 #'   "https://example.com/style.css"
 #' ))
 #'
 #' cf_purge_cache("abc123", purge_everything = TRUE)
-#' }
+#' \dontshow{vcr::eject_cassette()}
 cf_purge_cache <- function(
   zone_id,
   files = NULL,
@@ -47,6 +56,7 @@ cf_purge_cache <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
   if (purge_everything) {
     body <- list(purge_everything = TRUE)
   } else {
@@ -67,11 +77,13 @@ cf_purge_cache <- function(
     }
   }
   cf_request(
-    paste0("zones/", zone_id, "/purge_cache"),
-    method = "POST",
-    body = body,
+    c("zones", zone_id, "purge_cache"),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_method("POST") |>
+    httr2::req_body_json(body) |>
+    httr2::req_perform() |>
+    cf_resp()
 }

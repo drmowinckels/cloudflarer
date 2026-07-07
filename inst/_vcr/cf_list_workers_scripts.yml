@@ -1,0 +1,15 @@
+http_interactions:
+  - request:
+      method: GET
+      uri: https://api.cloudflare.com/client/v4/accounts/abc123/workers/scripts
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {"success": true, "errors": [], "messages": [],
+           "result": [{"id": "my-worker", "created_on": "2026-01-01T00:00:00Z"},
+                      {"id": "other-worker", "created_on": "2026-01-02T00:00:00Z"}]}
+    recorded_at: 2026-05-20 18:07:49
+recorded_with: VCR-vcr/2.1.0

@@ -17,10 +17,15 @@
 #'   `as_df = FALSE`).
 #' @export
 #' @family pages
-#' @examples
-#' \dontrun{
-#' cf_list_pages_projects("abc123")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 #' }
+#' vcr::insert_example_cassette("cf_list_pages_projects", package = "cloudflarer")
+#' }
+#' cf_list_pages_projects("abc123")
+#' \dontshow{vcr::eject_cassette()}
 cf_list_pages_projects <- function(
   account_id,
   as_df = TRUE,
@@ -28,12 +33,15 @@ cf_list_pages_projects <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(account_id)
   records <- cf_request(
-    paste0("accounts/", account_id, "/pages/projects"),
+    c("accounts", account_id, "pages", "projects"),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
   if (as_df) cf_records_to_df(records) else records
 }
 
@@ -49,10 +57,15 @@ cf_list_pages_projects <- function(
 #'   config, domains, and the latest deployment.
 #' @export
 #' @family pages
-#' @examples
-#' \dontrun{
-#' cf_get_pages_project("abc123", "my-site")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 #' }
+#' vcr::insert_example_cassette("cf_get_pages_project", package = "cloudflarer")
+#' }
+#' cf_get_pages_project("abc123", "my-site")
+#' \dontshow{vcr::eject_cassette()}
 cf_get_pages_project <- function(
   account_id,
   project_name,
@@ -60,17 +73,16 @@ cf_get_pages_project <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(account_id)
+  cf_check_id(project_name)
   cf_request(
-    paste0(
-      "accounts/",
-      account_id,
-      "/pages/projects/",
-      project_name
-    ),
+    c("accounts", account_id, "pages", "projects", project_name),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' List deployments for a Pages project
@@ -90,10 +102,15 @@ cf_get_pages_project <- function(
 #'   `as_df = FALSE`).
 #' @export
 #' @family pages
-#' @examples
-#' \dontrun{
-#' cf_list_pages_deployments("abc123", "my-site")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 #' }
+#' vcr::insert_example_cassette("cf_list_pages_deployments", package = "cloudflarer")
+#' }
+#' cf_list_pages_deployments("abc123", "my-site")
+#' \dontshow{vcr::eject_cassette()}
 cf_list_pages_deployments <- function(
   account_id,
   project_name,
@@ -104,19 +121,14 @@ cf_list_pages_deployments <- function(
   email = NULL,
   api_key = NULL
 ) {
-  records <- cf_request_collect(
-    paste0(
-      "accounts/",
-      account_id,
-      "/pages/projects/",
-      project_name,
-      "/deployments"
-    ),
-    per_page = per_page,
-    max_pages = max_pages,
+  cf_check_id(account_id)
+  cf_check_id(project_name)
+  records <- cf_request(
+    c("accounts", account_id, "pages", "projects", project_name, "deployments"),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    cf_collect(per_page = per_page, max_pages = max_pages)
   if (as_df) cf_records_to_df(records) else records
 }

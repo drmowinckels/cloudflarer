@@ -40,9 +40,16 @@ Returns the currently-connected \code{cloudflared} instances for the
 tunnel.
 }
 \examples{
-\dontrun{
-cf_list_tunnel_connections("abc123", "tunnel-1")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 }
+vcr::insert_example_cassette("cf_list_tunnel_connections", package = "cloudflarer")
+}
+cf_list_tunnel_connections("abc123", "tunnel-1")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other tunnels: 

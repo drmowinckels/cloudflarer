@@ -36,9 +36,16 @@ fetch the actual source, use the API's
 \verb{/workers/scripts/\{name\}/content} endpoint via \code{\link[=cf_request]{cf_request()}}.
 }
 \examples{
-\dontrun{
-cf_get_workers_script("abc123", "my-worker")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 }
+vcr::insert_example_cassette("cf_get_workers_script", package = "cloudflarer")
+}
+cf_get_workers_script("abc123", "my-worker")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other workers: 

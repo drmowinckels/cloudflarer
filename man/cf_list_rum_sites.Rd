@@ -22,7 +22,7 @@ cf_list_rum_sites(
 \code{"created"} or \code{"host"}.}
 
 \item{per_page, max_pages}{Pagination controls, see
-\code{\link[=cf_request_collect]{cf_request_collect()}}.}
+\code{\link[=cf_collect]{cf_collect()}}.}
 
 \item{as_df}{Logical. When \code{TRUE} (the default), returns a
 data.frame via \code{\link[=cf_records_to_df]{cf_records_to_df()}}. Set to \code{FALSE} to get the
@@ -49,9 +49,16 @@ includes the beacon snippet, whether or not the site is proxied
 through Cloudflare.
 }
 \examples{
-\dontrun{
-cf_list_rum_sites("acc-1")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 }
+vcr::insert_example_cassette("cf_list_rum_sites", package = "cloudflarer")
+}
+cf_list_rum_sites("acc-1")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other analytics: 

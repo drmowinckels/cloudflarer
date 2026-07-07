@@ -7,9 +7,9 @@
 #' @param status Optional status filter (for example `"active"`).
 #' @param account_id Optional account identifier to scope the
 #'   listing.
-#' @param per_page Page size, see [cf_request_collect()].
+#' @param per_page Page size, see [cf_collect()].
 #' @param max_pages Maximum pages to retrieve, see
-#'   [cf_request_collect()].
+#'   [cf_collect()].
 #' @param as_df Logical. When `TRUE` (the default), returns a
 #'   data.frame via [cf_records_to_df()]. Set to `FALSE` for the
 #'   raw nested list.
@@ -21,11 +21,16 @@
 #'   `as_df = FALSE`).
 #' @export
 #' @family zones
-#' @examples
-#' \dontrun{
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
+#' vcr::insert_example_cassette("cf_list_zones", package = "cloudflarer")
+#' }
 #' cf_list_zones()
 #' cf_list_zones(name = "example.com")
-#' }
+#' \dontshow{vcr::eject_cassette()}
 cf_list_zones <- function(
   name = NULL,
   status = NULL,
@@ -37,19 +42,18 @@ cf_list_zones <- function(
   email = NULL,
   api_key = NULL
 ) {
-  records <- cf_request_collect(
+  records <- cf_request(
     "zones",
-    query = list(
-      name = name,
-      status = status,
-      "account.id" = account_id
-    ),
-    per_page = per_page,
-    max_pages = max_pages,
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_url_query(
+      name = name,
+      status = status,
+      "account.id" = account_id
+    ) |>
+    cf_collect(per_page = per_page, max_pages = max_pages)
   if (as_df) cf_records_to_df(records) else records
 }
 
@@ -63,17 +67,25 @@ cf_list_zones <- function(
 #' @return A named list describing the zone.
 #' @export
 #' @family zones
-#' @examples
-#' \dontrun{
-#' cf_get_zone("abc123")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 #' }
+#' vcr::insert_example_cassette("cf_get_zone", package = "cloudflarer")
+#' }
+#' cf_get_zone("abc123")
+#' \dontshow{vcr::eject_cassette()}
 cf_get_zone <- function(zone_id, token = NULL, email = NULL, api_key = NULL) {
+  cf_check_id(zone_id)
   cf_request(
-    paste0("zones/", zone_id),
+    c("zones", zone_id),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' Get zone settings
@@ -92,10 +104,15 @@ cf_get_zone <- function(zone_id, token = NULL, email = NULL, api_key = NULL) {
 #' @return A data.frame of settings (or list when `as_df = FALSE`).
 #' @export
 #' @family zones
-#' @examples
-#' \dontrun{
-#' cf_get_zone_settings("abc123")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 #' }
+#' vcr::insert_example_cassette("cf_get_zone_settings", package = "cloudflarer")
+#' }
+#' cf_get_zone_settings("abc123")
+#' \dontshow{vcr::eject_cassette()}
 cf_get_zone_settings <- function(
   zone_id,
   as_df = TRUE,
@@ -103,12 +120,15 @@ cf_get_zone_settings <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
   records <- cf_request(
-    paste0("zones/", zone_id, "/settings"),
+    c("zones", zone_id, "settings"),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
   if (as_df) cf_records_to_df(records) else records
 }
 
@@ -125,10 +145,15 @@ cf_get_zone_settings <- function(
 #'   `modified_on`, and editability flags.
 #' @export
 #' @family zones
-#' @examples
-#' \dontrun{
-#' cf_get_zone_setting("abc123", "ssl")
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 #' }
+#' vcr::insert_example_cassette("cf_get_zone_setting", package = "cloudflarer")
+#' }
+#' cf_get_zone_setting("abc123", "ssl")
+#' \dontshow{vcr::eject_cassette()}
 cf_get_zone_setting <- function(
   zone_id,
   setting,
@@ -136,10 +161,14 @@ cf_get_zone_setting <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
+  cf_check_id(setting)
   cf_request(
-    paste0("zones/", zone_id, "/settings/", setting),
+    c("zones", zone_id, "settings", setting),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
 }

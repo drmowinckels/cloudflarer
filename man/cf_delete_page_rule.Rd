@@ -34,9 +34,16 @@ A named list with the deleted rule's \code{id}.
 Delete a Page Rule
 }
 \examples{
-\dontrun{
-cf_delete_page_rule(zone_id, "rule-1")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 }
+vcr::insert_example_cassette("cf_delete_page_rule", package = "cloudflarer")
+}
+cf_delete_page_rule("abc123", "rule-1")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other zones: 

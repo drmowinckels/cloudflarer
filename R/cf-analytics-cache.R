@@ -12,14 +12,23 @@
 #'   `request_hit_ratio`, `bandwidth_hit_ratio`.
 #' @export
 #' @family analytics
-#' @examples
-#' \dontrun{
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
+#' vcr::insert_example_cassette(
+#'   "cf_cache_ratio",
+#'   package = "cloudflarer",
+#'   match_requests_on = c("method", "uri")
+#' )
+#' }
 #' cf_cache_ratio(
 #'   "abc123",
 #'   since = Sys.Date() - 7,
 #'   until = Sys.Date()
 #' )
-#' }
+#' \dontshow{vcr::eject_cassette()}
 cf_cache_ratio <- function(
   zone_id,
   since,
@@ -29,6 +38,7 @@ cf_cache_ratio <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
   query <- "
   query CacheDaily($zoneTag: String!, $since: Date!, $until: Date!,
                    $limit: Int!) {

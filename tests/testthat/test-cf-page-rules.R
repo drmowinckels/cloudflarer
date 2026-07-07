@@ -21,23 +21,19 @@ describe("cf_list_page_rules()", {
   })
 
   it("forwards optional query parameters", {
-    captured <- NULL
-    local_mocked_bindings(
-      cf_request = function(endpoint, query, ...) {
-        captured <<- list(endpoint = endpoint, query = query)
-        list()
-      }
-    )
+    cap <- local_captured_request()
+    local_mock_auth()
     cf_list_page_rules(
       "zone-1",
       status = "active",
       order = "priority",
       direction = "desc"
     )
-    expect_equal(captured$endpoint, "zones/zone-1/pagerules")
-    expect_equal(captured$query$status, "active")
-    expect_equal(captured$query$order, "priority")
-    expect_equal(captured$query$direction, "desc")
+    expect_match(cap$req$url, "zones/zone-1/pagerules")
+    query <- httr2::url_parse(cap$req$url)$query
+    expect_equal(query$status, "active")
+    expect_equal(query$order, "priority")
+    expect_equal(query$direction, "desc")
   })
 })
 
@@ -67,14 +63,11 @@ describe("cf_create_page_rule()", {
     expect_equal(rule$status, "active")
   })
 
-  it("forwards the body to cf_request", {
-    captured <- NULL
-    local_mocked_bindings(
-      cf_request = function(endpoint, method, body, ...) {
-        captured <<- list(endpoint = endpoint, method = method, body = body)
-        list(id = "rule-x")
-      }
+  it("forwards the body to the request", {
+    cap <- local_captured_request(
+      body = '{"success":true,"result":{"id":"rule-x"}}'
     )
+    local_mock_auth()
     cf_create_page_rule(
       "zone-1",
       targets = list(cf_page_rule_target("*example.com/blog/*")),
@@ -82,12 +75,13 @@ describe("cf_create_page_rule()", {
       priority = 5,
       status = "disabled"
     )
-    expect_equal(captured$endpoint, "zones/zone-1/pagerules")
-    expect_equal(captured$method, "POST")
-    expect_equal(captured$body$priority, 5)
-    expect_equal(captured$body$status, "disabled")
-    expect_equal(captured$body$targets[[1]]$target, "url")
-    expect_equal(captured$body$actions[[1]]$id, "cache_level")
+    expect_match(cap$req$url, "zones/zone-1/pagerules$")
+    expect_equal(cap$req$method, "POST")
+    body <- cap$req$body$data
+    expect_equal(body$priority, 5)
+    expect_equal(body$status, "disabled")
+    expect_equal(body$targets[[1]]$target, "url")
+    expect_equal(body$actions[[1]]$id, "cache_level")
   })
 })
 
@@ -101,16 +95,11 @@ describe("cf_update_page_rule()", {
   })
 
   it("sends only supplied fields", {
-    captured <- NULL
-    local_mocked_bindings(
-      cf_request = function(endpoint, method, body, ...) {
-        captured <<- list(method = method, body = body)
-        list()
-      }
-    )
+    cap <- local_captured_request()
+    local_mock_auth()
     cf_update_page_rule("zone-1", "rule-1", priority = 9)
-    expect_equal(captured$method, "PATCH")
-    expect_equal(captured$body, list(priority = 9))
+    expect_equal(cap$req$method, "PATCH")
+    expect_equal(cap$req$body$data, list(priority = 9))
   })
 })
 

@@ -100,57 +100,63 @@ describe("cf_api_key()", {
 })
 
 describe("cf_token_verify()", {
-  it("delegates to cf_request with the verify endpoint", {
-    captured <- NULL
-    local_mocked_bindings(
-      cf_request = function(endpoint, ...) {
-        captured <<- endpoint
-        list(id = "tok", status = "active")
-      }
+  it("targets the verify endpoint", {
+    cap <- local_captured_request(
+      body = '{"success":true,"result":{"id":"tok","status":"active"}}'
     )
+    local_mock_auth()
     res <- cf_token_verify()
-    expect_equal(captured, "user/tokens/verify")
+    expect_match(cap$req$url, "user/tokens/verify$")
     expect_equal(res$status, "active")
   })
 })
 
 describe("cf_verify()", {
   it("uses /user/tokens/verify when token auth is active", {
-    captured <- NULL
-    local_mocked_bindings(
-      cf_request = function(endpoint, ...) {
-        captured <<- endpoint
-        list(status = "active")
-      }
+    cap <- local_captured_request(
+      body = '{"success":true,"result":{"status":"active"}}'
     )
     local_mock_auth()
     cf_verify()
-    expect_equal(captured, "user/tokens/verify")
+    expect_match(cap$req$url, "user/tokens/verify$")
   })
 
   it("uses /user when key auth is active", {
-    captured <- NULL
-    local_mocked_bindings(
-      cf_request = function(endpoint, ...) {
-        captured <<- endpoint
-        list(email = "x@example.com")
-      }
+    cap <- local_captured_request(
+      body = '{"success":true,"result":{"email":"x@example.com"}}'
     )
     local_mock_key_auth()
     cf_verify()
-    expect_equal(captured, "user")
+    expect_match(cap$req$url, "/user$")
   })
 
   it("uses /user/tokens/verify when an explicit token is passed", {
-    captured <- NULL
-    local_mocked_bindings(
-      cf_request = function(endpoint, ...) {
-        captured <<- endpoint
-        list(status = "active")
-      }
+    cap <- local_captured_request(
+      body = '{"success":true,"result":{"status":"active"}}'
     )
     local_mock_key_auth()
     cf_verify(token = "abc")
-    expect_equal(captured, "user/tokens/verify")
+    expect_match(cap$req$url, "user/tokens/verify$")
+  })
+
+  it("uses /user with explicit key auth even when an env token is set", {
+    cap <- local_captured_request(
+      body = '{"success":true,"result":{"email":"x@example.com"}}'
+    )
+    local_mock_auth()
+    cf_verify(email = "e@example.com", api_key = "k")
+    expect_match(cap$req$url, "/user$")
+    headers <- httr2::req_dry_run(
+      cap$req,
+      quiet = TRUE,
+      redact_headers = FALSE
+    )$headers
+    expect_equal(headers$`x-auth-email`, "e@example.com")
+    expect_equal(headers$`x-auth-key`, "k")
+  })
+
+  it("aborts when no credentials are configured", {
+    local_no_auth()
+    expect_error(cf_verify(), "No Cloudflare credentials")
   })
 })

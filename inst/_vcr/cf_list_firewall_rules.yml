@@ -1,0 +1,18 @@
+http_interactions:
+  - request:
+      method: GET
+      uri: https://api.cloudflare.com/client/v4/zones/abc123/firewall/rules?per_page=50&page=1
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {"success": true, "errors": [], "messages": [],
+           "result": [{"id": "rule-1", "action": "block", "paused": false,
+                       "filter": {"id": "flt-1", "expression": "ip.src eq 192.0.2.1"}},
+                      {"id": "rule-2", "action": "challenge", "paused": false,
+                       "filter": {"id": "flt-2", "expression": "http.host eq \"example.com\""}}],
+           "result_info": {"page": 1, "per_page": 50, "count": 2, "total_count": 2, "total_pages": 1}}
+    recorded_at: 2026-05-20 18:07:49
+recorded_with: VCR-vcr/2.1.0

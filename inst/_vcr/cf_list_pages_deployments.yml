@@ -1,0 +1,16 @@
+http_interactions:
+  - request:
+      method: GET
+      uri: https://api.cloudflare.com/client/v4/accounts/abc123/pages/projects/my-site/deployments?per_page=25&page=1
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {"success": true, "errors": [], "messages": [],
+           "result": [{"id": "dep-1", "environment": "production", "created_on": "2026-05-20T18:07:49Z"},
+                      {"id": "dep-2", "environment": "preview", "created_on": "2026-05-19T10:03:11Z"}],
+           "result_info": {"page": 1, "per_page": 25, "count": 2, "total_count": 2, "total_pages": 1}}
+    recorded_at: 2026-05-20 18:07:49
+recorded_with: VCR-vcr/2.1.0

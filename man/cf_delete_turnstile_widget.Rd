@@ -34,9 +34,16 @@ A named list with the deleted widget's \code{sitekey}.
 Delete a Turnstile widget
 }
 \examples{
-\dontrun{
-cf_delete_turnstile_widget("abc123", "0x4AAA...")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 }
+vcr::insert_example_cassette("cf_delete_turnstile_widget", package = "cloudflarer")
+}
+cf_delete_turnstile_widget("abc123", "0x4AAA...")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other turnstile: 

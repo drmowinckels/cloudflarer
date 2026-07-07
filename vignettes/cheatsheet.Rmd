@@ -10,12 +10,7 @@ vignette: >
 ```{r}
 #| label: setup
 #| include: false
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  eval = FALSE
-)
-library(cloudflarer)
+source("_vcr-setup.R")
 ```
 
 One-page reference of the most-used cloudflarer calls. Every list
@@ -25,6 +20,7 @@ users); pass `as_df = FALSE` for the raw nested list.
 ## Setup
 
 ```{r}
+#| cassette: cheat-sitrep
 # In ~/.Renviron
 # CLOUDFLARE_API_TOKEN=...                  # recommended
 # CLOUDFLARE_EMAIL=you@example.com          # OR (legacy)
@@ -37,6 +33,7 @@ cf_sitrep()
 ## Discover what you can reach
 
 ```{r}
+#| cassette: cheat-discover
 cf_user()
 cf_list_accounts()
 cf_list_zones()
@@ -46,6 +43,7 @@ cf_list_zones(name = "example.com")
 ## Quick overview of a zone
 
 ```{r}
+#| cassette: cheat-overview
 zones <- cf_list_zones()
 zone_id    <- zones$id[1]
 account_id <- zones$account[[1]]$id
@@ -61,6 +59,7 @@ yields `NULL` for that slot instead of failing the whole call.
 ## Traffic analytics
 
 ```{r}
+#| cassette: cheat-traffic
 cf_zone_requests(zone_id, Sys.Date() - 7, Sys.Date(), by = "day")
 cf_zone_requests(zone_id, Sys.time() - 12 * 3600, Sys.time(), by = "hour")
 
@@ -78,6 +77,7 @@ cf_firewall_events_top(
 ## Web Analytics (RUM)
 
 ```{r}
+#| cassette: cheat-rum
 sites <- cf_list_rum_sites(account_id)
 site_tag <- sites$site_tag[1]
 
@@ -92,6 +92,7 @@ cf_rum_top(account_id, site_tag,
 ## DNS records
 
 ```{r}
+#| cassette: cheat-dns
 cf_list_dns_records(zone_id, type = "A")
 
 cf_create_dns_record(
@@ -106,6 +107,7 @@ cf_delete_dns_record(zone_id, "rec-1")
 ## Page Rules
 
 ```{r}
+#| cassette: cheat-pagerules
 cf_list_page_rules(zone_id)
 
 cf_create_page_rule(
@@ -124,6 +126,7 @@ cf_delete_page_rule(zone_id, "rule-1")
 ## Cache purging
 
 ```{r}
+#| cassette: cheat-cache
 cf_purge_cache(zone_id, files = c(
   "https://example.com/index.html",
   "https://example.com/style.css"
@@ -137,6 +140,7 @@ cf_purge_cache(zone_id, purge_everything = TRUE)
 ## Zone settings
 
 ```{r}
+#| cassette: cheat-settings
 cf_get_zone_settings(zone_id)
 cf_get_zone_setting(zone_id, "ssl")
 ```
@@ -144,6 +148,7 @@ cf_get_zone_setting(zone_id, "ssl")
 ## Email Routing
 
 ```{r}
+#| cassette: cheat-email
 cf_get_email_routing_settings(zone_id)
 cf_list_email_routing_rules(zone_id)
 cf_list_email_routing_addresses(account_id)
@@ -152,6 +157,7 @@ cf_list_email_routing_addresses(account_id)
 ## Turnstile (CAPTCHA replacement)
 
 ```{r}
+#| cassette: cheat-turnstile
 cf_list_turnstile_widgets(account_id)
 
 cf_create_turnstile_widget(
@@ -165,6 +171,7 @@ cf_create_turnstile_widget(
 ## Workers
 
 ```{r}
+#| cassette: cheat-workers
 cf_list_workers_scripts(account_id)
 cf_workers_invocations(account_id, Sys.Date() - 7, Sys.Date())
 cf_list_kv_namespaces(account_id)
@@ -173,6 +180,7 @@ cf_list_kv_namespaces(account_id)
 ## Pages, R2, Tunnels
 
 ```{r}
+#| cassette: cheat-storage
 cf_list_pages_projects(account_id)
 cf_list_pages_deployments(account_id, "my-project")
 cf_list_r2_buckets(account_id)
@@ -182,11 +190,12 @@ cf_list_tunnels(account_id)
 ## Firewall + Rulesets
 
 ```{r}
+#| cassette: cheat-rulesets
 cf_list_firewall_rules(zone_id)
 
 # Modern rulesets surface:
 cf_list_rulesets(zone_id)
-cf_get_ruleset(zone_id, ruleset_id)
+cf_get_ruleset(zone_id, "rs-1")
 cf_list_account_rulesets(account_id)
 ```
 
@@ -196,16 +205,19 @@ For anything cloudflarer does not wrap, drop down to the generics.
 They handle auth and the envelope; you handle the path.
 
 ```{r}
-# Any REST endpoint:
-cf_request("user/tokens/verify")
-cf_request(
-  "zones/abc/dns_records",
-  method = "POST",
-  body = list(type = "A", name = "x", content = "1.2.3.4")
-)
+#| cassette: cheat-escape
+# Any REST endpoint: build -> pipe httr2 verbs -> perform -> unwrap
+cf_request("user/tokens/verify") |>
+  httr2::req_perform() |>
+  cf_resp()
+cf_request("zones/abc/dns_records") |>
+  httr2::req_method("POST") |>
+  httr2::req_body_json(list(type = "A", name = "x", content = "192.0.2.1")) |>
+  httr2::req_perform() |>
+  cf_resp()
 
 # Paginated REST list (returns a raw list):
-cf_request_collect("accounts/abc/access/apps", per_page = 50)
+cf_request("accounts/abc/access/apps") |> cf_collect(per_page = 50)
 
 # Any GraphQL Analytics query:
 cf_graphql(
@@ -225,6 +237,7 @@ Every cloudflarer failure (HTTP error, envelope `success: false`,
 GraphQL `errors[]`) raises a classed condition:
 
 ```{r}
+#| cassette: cheat-error
 tryCatch(
   cf_get_zone("does-not-exist"),
   cloudflarer_error = function(err) {

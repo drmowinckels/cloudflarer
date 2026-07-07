@@ -8,8 +8,15 @@
 #' @return Invisibly, a list with the diagnostic results.
 #' @export
 #' @family authentication
-#' @examples
+#' @examplesIf requireNamespace("vcr", quietly = TRUE)
+#' \dontshow{
+#' if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+#'   Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
+#' }
+#' vcr::insert_example_cassette("cf_sitrep", package = "cloudflarer")
+#' }
 #' cf_sitrep()
+#' \dontshow{vcr::eject_cassette()}
 cf_sitrep <- function() {
   cli::cli_h1("cloudflarer sitrep")
   version <- utils::packageVersion("cloudflarer")

@@ -26,9 +26,16 @@ A named list describing the zone.
 Get a single zone
 }
 \examples{
-\dontrun{
-cf_get_zone("abc123")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 }
+vcr::insert_example_cassette("cf_get_zone", package = "cloudflarer")
+}
+cf_get_zone("abc123")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other zones: 

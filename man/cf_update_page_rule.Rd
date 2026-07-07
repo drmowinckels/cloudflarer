@@ -50,9 +50,20 @@ Performs a \code{PATCH}. Only supply fields you want to change.
 Targets and actions are full replacements when supplied.
 }
 \examples{
-\dontrun{
-cf_update_page_rule(zone_id, "rule-1", status = "disabled")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 }
+vcr::insert_example_cassette(
+  "cf_update_page_rule",
+  package = "cloudflarer",
+  match_requests_on = c("method", "uri")
+)
+}
+cf_update_page_rule("abc123", "rule-1", status = "disabled")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other zones: 

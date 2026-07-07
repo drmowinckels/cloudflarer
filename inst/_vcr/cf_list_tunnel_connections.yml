@@ -1,0 +1,15 @@
+http_interactions:
+  - request:
+      method: GET
+      uri: https://api.cloudflare.com/client/v4/accounts/abc123/cfd_tunnel/tunnel-1/connections
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {"success": true, "errors": [], "messages": [],
+           "result": [{"id": "conn-1", "colo_name": "AMS", "is_pending_reconnect": false},
+                      {"id": "conn-2", "colo_name": "CDG", "is_pending_reconnect": false}]}
+    recorded_at: 2026-05-20 18:07:49
+recorded_with: VCR-vcr/2.1.0

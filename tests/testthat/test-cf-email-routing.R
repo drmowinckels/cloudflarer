@@ -24,16 +24,19 @@ describe("cf_list_email_routing_rules()", {
   })
 
   it("forwards enabled_only as a query parameter", {
-    captured <- NULL
-    local_mocked_bindings(
-      cf_request_collect = function(endpoint, query, ...) {
-        captured <<- list(endpoint = endpoint, query = query)
-        list()
-      }
-    )
+    cap <- local_captured_request()
+    local_mock_auth()
     cf_list_email_routing_rules("zone-1", enabled_only = TRUE)
-    expect_equal(captured$endpoint, "zones/zone-1/email/routing/rules")
-    expect_equal(captured$query$enabled, "true")
+    expect_match(cap$req$url, "zones/zone-1/email/routing/rules")
+    query <- httr2::url_parse(cap$req$url)$query
+    expect_equal(query$enabled, "true")
+  })
+
+  it("rejects a non-logical enabled_only with a named message", {
+    expect_error(
+      cf_list_email_routing_rules("zone-1", enabled_only = "yes"),
+      "enabled_only"
+    )
   })
 
   it("returns a list when as_df = FALSE", {
@@ -54,19 +57,22 @@ describe("cf_list_email_routing_addresses()", {
     })
     expect_s3_class(df, "data.frame")
     expect_equal(nrow(df), 2L)
-    expect_equal(df$email, c("me@gmail.com", "backup@gmail.com"))
+    expect_equal(df$email, c("me@example.com", "backup@example.com"))
   })
 
   it("forwards verified_only as a query parameter", {
-    captured <- NULL
-    local_mocked_bindings(
-      cf_request_collect = function(endpoint, query, ...) {
-        captured <<- list(endpoint = endpoint, query = query)
-        list()
-      }
-    )
+    cap <- local_captured_request()
+    local_mock_auth()
     cf_list_email_routing_addresses("acc-1", verified_only = TRUE)
-    expect_equal(captured$query$verified, "true")
+    query <- httr2::url_parse(cap$req$url)$query
+    expect_equal(query$verified, "true")
+  })
+
+  it("rejects a non-logical verified_only with a named message", {
+    expect_error(
+      cf_list_email_routing_addresses("acc-1", verified_only = NA),
+      "verified_only"
+    )
   })
 
   it("returns a list when as_df = FALSE", {
@@ -75,6 +81,6 @@ describe("cf_list_email_routing_addresses()", {
       res <- cf_list_email_routing_addresses("acc-1", as_df = FALSE)
     })
     expect_type(res, "list")
-    expect_equal(res[[1]]$email, "me@gmail.com")
+    expect_equal(res[[1]]$email, "me@example.com")
   })
 })

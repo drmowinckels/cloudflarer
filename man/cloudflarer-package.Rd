@@ -4,21 +4,21 @@
 \name{cloudflarer-package}
 \alias{cloudflarer}
 \alias{cloudflarer-package}
-\title{cloudflarer: Interface to the Cloudflare API}
+\title{cloudflarer: Interface to the 'Cloudflare' API}
 \description{
-An R interface to the Cloudflare REST API (\url{https://developers.cloudflare.com/api/}). Wraps the v4 API with authenticated requests, response unwrapping, paginated list helpers, and a generic request function so users can call any endpoint that is not yet covered by a dedicated wrapper.
+An 'R' interface to the 'Cloudflare' REST API (\url{https://developers.cloudflare.com/api/}). Wraps the v4 API with authenticated requests, response unwrapping, paginated list helpers, and a generic request function so users can call any endpoint that is not yet covered by a dedicated wrapper.
 }
 \seealso{
 Useful links:
 \itemize{
   \item \url{https://github.com/drmowinckels/cloudflarer}
-  \item \url{https://drmowinckels.github.io/cloudflarer/}
+  \item \url{https://drmowinckels.io/cloudflarer/}
   \item Report bugs at \url{https://github.com/drmowinckels/cloudflarer/issues}
 }
 
 }
 \author{
-\strong{Maintainer}: Athanasia Mo Mowinckel \email{a.m.mowinckel@psykologi.uio.no} (\href{https://orcid.org/0000-0002-5756-0223}{ORCID})
+\strong{Maintainer}: Athanasia Mo Mowinckel \email{a.m.mowinckel@psykologi.uio.no} (\href{https://orcid.org/0000-0002-5756-0223}{ORCID}) (drmowinckels) [copyright holder]
 
 }
 \keyword{internal}

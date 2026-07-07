@@ -10,12 +10,7 @@ vignette: >
 ```{r}
 #| label: setup
 #| include: false
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  eval = FALSE
-)
-library(cloudflarer)
+source("_vcr-setup.R")
 ```
 
 cloudflarer wraps the Cloudflare v4 REST API. Most users will reach
@@ -44,6 +39,7 @@ The Global API Key (legacy) also works through
 Verify the connection:
 
 ```{r}
+#| cassette: intro-sitrep
 library(cloudflarer)
 cf_sitrep()
 ```
@@ -51,6 +47,7 @@ cf_sitrep()
 ## Discovering what you can reach
 
 ```{r}
+#| cassette: intro-discover
 cf_user()
 
 cf_list_accounts()
@@ -61,6 +58,7 @@ Both helpers walk every page of results automatically. Pass
 `max_pages` to stop early while exploring:
 
 ```{r}
+#| cassette: intro-zones-page
 cf_list_zones(max_pages = 1)
 ```
 
@@ -71,6 +69,7 @@ cf_list_zones(max_pages = 1)
 `cf_delete_dns_record()` cover the CRUD lifecycle:
 
 ```{r}
+#| cassette: intro-dns
 zones <- cf_list_zones()
 zone_id <- zones$id[1]
 
@@ -95,6 +94,7 @@ cf_delete_dns_record(zone_id, "rec-1")
 Targeted purges are preferred over wipes:
 
 ```{r}
+#| cassette: intro-purge
 cf_purge_cache(zone_id, files = c(
   "https://example.com/index.html",
   "https://example.com/style.css"
@@ -107,6 +107,7 @@ cf_purge_cache(zone_id, purge_everything = TRUE)
 ## Zone settings
 
 ```{r}
+#| cassette: intro-settings
 settings <- cf_get_zone_settings(zone_id)
 settings[settings$id %in% c("ssl", "cache_level", "security_level"),
          c("id", "value")]
@@ -118,34 +119,36 @@ cf_get_zone_setting(zone_id, "ssl")
 
 Every endpoint in the
 [Cloudflare API reference](https://developers.cloudflare.com/api/)
-is reachable through `cf_request()`. Pass the path relative to
-`/client/v4`, an HTTP `method`, and optional `query` or `body`
-lists.
+is reachable through `cf_request()`, which builds an authenticated
+request for a path relative to `/client/v4`. Pipe it through the
+`httr2` request verbs you need, perform it, and unwrap the envelope
+with `cf_resp()`:
 
 ```{r}
-cf_request("user/tokens/verify")
+#| cassette: intro-generic
+cf_request("user/tokens/verify") |>
+  httr2::req_perform() |>
+  cf_resp()
 
-cf_request(
-  "zones/abc123/dns_records",
-  method = "POST",
-  body = list(
+cf_request("zones/abc123/dns_records") |>
+  httr2::req_method("POST") |>
+  httr2::req_body_json(list(
     type    = "A",
     name    = "www.example.com",
     content = "192.0.2.1",
     proxied = TRUE
-  )
-)
+  )) |>
+  httr2::req_perform() |>
+  cf_resp()
 ```
 
-For paginated list endpoints, use `cf_request_collect()` to get the
-raw list, or call `cf_records_to_df()` on the result yourself to
-tidy it into a data.frame:
+For paginated list endpoints, pipe the request into `cf_collect()`
+to get the raw list, then tidy it with `cf_records_to_df()`:
 
 ```{r}
-records <- cf_request_collect(
-  "accounts/abc123/access/apps",
-  per_page = 50
-)
+#| cassette: intro-collect
+records <- cf_request("accounts/abc123/access/apps") |>
+  cf_collect(per_page = 50)
 cf_records_to_df(records)
 ```
 
@@ -156,6 +159,7 @@ Both HTTP-level failures and Cloudflare envelope failures
 so you can catch them with `tryCatch()`:
 
 ```{r}
+#| cassette: intro-error
 tryCatch(
   cf_get_zone("does-not-exist"),
   cloudflarer_error = function(err) {

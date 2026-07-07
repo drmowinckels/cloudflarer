@@ -17,10 +17,10 @@ cf_list_accounts(
 \arguments{
 \item{name}{Optional name filter passed to the API.}
 
-\item{per_page}{Page size, see \code{\link[=cf_request_collect]{cf_request_collect()}}.}
+\item{per_page}{Page size, see \code{\link[=cf_collect]{cf_collect()}}.}
 
 \item{max_pages}{Maximum number of pages to retrieve, see
-\code{\link[=cf_request_collect]{cf_request_collect()}}.}
+\code{\link[=cf_collect]{cf_collect()}}.}
 
 \item{as_df}{Logical. When \code{TRUE} (the default), returns a
 data.frame via \code{\link[=cf_records_to_df]{cf_records_to_df()}}. Set to \code{FALSE} to get the
@@ -44,9 +44,16 @@ A data.frame of account records (or a list when
 Lists all accounts the authenticated user has access to.
 }
 \examples{
-\dontrun{
-cf_list_accounts()
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 }
+vcr::insert_example_cassette("cf_list_accounts", package = "cloudflarer")
+}
+cf_list_accounts()
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other accounts: 

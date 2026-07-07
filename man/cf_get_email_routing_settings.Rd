@@ -32,9 +32,19 @@ Returns the current Email Routing configuration for the zone:
 enabled/disabled, SPF/MX status, last-modified timestamps.
 }
 \examples{
-\dontrun{
-cf_get_email_routing_settings("abc123")
+\dontshow{if (requireNamespace("vcr", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\dontshow{
+if (!nzchar(Sys.getenv("CLOUDFLARE_API_TOKEN"))) {
+  Sys.setenv(CLOUDFLARE_API_TOKEN = "cloudflarer-example")
 }
+vcr::insert_example_cassette(
+  "cf_get_email_routing_settings",
+  package = "cloudflarer"
+)
+}
+cf_get_email_routing_settings("abc123")
+\dontshow{vcr::eject_cassette()}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other email: 

@@ -1,0 +1,68 @@
+http_interactions:
+  - request:
+      method: POST
+      uri: https://api.cloudflare.com/client/v4/graphql
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {"data": {"viewer": {"zones": [{"httpRequests1dGroups": [
+            {"dimensions": {"date": "2026-05-01"}, "sum": {"requests": 1000, "bytes": 2000000, "pageViews": 500, "threats": 10}, "uniq": {"uniques": 300}}
+          ]}]}}}
+    recorded_at: 2026-05-20 18:07:49
+  - request:
+      method: POST
+      uri: https://api.cloudflare.com/client/v4/graphql
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {"data": {"viewer": {"zones": [{"httpRequests1dGroups": [
+            {"dimensions": {"date": "2026-05-01"}, "sum": {"requests": 1000, "cachedRequests": 800, "bytes": 2000000, "cachedBytes": 1500000}}
+          ]}]}}}
+    recorded_at: 2026-05-20 18:07:49
+  - request:
+      method: POST
+      uri: https://api.cloudflare.com/client/v4/graphql
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {"data": {"viewer": {"zones": [{"dnsAnalyticsAdaptiveGroups": [
+            {"count": 1234, "dimensions": {"date": "2026-05-01"}}
+          ]}]}}}
+    recorded_at: 2026-05-20 18:07:49
+  - request:
+      method: POST
+      uri: https://api.cloudflare.com/client/v4/graphql
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {"data": {"viewer": {"zones": [{"firewallEventsAdaptiveGroups": [
+            {"count": 42, "dimensions": {"date": "2026-05-01"}}
+          ]}]}}}
+    recorded_at: 2026-05-20 18:07:49
+  - request:
+      method: POST
+      uri: https://api.cloudflare.com/client/v4/graphql
+    response:
+      status: 200
+      headers:
+        content-type: application/json
+      body:
+        string: |
+          {"data": {"viewer": {"accounts": [{"rumPageloadEventsAdaptiveGroups": [
+            {"count": 300, "dimensions": {"countryName": "United States"}},
+            {"count": 120, "dimensions": {"countryName": "Germany"}}
+          ]}]}}}
+    recorded_at: 2026-05-20 18:07:49
+recorded_with: VCR-vcr/2.1.0
