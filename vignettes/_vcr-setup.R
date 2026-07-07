@@ -12,7 +12,9 @@ vcr::vcr_configure(
   match_requests_on = c("method", "uri"),
   filter_request_headers = "Authorization"
 )
-# prefix = "" so a chunk's `cassette` option maps straight to _vcr/<name>.yml
-vcr::setup_knitr(prefix = "")
+# prefix = "" so a chunk's `cassette` option maps straight to _vcr/<name>.yml.
+# record = "none" so a missing/mismatched cassette fails the build loudly
+# instead of making a live call and recording real account data.
+vcr::setup_knitr(prefix = "", record = "none")
 
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
