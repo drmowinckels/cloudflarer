@@ -50,6 +50,8 @@ uniques (from \code{\link[=cf_zone_requests]{cf_zone_requests()}}).
 \code{\link[=cf_rum_top]{cf_rum_top()}}); only populated when \code{account_id} and
 \code{site_tag} are supplied.
 \item \code{summary} -- a one-row data.frame with the period totals.
+\item \code{zone_id}, \code{since}, \code{until} -- the call's own arguments,
+echoed back for reference.
 }
 }
 \description{

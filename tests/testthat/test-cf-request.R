@@ -62,6 +62,23 @@ describe("cf_req_auth()", {
     expect_equal(headers$`x-auth-key`, "secret")
   })
 
+  it("redacts the API key and email from the request's printed form", {
+    req <- request("https://example.com") |>
+      cf_req_auth(email = "me@example.com", api_key = "supersecret-key")
+    printed <- paste(utils::capture.output(print(req)), collapse = "\n")
+    expect_false(grepl("supersecret-key", printed, fixed = TRUE))
+    expect_false(grepl("me@example.com", printed, fixed = TRUE))
+    expect_match(printed, "REDACTED")
+  })
+
+  it("redacts the bearer token from the request's printed form", {
+    req <- request("https://example.com") |>
+      cf_req_auth(token = "supersecret-token")
+    printed <- paste(utils::capture.output(print(req)), collapse = "\n")
+    expect_false(grepl("supersecret-token", printed, fixed = TRUE))
+    expect_match(printed, "REDACTED")
+  })
+
   it("picks token mode from env vars when no explicit args are passed", {
     local_mock_auth()
     headers <- request("https://example.com") |>

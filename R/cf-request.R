@@ -63,7 +63,7 @@ cf_req_auth <- function(req, token = NULL, email = NULL, api_key = NULL) {
     return(httr2::req_auth_bearer_token(req, token))
   }
   if (!is.null(email) || !is.null(api_key)) {
-    return(httr2::req_headers(
+    return(httr2::req_headers_redacted(
       req,
       `X-Auth-Email` = cf_email(email),
       `X-Auth-Key` = cf_api_key(api_key)
@@ -83,7 +83,7 @@ cf_req_auth <- function(req, token = NULL, email = NULL, api_key = NULL) {
   if (mode == "token") {
     return(httr2::req_auth_bearer_token(req, cf_token()))
   }
-  httr2::req_headers(
+  httr2::req_headers_redacted(
     req,
     `X-Auth-Email` = cf_email(),
     `X-Auth-Key` = cf_api_key()

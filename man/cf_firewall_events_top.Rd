@@ -25,7 +25,10 @@ cf_firewall_events_top(
 choices: \code{"action"} (block, challenge, ...), \code{"source"} (WAF,
 firewall rules, security level, ...), \code{"ruleId"},
 \code{"clientCountryName"}, \code{"clientRequestPath"},
-\code{"clientRequestHTTPHost"}, \code{"userAgent"}.}
+\code{"clientRequestHTTPHost"}, \code{"userAgent"}. Must be a single
+field name (letters, digits, underscores; not starting with a
+digit) and cannot be \code{"events"}, which names the metric
+column.}
 
 \item{limit}{Number of rows to return.}
 

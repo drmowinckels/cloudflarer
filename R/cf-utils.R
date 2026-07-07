@@ -221,3 +221,53 @@ cf_check_id <- function(
   }
   invisible(x)
 }
+
+#' Validate a `dimension` argument used as a GraphQL field name
+#'
+#' Used by "top N by dimension" wrappers that splice the
+#' caller-supplied `dimension` directly into a GraphQL query string
+#' (as the field requested inside a `dimensions { ... }` selection
+#' set) and also name their first output column after it, next to a
+#' fixed metric column (`count`, `events`, ...).
+#'
+#' Two independent failure modes are guarded here:
+#'
+#' * `dimension` must look like a single GraphQL field name
+#'   (`^[A-Za-z_][A-Za-z0-9_]*$`). Without this check, an
+#'   unvalidated `dimension` is interpolated verbatim into the
+#'   query text, so any caller-controlled value -- for example one
+#'   forwarded from a Shiny input or URL parameter by code built on
+#'   top of this package -- could break out of the intended
+#'   selection set and request additional fields.
+#' * `dimension` must not equal `reserved`, the fixed metric column
+#'   name, since `data.frame` silently allows duplicate column
+#'   names and `$` access on the result becomes ambiguous.
+#'
+#' @keywords internal
+#' @noRd
+cf_check_dimension_name <- function(
+  dimension,
+  reserved,
+  arg = rlang::caller_arg(dimension),
+  call = rlang::caller_env()
+) {
+  if (
+    !is_nonempty_string(dimension) ||
+      !grepl("^[A-Za-z_][A-Za-z0-9_]*$", dimension)
+  ) {
+    cli::cli_abort(
+      paste(
+        "{.arg {arg}} must be a single GraphQL field name (letters,",
+        "digits, underscores; not starting with a digit)."
+      ),
+      call = call
+    )
+  }
+  if (identical(dimension, reserved)) {
+    cli::cli_abort(
+      "{.arg {arg}} cannot be {.val {reserved}}: that name is already used for the metric column.",
+      call = call
+    )
+  }
+  invisible(dimension)
+}

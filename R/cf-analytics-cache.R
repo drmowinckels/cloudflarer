@@ -73,9 +73,6 @@ cf_cache_ratio <- function(
     .envir = parent.frame()
   )
   groups <- res$data$viewer$zones[[1]]$httpRequests1dGroups
-  if (!length(groups)) {
-    return(empty_cache_ratio_df())
-  }
   requests <- vapply(
     groups,
     function(g) as.integer(g$sum$requests),
@@ -104,19 +101,6 @@ cf_cache_ratio <- function(
       cached_requests / requests
     ),
     bandwidth_hit_ratio = ifelse(bytes == 0, NA_real_, cached_bytes / bytes),
-    stringsAsFactors = FALSE
-  ))
-}
-
-empty_cache_ratio_df <- function() {
-  as_cf_tibble(data.frame(
-    date = character(0),
-    requests = integer(0),
-    cached_requests = integer(0),
-    bytes = numeric(0),
-    cached_bytes = numeric(0),
-    request_hit_ratio = numeric(0),
-    bandwidth_hit_ratio = numeric(0),
     stringsAsFactors = FALSE
   ))
 }
