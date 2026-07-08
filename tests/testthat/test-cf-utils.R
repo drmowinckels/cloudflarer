@@ -249,6 +249,36 @@ describe("cf_check_id()", {
   })
 })
 
+describe("cf_check_path_id()", {
+  it("passes for a plain, slash-free string", {
+    expect_invisible(cf_check_path_id("ns-1"))
+  })
+
+  it("aborts for the same invalid input as cf_check_id()", {
+    expect_error(cf_check_path_id(NULL), "must be a non-empty character string")
+    expect_error(cf_check_path_id(""), "must be a non-empty character string")
+  })
+
+  it("aborts for a value containing a slash", {
+    expect_error(cf_check_path_id("foo/bar"), "must not contain")
+  })
+
+  it("aborts for a bare dot-segment", {
+    expect_error(cf_check_path_id("."), "must not contain")
+    expect_error(cf_check_path_id(".."), "must not contain")
+  })
+
+  it("aborts for a path-traversal payload", {
+    traversal <- "../../../../accounts/other/storage/kv/namespaces/x/values/y"
+    expect_error(cf_check_path_id(traversal), "must not contain")
+  })
+
+  it("names the failing argument in the message", {
+    key_name <- "a/b"
+    expect_error(cf_check_path_id(key_name), "key_name")
+  })
+})
+
 describe("cf_check_dimension_name()", {
   it("passes when dimension differs from the reserved name", {
     expect_invisible(cf_check_dimension_name("countryName", "count"))

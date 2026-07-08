@@ -34,7 +34,7 @@ cf_list_kv_namespaces <- function(
   email = NULL,
   api_key = NULL
 ) {
-  cf_check_id(account_id)
+  cf_check_path_id(account_id)
   records <- cf_request(
     c("accounts", account_id, "storage", "kv", "namespaces"),
     token = token,
@@ -72,8 +72,8 @@ cf_get_kv_namespace <- function(
   email = NULL,
   api_key = NULL
 ) {
-  cf_check_id(account_id)
-  cf_check_id(namespace_id)
+  cf_check_path_id(account_id)
+  cf_check_path_id(namespace_id)
   cf_request(
     c("accounts", account_id, "storage", "kv", "namespaces", namespace_id),
     token = token,
@@ -115,7 +115,7 @@ cf_create_kv_namespace <- function(
   email = NULL,
   api_key = NULL
 ) {
-  cf_check_id(account_id)
+  cf_check_path_id(account_id)
   cf_check_id(title)
   cf_request(
     c("accounts", account_id, "storage", "kv", "namespaces"),
@@ -161,8 +161,8 @@ cf_rename_kv_namespace <- function(
   email = NULL,
   api_key = NULL
 ) {
-  cf_check_id(account_id)
-  cf_check_id(namespace_id)
+  cf_check_path_id(account_id)
+  cf_check_path_id(namespace_id)
   cf_check_id(title)
   cf_request(
     c("accounts", account_id, "storage", "kv", "namespaces", namespace_id),
@@ -200,8 +200,8 @@ cf_delete_kv_namespace <- function(
   email = NULL,
   api_key = NULL
 ) {
-  cf_check_id(account_id)
-  cf_check_id(namespace_id)
+  cf_check_path_id(account_id)
+  cf_check_path_id(namespace_id)
   cf_request(
     c("accounts", account_id, "storage", "kv", "namespaces", namespace_id),
     token = token,
@@ -260,8 +260,8 @@ cf_list_kv_keys <- function(
   email = NULL,
   api_key = NULL
 ) {
-  cf_check_id(account_id)
-  cf_check_id(namespace_id)
+  cf_check_path_id(account_id)
+  cf_check_path_id(namespace_id)
   req <- cf_request(
     c(
       "accounts",
@@ -336,9 +336,9 @@ cf_get_kv_value <- function(
   email = NULL,
   api_key = NULL
 ) {
-  cf_check_id(account_id)
-  cf_check_id(namespace_id)
-  cf_check_id(key_name)
+  cf_check_path_id(account_id)
+  cf_check_path_id(namespace_id)
+  cf_check_path_id(key_name)
   as <- match.arg(as)
   resp <- cf_request(
     c(
@@ -357,7 +357,7 @@ cf_get_kv_value <- function(
   ) |>
     httr2::req_perform()
   if (httr2::resp_status(resp) >= 400L) {
-    cf_resp_envelope(resp)
+    return(cf_resp_envelope(resp))
   }
   if (as == "raw") httr2::resp_body_raw(resp) else httr2::resp_body_string(resp)
 }
@@ -401,9 +401,9 @@ cf_put_kv_value <- function(
   email = NULL,
   api_key = NULL
 ) {
-  cf_check_id(account_id)
-  cf_check_id(namespace_id)
-  cf_check_id(key_name)
+  cf_check_path_id(account_id)
+  cf_check_path_id(namespace_id)
+  cf_check_path_id(key_name)
   cf_request(
     c(
       "accounts",
@@ -455,9 +455,9 @@ cf_delete_kv_value <- function(
   email = NULL,
   api_key = NULL
 ) {
-  cf_check_id(account_id)
-  cf_check_id(namespace_id)
-  cf_check_id(key_name)
+  cf_check_path_id(account_id)
+  cf_check_path_id(namespace_id)
+  cf_check_path_id(key_name)
   cf_request(
     c(
       "accounts",
@@ -523,8 +523,8 @@ cf_put_kv_values <- function(
   email = NULL,
   api_key = NULL
 ) {
-  cf_check_id(account_id)
-  cf_check_id(namespace_id)
+  cf_check_path_id(account_id)
+  cf_check_path_id(namespace_id)
   if (!is.list(values) || !length(values)) {
     cli::cli_abort(
       "{.arg values} must be a non-empty list of key-value entries."
@@ -584,8 +584,8 @@ cf_delete_kv_values <- function(
   email = NULL,
   api_key = NULL
 ) {
-  cf_check_id(account_id)
-  cf_check_id(namespace_id)
+  cf_check_path_id(account_id)
+  cf_check_path_id(namespace_id)
   if (!is.character(keys) || !length(keys)) {
     cli::cli_abort(
       "{.arg keys} must be a non-empty character vector of key names."

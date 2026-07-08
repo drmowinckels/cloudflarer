@@ -148,6 +148,14 @@ describe("cf_get_kv_value()", {
       class = "cloudflarer_error"
     )
   })
+
+  it("rejects a key_name that would inject extra path segments", {
+    local_mock_auth()
+    expect_error(
+      cf_get_kv_value("acc-1", "ns-1", "../../accounts/other/storage"),
+      "must not contain"
+    )
+  })
 })
 
 describe("cf_put_kv_value()", {
@@ -174,6 +182,14 @@ describe("cf_put_kv_value()", {
     query <- httr2::url_parse(cap$req$url)$query
     expect_equal(query$expiration_ttl, "3600")
   })
+
+  it("rejects a key_name that would inject extra path segments", {
+    local_mock_auth()
+    expect_error(
+      cf_put_kv_value("acc-1", "ns-1", "a/../b", "hello world"),
+      "must not contain"
+    )
+  })
 })
 
 describe("cf_delete_kv_value()", {
@@ -183,6 +199,14 @@ describe("cf_delete_kv_value()", {
       res <- cf_delete_kv_value("acc-1", "ns-1", "greeting")
     })
     expect_null(res)
+  })
+
+  it("rejects a key_name that would inject extra path segments", {
+    local_mock_auth()
+    expect_error(
+      cf_delete_kv_value("acc-1", "ns-1", "a/../b"),
+      "must not contain"
+    )
   })
 })
 
