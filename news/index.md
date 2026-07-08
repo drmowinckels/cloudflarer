@@ -77,6 +77,33 @@
   every other component (`ov$zone_id` rather than
   `attr(ov, "zone_id")`).
 
+### New endpoint groups
+
+- Healthchecks:
+  [`cf_list_healthchecks()`](http://drmowinckels.io/cloudflarer/reference/cf_list_healthchecks.md),
+  [`cf_get_healthcheck()`](http://drmowinckels.io/cloudflarer/reference/cf_get_healthcheck.md),
+  [`cf_create_healthcheck()`](http://drmowinckels.io/cloudflarer/reference/cf_create_healthcheck.md),
+  [`cf_update_healthcheck()`](http://drmowinckels.io/cloudflarer/reference/cf_update_healthcheck.md),
+  [`cf_delete_healthcheck()`](http://drmowinckels.io/cloudflarer/reference/cf_delete_healthcheck.md)
+  for standalone (non-load-balancer) zone healthchecks.
+- SSL certificate packs:
+  [`cf_list_certificate_packs()`](http://drmowinckels.io/cloudflarer/reference/cf_list_certificate_packs.md),
+  [`cf_get_certificate_pack()`](http://drmowinckels.io/cloudflarer/reference/cf_get_certificate_pack.md)
+  for universal, advanced, and custom zone certificates.
+- Custom hostnames (SSL for SaaS):
+  [`cf_list_custom_hostnames()`](http://drmowinckels.io/cloudflarer/reference/cf_list_custom_hostnames.md),
+  [`cf_get_custom_hostname()`](http://drmowinckels.io/cloudflarer/reference/cf_get_custom_hostname.md),
+  [`cf_create_custom_hostname()`](http://drmowinckels.io/cloudflarer/reference/cf_create_custom_hostname.md),
+  [`cf_delete_custom_hostname()`](http://drmowinckels.io/cloudflarer/reference/cf_delete_custom_hostname.md).
+- D1 (serverless SQL):
+  [`cf_list_d1_databases()`](http://drmowinckels.io/cloudflarer/reference/cf_list_d1_databases.md),
+  [`cf_get_d1_database()`](http://drmowinckels.io/cloudflarer/reference/cf_get_d1_database.md),
+  [`cf_create_d1_database()`](http://drmowinckels.io/cloudflarer/reference/cf_create_d1_database.md),
+  [`cf_delete_d1_database()`](http://drmowinckels.io/cloudflarer/reference/cf_delete_d1_database.md),
+  and
+  [`cf_d1_query()`](http://drmowinckels.io/cloudflarer/reference/cf_d1_query.md)
+  for parameterised SQL execution that returns a data.frame by default.
+
 ### Core
 
 - Composable request layer built on `httr2`.

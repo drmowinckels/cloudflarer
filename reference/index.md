@@ -112,6 +112,50 @@ firewall, redirects, cache rules, rate limits).
 - [`cf_purge_cache()`](http://drmowinckels.io/cloudflarer/reference/cf_purge_cache.md)
   : Purge zone cache
 
+## Healthchecks
+
+- [`cf_create_healthcheck()`](http://drmowinckels.io/cloudflarer/reference/cf_create_healthcheck.md)
+  : Create a healthcheck
+- [`cf_delete_healthcheck()`](http://drmowinckels.io/cloudflarer/reference/cf_delete_healthcheck.md)
+  : Delete a healthcheck
+- [`cf_get_healthcheck()`](http://drmowinckels.io/cloudflarer/reference/cf_get_healthcheck.md)
+  : Get a single healthcheck
+- [`cf_list_healthchecks()`](http://drmowinckels.io/cloudflarer/reference/cf_list_healthchecks.md)
+  : List standalone healthchecks in a zone
+- [`cf_update_healthcheck()`](http://drmowinckels.io/cloudflarer/reference/cf_update_healthcheck.md)
+  : Update a healthcheck
+
+## SSL/TLS
+
+Certificate packs (universal/advanced/custom) and SSL-for-SaaS custom
+hostnames.
+
+- [`cf_get_certificate_pack()`](http://drmowinckels.io/cloudflarer/reference/cf_get_certificate_pack.md)
+  : Get a single SSL certificate pack
+- [`cf_list_certificate_packs()`](http://drmowinckels.io/cloudflarer/reference/cf_list_certificate_packs.md)
+  : List SSL certificate packs in a zone
+- [`cf_create_custom_hostname()`](http://drmowinckels.io/cloudflarer/reference/cf_create_custom_hostname.md)
+  : Create a custom hostname
+- [`cf_delete_custom_hostname()`](http://drmowinckels.io/cloudflarer/reference/cf_delete_custom_hostname.md)
+  : Delete a custom hostname
+- [`cf_get_custom_hostname()`](http://drmowinckels.io/cloudflarer/reference/cf_get_custom_hostname.md)
+  : Get a single custom hostname
+- [`cf_list_custom_hostnames()`](http://drmowinckels.io/cloudflarer/reference/cf_list_custom_hostnames.md)
+  : List custom hostnames in a zone
+
+## D1 (serverless SQL)
+
+- [`cf_create_d1_database()`](http://drmowinckels.io/cloudflarer/reference/cf_create_d1_database.md)
+  : Create a D1 database
+- [`cf_delete_d1_database()`](http://drmowinckels.io/cloudflarer/reference/cf_delete_d1_database.md)
+  : Delete a D1 database
+- [`cf_get_d1_database()`](http://drmowinckels.io/cloudflarer/reference/cf_get_d1_database.md)
+  : Get a single D1 database
+- [`cf_list_d1_databases()`](http://drmowinckels.io/cloudflarer/reference/cf_list_d1_databases.md)
+  : List D1 databases in an account
+- [`cf_d1_query()`](http://drmowinckels.io/cloudflarer/reference/cf_d1_query.md)
+  : Run a SQL query against a D1 database
+
 ## Workers
 
 - [`cf_list_workers_scripts()`](http://drmowinckels.io/cloudflarer/reference/cf_list_workers_scripts.md)
