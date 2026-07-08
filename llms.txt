@@ -286,6 +286,24 @@ hostnames.
   : List Workers KV namespaces
 - [`cf_get_kv_namespace()`](http://drmowinckels.io/cloudflarer/reference/cf_get_kv_namespace.md)
   : Get a single Workers KV namespace
+- [`cf_create_kv_namespace()`](http://drmowinckels.io/cloudflarer/reference/cf_create_kv_namespace.md)
+  : Create a Workers KV namespace
+- [`cf_rename_kv_namespace()`](http://drmowinckels.io/cloudflarer/reference/cf_rename_kv_namespace.md)
+  : Rename a Workers KV namespace
+- [`cf_delete_kv_namespace()`](http://drmowinckels.io/cloudflarer/reference/cf_delete_kv_namespace.md)
+  : Delete a Workers KV namespace
+- [`cf_list_kv_keys()`](http://drmowinckels.io/cloudflarer/reference/cf_list_kv_keys.md)
+  : List the keys in a Workers KV namespace
+- [`cf_get_kv_value()`](http://drmowinckels.io/cloudflarer/reference/cf_get_kv_value.md)
+  : Read a value from a Workers KV namespace
+- [`cf_put_kv_value()`](http://drmowinckels.io/cloudflarer/reference/cf_put_kv_value.md)
+  : Write a value to a Workers KV namespace
+- [`cf_delete_kv_value()`](http://drmowinckels.io/cloudflarer/reference/cf_delete_kv_value.md)
+  : Delete a value from a Workers KV namespace
+- [`cf_put_kv_values()`](http://drmowinckels.io/cloudflarer/reference/cf_put_kv_values.md)
+  : Write multiple key-value pairs to a Workers KV namespace
+- [`cf_delete_kv_values()`](http://drmowinckels.io/cloudflarer/reference/cf_delete_kv_values.md)
+  : Delete multiple keys from a Workers KV namespace
 
 ## Pages
 

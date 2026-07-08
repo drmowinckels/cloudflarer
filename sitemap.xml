@@ -18,6 +18,7 @@
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_create_d1_database.html</loc></url>
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_create_dns_record.html</loc></url>
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_create_healthcheck.html</loc></url>
+<url><loc>http://drmowinckels.io/cloudflarer/reference/cf_create_kv_namespace.html</loc></url>
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_create_page_rule.html</loc></url>
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_create_turnstile_widget.html</loc></url>
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_d1_query.html</loc></url>
@@ -25,6 +26,9 @@
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_delete_d1_database.html</loc></url>
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_delete_dns_record.html</loc></url>
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_delete_healthcheck.html</loc></url>
+<url><loc>http://drmowinckels.io/cloudflarer/reference/cf_delete_kv_namespace.html</loc></url>
+<url><loc>http://drmowinckels.io/cloudflarer/reference/cf_delete_kv_value.html</loc></url>
+<url><loc>http://drmowinckels.io/cloudflarer/reference/cf_delete_kv_values.html</loc></url>
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_delete_page_rule.html</loc></url>
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_delete_turnstile_widget.html</loc></url>
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_dns_queries.html</loc></url>
@@ -40,6 +44,7 @@
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_get_email_routing_settings.html</loc></url>
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_get_healthcheck.html</loc></url>
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_get_kv_namespace.html</loc></url>
+<url><loc>http://drmowinckels.io/cloudflarer/reference/cf_get_kv_value.html</loc></url>
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_get_page_rule.html</loc></url>
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_get_pages_project.html</loc></url>
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_get_r2_bucket.html</loc></url>
@@ -63,6 +68,7 @@
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_list_email_routing_rules.html</loc></url>
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_list_firewall_rules.html</loc></url>
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_list_healthchecks.html</loc></url>
+<url><loc>http://drmowinckels.io/cloudflarer/reference/cf_list_kv_keys.html</loc></url>
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_list_kv_namespaces.html</loc></url>
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_list_page_rules.html</loc></url>
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_list_pages_deployments.html</loc></url>
@@ -78,7 +84,10 @@
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_page_rule_action.html</loc></url>
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_page_rule_target.html</loc></url>
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_purge_cache.html</loc></url>
+<url><loc>http://drmowinckels.io/cloudflarer/reference/cf_put_kv_value.html</loc></url>
+<url><loc>http://drmowinckels.io/cloudflarer/reference/cf_put_kv_values.html</loc></url>
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_records_to_df.html</loc></url>
+<url><loc>http://drmowinckels.io/cloudflarer/reference/cf_rename_kv_namespace.html</loc></url>
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_request.html</loc></url>
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_resp.html</loc></url>
 <url><loc>http://drmowinckels.io/cloudflarer/reference/cf_rum_page_views.html</loc></url>
