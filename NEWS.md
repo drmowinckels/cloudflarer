@@ -66,6 +66,23 @@
   attributes, so they're accessed the same way as every other
   component (`ov$zone_id` rather than `attr(ov, "zone_id")`).
 
+## New endpoint groups
+
+- Healthchecks: `cf_list_healthchecks()`, `cf_get_healthcheck()`,
+  `cf_create_healthcheck()`, `cf_update_healthcheck()`,
+  `cf_delete_healthcheck()` for standalone (non-load-balancer)
+  zone healthchecks.
+- SSL certificate packs: `cf_list_certificate_packs()`,
+  `cf_get_certificate_pack()` for universal, advanced, and custom
+  zone certificates.
+- Custom hostnames (SSL for SaaS): `cf_list_custom_hostnames()`,
+  `cf_get_custom_hostname()`, `cf_create_custom_hostname()`,
+  `cf_delete_custom_hostname()`.
+- D1 (serverless SQL): `cf_list_d1_databases()`,
+  `cf_get_d1_database()`, `cf_create_d1_database()`,
+  `cf_delete_d1_database()`, and `cf_d1_query()` for parameterised
+  SQL execution that returns a data.frame by default.
+
 ## Core
 
 - Composable request layer built on `httr2`. `cf_request()` builds
