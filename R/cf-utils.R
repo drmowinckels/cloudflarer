@@ -222,6 +222,37 @@ cf_check_id <- function(
   invisible(x)
 }
 
+#' Validate a URL-path-segment argument that must not itself contain
+#' path separators
+#'
+#' [cf_req_path()] splits every element of the endpoint vector on
+#' `/` before appending it as one or more URL path segments, so a
+#' path-segment argument that is free-form user text (as opposed to
+#' an opaque Cloudflare-issued ID) can smuggle extra `/` or `..`
+#' segments into the request path -- redirecting the call to a
+#' different, unintended endpoint under the same credentials. Use
+#' this instead of [cf_check_id()] for any argument that (a) is
+#' spliced into a request path and (b) is chosen by the caller
+#' rather than returned by a prior Cloudflare API call.
+#'
+#' @inheritParams cf_check_id
+#' @keywords internal
+#' @noRd
+cf_check_path_id <- function(
+  x,
+  arg = rlang::caller_arg(x),
+  call = rlang::caller_env()
+) {
+  cf_check_id(x, arg = arg, call = call)
+  if (grepl("/", x, fixed = TRUE) || x %in% c(".", "..")) {
+    cli::cli_abort(
+      "{.arg {arg}} must not contain {.val /} or be {.val .} or {.val ..}.",
+      call = call
+    )
+  }
+  invisible(x)
+}
+
 #' Validate a `dimension` argument used as a GraphQL field name
 #'
 #' Used by "top N by dimension" wrappers that splice the

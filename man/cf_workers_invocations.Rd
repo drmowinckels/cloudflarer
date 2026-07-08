@@ -83,10 +83,19 @@ Other analytics:
 \code{\link{cf_zone_requests}()}
 
 Other workers: 
+\code{\link{cf_create_kv_namespace}()},
+\code{\link{cf_delete_kv_namespace}()},
+\code{\link{cf_delete_kv_value}()},
+\code{\link{cf_delete_kv_values}()},
 \code{\link{cf_get_kv_namespace}()},
+\code{\link{cf_get_kv_value}()},
 \code{\link{cf_get_workers_script}()},
+\code{\link{cf_list_kv_keys}()},
 \code{\link{cf_list_kv_namespaces}()},
-\code{\link{cf_list_workers_scripts}()}
+\code{\link{cf_list_workers_scripts}()},
+\code{\link{cf_put_kv_value}()},
+\code{\link{cf_put_kv_values}()},
+\code{\link{cf_rename_kv_namespace}()}
 }
 \concept{analytics}
 \concept{workers}

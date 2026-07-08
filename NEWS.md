@@ -2,6 +2,15 @@
 
 - Initial scaffold of the package.
 
+## New features
+
+- Workers KV namespace management: `cf_create_kv_namespace()`,
+  `cf_rename_kv_namespace()`, `cf_delete_kv_namespace()`.
+- Workers KV key-value access: `cf_list_kv_keys()`,
+  `cf_get_kv_value()`, `cf_put_kv_value()`, `cf_delete_kv_value()`.
+- Workers KV bulk operations: `cf_put_kv_values()`,
+  `cf_delete_kv_values()`.
+
 ## Hardening
 
 - `cf_verify()` no longer crashes with an `NA`-in-`if` error when

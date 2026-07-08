@@ -1,0 +1,12 @@
+http_interactions:
+  - request:
+      method: GET
+      uri: https://api.cloudflare.com/client/v4/accounts/acc-1/storage/kv/namespaces/ns-1/values/greeting
+    response:
+      status: 200
+      headers:
+        content-type: text/plain; charset=UTF-8
+      body:
+        string: hello world
+    recorded_at: 2026-05-21 00:00:00
+recorded_with: VCR-vcr/2.1.0

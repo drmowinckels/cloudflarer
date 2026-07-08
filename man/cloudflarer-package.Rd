@@ -6,6 +6,8 @@
 \alias{cloudflarer-package}
 \title{cloudflarer: Interface to the 'Cloudflare' API}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 An 'R' interface to the 'Cloudflare' REST API (\url{https://developers.cloudflare.com/api/}). Wraps the v4 API with authenticated requests, response unwrapping, paginated list helpers, and a generic request function so users can call any endpoint that is not yet covered by a dedicated wrapper.
 }
 \seealso{
