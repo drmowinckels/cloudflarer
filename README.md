@@ -1,6 +1,6 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# cloudflarer
+# cloudflarer <a href="http://drmowinckels.io/cloudflarer/"><img src="man/figures/logo.png" align="right" height="138" alt="cloudflarer website" /></a>
 
 <!-- badges: start -->
 

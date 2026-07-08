@@ -67,6 +67,15 @@ reference:
       - cf_workers_invocations
       - cf_list_kv_namespaces
       - cf_get_kv_namespace
+      - cf_create_kv_namespace
+      - cf_rename_kv_namespace
+      - cf_delete_kv_namespace
+      - cf_list_kv_keys
+      - cf_get_kv_value
+      - cf_put_kv_value
+      - cf_delete_kv_value
+      - cf_put_kv_values
+      - cf_delete_kv_values
   - title: Pages
     contents:
       - cf_list_pages_projects
