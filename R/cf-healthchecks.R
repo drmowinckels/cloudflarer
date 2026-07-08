@@ -5,7 +5,7 @@
 #'
 #' @param zone_id Character. Cloudflare zone identifier.
 #' @param per_page,max_pages Pagination controls, see
-#'   [cf_request_collect()].
+#'   [cf_collect()].
 #' @param as_df Logical. When `TRUE` (the default), returns a
 #'   data.frame via [cf_records_to_df()].
 #' @inheritParams cf_token
@@ -29,14 +29,14 @@ cf_list_healthchecks <- function(
   email = NULL,
   api_key = NULL
 ) {
-  records <- cf_request_collect(
-    paste0("zones/", zone_id, "/healthchecks"),
-    per_page = per_page,
-    max_pages = max_pages,
+  cf_check_id(zone_id)
+  records <- cf_request(
+    c("zones", zone_id, "healthchecks"),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    cf_collect(per_page = per_page, max_pages = max_pages)
   if (as_df) cf_records_to_df(records) else records
 }
 
@@ -62,12 +62,16 @@ cf_get_healthcheck <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
+  cf_check_id(healthcheck_id)
   cf_request(
-    paste0("zones/", zone_id, "/healthchecks/", healthcheck_id),
+    c("zones", zone_id, "healthchecks", healthcheck_id),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' Create a healthcheck
@@ -139,14 +143,17 @@ cf_create_healthcheck <- function(
     suspended = suspended,
     ...
   ))
+  cf_check_id(zone_id)
   cf_request(
-    paste0("zones/", zone_id, "/healthchecks"),
-    method = "POST",
-    body = body,
+    c("zones", zone_id, "healthchecks"),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_method("POST") |>
+    httr2::req_body_json(body) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' Update a healthcheck
@@ -196,14 +203,18 @@ cf_update_healthcheck <- function(
     suspended = suspended,
     ...
   ))
+  cf_check_id(zone_id)
+  cf_check_id(healthcheck_id)
   cf_request(
-    paste0("zones/", zone_id, "/healthchecks/", healthcheck_id),
-    method = "PATCH",
-    body = body,
+    c("zones", zone_id, "healthchecks", healthcheck_id),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_method("PATCH") |>
+    httr2::req_body_json(body) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' Delete a healthcheck
@@ -224,11 +235,15 @@ cf_delete_healthcheck <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
+  cf_check_id(healthcheck_id)
   cf_request(
-    paste0("zones/", zone_id, "/healthchecks/", healthcheck_id),
-    method = "DELETE",
+    c("zones", zone_id, "healthchecks", healthcheck_id),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_method("DELETE") |>
+    httr2::req_perform() |>
+    cf_resp()
 }

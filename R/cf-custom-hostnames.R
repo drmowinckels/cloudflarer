@@ -7,7 +7,7 @@
 #' @param ssl Optional SSL status filter (e.g. `"active"`,
 #'   `"pending_validation"`).
 #' @param per_page,max_pages Pagination controls, see
-#'   [cf_request_collect()].
+#'   [cf_collect()].
 #' @param as_df Logical. When `TRUE` (the default), returns a
 #'   data.frame via [cf_records_to_df()].
 #' @inheritParams cf_token
@@ -33,15 +33,15 @@ cf_list_custom_hostnames <- function(
   email = NULL,
   api_key = NULL
 ) {
-  records <- cf_request_collect(
-    paste0("zones/", zone_id, "/custom_hostnames"),
-    query = list(hostname = hostname, ssl = ssl),
-    per_page = per_page,
-    max_pages = max_pages,
+  cf_check_id(zone_id)
+  records <- cf_request(
+    c("zones", zone_id, "custom_hostnames"),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_url_query(hostname = hostname, ssl = ssl) |>
+    cf_collect(per_page = per_page, max_pages = max_pages)
   if (as_df) cf_records_to_df(records) else records
 }
 
@@ -67,12 +67,16 @@ cf_get_custom_hostname <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
+  cf_check_id(custom_hostname_id)
   cf_request(
-    paste0("zones/", zone_id, "/custom_hostnames/", custom_hostname_id),
+    c("zones", zone_id, "custom_hostnames", custom_hostname_id),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' Create a custom hostname
@@ -128,14 +132,17 @@ cf_create_custom_hostname <- function(
     custom_origin_server = custom_origin_server,
     ...
   ))
+  cf_check_id(zone_id)
   cf_request(
-    paste0("zones/", zone_id, "/custom_hostnames"),
-    method = "POST",
-    body = body,
+    c("zones", zone_id, "custom_hostnames"),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_method("POST") |>
+    httr2::req_body_json(body) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' Delete a custom hostname
@@ -156,11 +163,15 @@ cf_delete_custom_hostname <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
+  cf_check_id(custom_hostname_id)
   cf_request(
-    paste0("zones/", zone_id, "/custom_hostnames/", custom_hostname_id),
-    method = "DELETE",
+    c("zones", zone_id, "custom_hostnames", custom_hostname_id),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_method("DELETE") |>
+    httr2::req_perform() |>
+    cf_resp()
 }

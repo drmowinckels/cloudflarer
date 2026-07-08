@@ -21,7 +21,7 @@ cf_list_d1_databases(
 \item{name}{Optional name filter (substring match).}
 
 \item{per_page, max_pages}{Pagination controls, see
-\code{\link[=cf_request_collect]{cf_request_collect()}}.}
+\code{\link[=cf_collect]{cf_collect()}}.}
 
 \item{as_df}{Logical. When \code{TRUE} (the default), returns a
 data.frame via \code{\link[=cf_records_to_df]{cf_records_to_df()}}.}

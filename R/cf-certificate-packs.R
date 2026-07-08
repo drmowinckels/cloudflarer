@@ -7,7 +7,7 @@
 #' @param status Optional status filter, for example `"active"` or
 #'   `"pending_validation"`.
 #' @param per_page,max_pages Pagination controls, see
-#'   [cf_request_collect()].
+#'   [cf_collect()].
 #' @param as_df Logical. When `TRUE` (the default), returns a
 #'   data.frame via [cf_records_to_df()].
 #' @inheritParams cf_token
@@ -33,15 +33,15 @@ cf_list_certificate_packs <- function(
   email = NULL,
   api_key = NULL
 ) {
-  records <- cf_request_collect(
-    paste0("zones/", zone_id, "/ssl/certificate_packs"),
-    query = list(status = status),
-    per_page = per_page,
-    max_pages = max_pages,
+  cf_check_id(zone_id)
+  records <- cf_request(
+    c("zones", zone_id, "ssl", "certificate_packs"),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_url_query(status = status) |>
+    cf_collect(per_page = per_page, max_pages = max_pages)
   if (as_df) cf_records_to_df(records) else records
 }
 
@@ -67,10 +67,14 @@ cf_get_certificate_pack <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(zone_id)
+  cf_check_id(pack_id)
   cf_request(
-    paste0("zones/", zone_id, "/ssl/certificate_packs/", pack_id),
+    c("zones", zone_id, "ssl", "certificate_packs", pack_id),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
 }

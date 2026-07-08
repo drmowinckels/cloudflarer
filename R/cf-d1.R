@@ -5,7 +5,7 @@
 #' @param account_id Character. Cloudflare account identifier.
 #' @param name Optional name filter (substring match).
 #' @param per_page,max_pages Pagination controls, see
-#'   [cf_request_collect()].
+#'   [cf_collect()].
 #' @param as_df Logical. When `TRUE` (the default), returns a
 #'   data.frame via [cf_records_to_df()].
 #' @inheritParams cf_token
@@ -30,15 +30,15 @@ cf_list_d1_databases <- function(
   email = NULL,
   api_key = NULL
 ) {
-  records <- cf_request_collect(
-    paste0("accounts/", account_id, "/d1/database"),
-    query = list(name = name),
-    per_page = per_page,
-    max_pages = max_pages,
+  cf_check_id(account_id)
+  records <- cf_request(
+    c("accounts", account_id, "d1", "database"),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_url_query(name = name) |>
+    cf_collect(per_page = per_page, max_pages = max_pages)
   if (as_df) cf_records_to_df(records) else records
 }
 
@@ -64,12 +64,16 @@ cf_get_d1_database <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(account_id)
+  cf_check_id(database_id)
   cf_request(
-    paste0("accounts/", account_id, "/d1/database/", database_id),
+    c("accounts", account_id, "d1", "database", database_id),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' Create a D1 database
@@ -104,14 +108,17 @@ cf_create_d1_database <- function(
     primary_location_hint = primary_location_hint,
     ...
   ))
+  cf_check_id(account_id)
   cf_request(
-    paste0("accounts/", account_id, "/d1/database"),
-    method = "POST",
-    body = body,
+    c("accounts", account_id, "d1", "database"),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_method("POST") |>
+    httr2::req_body_json(body) |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' Delete a D1 database
@@ -132,13 +139,17 @@ cf_delete_d1_database <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(account_id)
+  cf_check_id(database_id)
   cf_request(
-    paste0("accounts/", account_id, "/d1/database/", database_id),
-    method = "DELETE",
+    c("accounts", account_id, "d1", "database", database_id),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_method("DELETE") |>
+    httr2::req_perform() |>
+    cf_resp()
 }
 
 #' Run a SQL query against a D1 database
@@ -178,15 +189,19 @@ cf_d1_query <- function(
   email = NULL,
   api_key = NULL
 ) {
+  cf_check_id(account_id)
+  cf_check_id(database_id)
   body <- drop_nulls(list(sql = sql, params = params))
   res <- cf_request(
-    paste0("accounts/", account_id, "/d1/database/", database_id, "/query"),
-    method = "POST",
-    body = body,
+    c("accounts", account_id, "d1", "database", database_id, "query"),
     token = token,
     email = email,
     api_key = api_key
-  )
+  ) |>
+    httr2::req_method("POST") |>
+    httr2::req_body_json(body) |>
+    httr2::req_perform() |>
+    cf_resp()
   if (!as_df) {
     return(res)
   }
