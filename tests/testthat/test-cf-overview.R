@@ -59,8 +59,21 @@ describe("cf_zone_overview()", {
     expect_s3_class(ov, "cloudflarer_overview")
     expect_named(
       ov,
-      c("traffic", "cache", "dns", "firewall", "top_countries", "summary")
+      c(
+        "traffic",
+        "cache",
+        "dns",
+        "firewall",
+        "top_countries",
+        "summary",
+        "zone_id",
+        "since",
+        "until"
+      )
     )
+    expect_equal(ov$zone_id, "zone-1")
+    expect_equal(ov$since, as.Date("2026-05-19"))
+    expect_equal(ov$until, as.Date("2026-05-21"))
     expect_equal(nrow(ov$traffic), 2L)
     expect_equal(nrow(ov$cache), 2L)
     expect_equal(nrow(ov$dns), 2L)

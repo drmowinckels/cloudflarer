@@ -84,4 +84,33 @@ describe("cf_rum_top()", {
     )
     expect_match(captured, "requestPath")
   })
+
+  it("aborts when dimension collides with the count metric column", {
+    expect_error(
+      cf_rum_top(
+        "acc-1",
+        site_tag = "site-1",
+        since = as.Date("2026-05-14"),
+        until = as.Date("2026-05-21"),
+        dimension = "count"
+      ),
+      "cannot be"
+    )
+  })
+
+  it("aborts before making a request when dimension is not a valid field name", {
+    local_mocked_bindings(
+      cf_graphql = function(...) cli::cli_abort("should not be called")
+    )
+    expect_error(
+      cf_rum_top(
+        "acc-1",
+        site_tag = "site-1",
+        since = as.Date("2026-05-14"),
+        until = as.Date("2026-05-21"),
+        dimension = "countryName } avg { sampleInterval"
+      ),
+      "field name"
+    )
+  })
 })

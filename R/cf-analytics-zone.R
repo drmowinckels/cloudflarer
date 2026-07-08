@@ -124,9 +124,6 @@ cf_zone_requests <- function(
   )
 
   groups <- res$data$viewer$zones[[1]][[node]]
-  if (!length(groups)) {
-    return(empty_zone_requests_df())
-  }
   as_cf_tibble(data.frame(
     date = vapply(groups, function(g) g$dimensions[[dim_field]], character(1)),
     requests = vapply(groups, function(g) g$sum$requests, integer(1)),
@@ -134,18 +131,6 @@ cf_zone_requests <- function(
     pageviews = vapply(groups, function(g) g$sum$pageViews, integer(1)),
     threats = vapply(groups, function(g) g$sum$threats, integer(1)),
     uniques = vapply(groups, function(g) g$uniq$uniques, integer(1)),
-    stringsAsFactors = FALSE
-  ))
-}
-
-empty_zone_requests_df <- function() {
-  as_cf_tibble(data.frame(
-    date = character(0),
-    requests = integer(0),
-    bytes = numeric(0),
-    pageviews = integer(0),
-    threats = integer(0),
-    uniques = integer(0),
     stringsAsFactors = FALSE
   ))
 }

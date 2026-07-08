@@ -248,3 +248,41 @@ describe("cf_check_id()", {
     expect_error(cf_check_id(zone_id), "zone_id")
   })
 })
+
+describe("cf_check_dimension_name()", {
+  it("passes when dimension differs from the reserved name", {
+    expect_invisible(cf_check_dimension_name("countryName", "count"))
+  })
+
+  it("aborts when dimension collides with the reserved name", {
+    expect_error(
+      cf_check_dimension_name("count", "count"),
+      "cannot be"
+    )
+  })
+
+  it("names the failing argument in the message", {
+    dimension <- "events"
+    expect_error(cf_check_dimension_name(dimension, "events"), "dimension")
+  })
+
+  it("aborts for NULL, NA, empty, or non-character input", {
+    expect_error(cf_check_dimension_name(NULL, "count"), "field name")
+    expect_error(cf_check_dimension_name(NA_character_, "count"), "field name")
+    expect_error(cf_check_dimension_name("", "count"), "field name")
+    expect_error(cf_check_dimension_name(42L, "count"), "field name")
+  })
+
+  it("aborts when dimension contains characters outside a GraphQL field name", {
+    expect_error(
+      cf_check_dimension_name("date } evil { x", "count"),
+      "field name"
+    )
+    expect_error(cf_check_dimension_name("foo-bar", "count"), "field name")
+    expect_error(cf_check_dimension_name("123abc", "count"), "field name")
+  })
+
+  it("passes for valid GraphQL field names with underscores and digits", {
+    expect_invisible(cf_check_dimension_name("client_ip2", "count"))
+  })
+})

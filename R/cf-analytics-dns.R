@@ -69,13 +69,6 @@ cf_dns_queries <- function(
     .envir = parent.frame()
   )
   groups <- res$data$viewer$zones[[1]]$dnsAnalyticsAdaptiveGroups
-  if (!length(groups)) {
-    return(as_cf_tibble(data.frame(
-      date = character(0),
-      queries = integer(0),
-      stringsAsFactors = FALSE
-    )))
-  }
   as_cf_tibble(data.frame(
     date = vapply(groups, function(g) g$dimensions$date, character(1)),
     queries = vapply(groups, function(g) as.integer(g$count), integer(1)),

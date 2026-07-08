@@ -32,6 +32,8 @@
 #'     [cf_rum_top()]); only populated when `account_id` and
 #'     `site_tag` are supplied.
 #'   * `summary` -- a one-row data.frame with the period totals.
+#'   * `zone_id`, `since`, `until` -- the call's own arguments,
+#'     echoed back for reference.
 #'
 #' @export
 #' @family analytics
@@ -124,12 +126,12 @@ cf_zone_overview <- function(
       dns = dns,
       firewall = firewall,
       top_countries = top_countries,
-      summary = summary_df
+      summary = summary_df,
+      zone_id = zone_id,
+      since = since,
+      until = until
     ),
-    class = c("cloudflarer_overview", "list"),
-    since = since,
-    until = until,
-    zone_id = zone_id
+    class = c("cloudflarer_overview", "list")
   )
 }
 

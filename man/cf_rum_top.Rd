@@ -29,7 +29,10 @@ character strings). Half-open \verb{[since, until)} interval.}
 \item{dimension}{Character. A dimension name supported by
 \code{rumPageloadEventsAdaptiveGroups}. Common choices:
 \code{"countryName"}, \code{"requestPath"}, \code{"refererHost"},
-\code{"userAgentBrowser"}, \code{"userAgentOS"}, \code{"deviceType"}.}
+\code{"userAgentBrowser"}, \code{"userAgentOS"}, \code{"deviceType"}. Must be
+a single field name (letters, digits, underscores; not
+starting with a digit) and cannot be \code{"count"}, which names
+the metric column.}
 
 \item{limit}{Number of rows to return (default 25).}
 

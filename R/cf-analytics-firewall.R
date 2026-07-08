@@ -84,13 +84,6 @@ cf_firewall_events_by_day <- function(
     .envir = parent.frame()
   )
   groups <- res$data$viewer$zones[[1]]$firewallEventsAdaptiveGroups
-  if (!length(groups)) {
-    return(as_cf_tibble(data.frame(
-      date = character(0),
-      events = integer(0),
-      stringsAsFactors = FALSE
-    )))
-  }
   as_cf_tibble(data.frame(
     date = vapply(groups, function(g) g$dimensions$date, character(1)),
     events = vapply(groups, function(g) as.integer(g$count), integer(1)),
@@ -108,7 +101,10 @@ cf_firewall_events_by_day <- function(
 #'   choices: `"action"` (block, challenge, ...), `"source"` (WAF,
 #'   firewall rules, security level, ...), `"ruleId"`,
 #'   `"clientCountryName"`, `"clientRequestPath"`,
-#'   `"clientRequestHTTPHost"`, `"userAgent"`.
+#'   `"clientRequestHTTPHost"`, `"userAgent"`. Must be a single
+#'   field name (letters, digits, underscores; not starting with a
+#'   digit) and cannot be `"events"`, which names the metric
+#'   column.
 #' @param limit Number of rows to return.
 #'
 #' @return A data.frame with two columns: the requested
@@ -144,7 +140,9 @@ cf_firewall_events_top <- function(
   email = NULL,
   api_key = NULL
 ) {
+  metric_col <- "events"
   cf_check_id(zone_id)
+  cf_check_dimension_name(dimension, metric_col)
   query <- sprintf(
     "query FwTop($zoneTag: String!, $since: Time!, $until: Time!,
                  $limit: Int!) {
@@ -175,24 +173,15 @@ cf_firewall_events_top <- function(
     .envir = parent.frame()
   )
   groups <- res$data$viewer$zones[[1]]$firewallEventsAdaptiveGroups
-  if (!length(groups)) {
-    out <- data.frame(
-      .x = character(0),
-      events = integer(0),
-      stringsAsFactors = FALSE
-    )
-    names(out)[1] <- dimension
-    return(as_cf_tibble(out))
-  }
   out <- data.frame(
     .x = vapply(
       groups,
       function(g) as.character(g$dimensions[[dimension]]),
       character(1)
     ),
-    events = vapply(groups, function(g) as.integer(g$count), integer(1)),
+    .y = vapply(groups, function(g) as.integer(g$count), integer(1)),
     stringsAsFactors = FALSE
   )
-  names(out)[1] <- dimension
+  names(out) <- c(dimension, metric_col)
   as_cf_tibble(out)
 }

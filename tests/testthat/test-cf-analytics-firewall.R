@@ -79,4 +79,31 @@ describe("cf_firewall_events_top()", {
     )
     expect_match(captured, "clientCountryName")
   })
+
+  it("aborts when dimension collides with the events metric column", {
+    expect_error(
+      cf_firewall_events_top(
+        "zone-1",
+        since = as.Date("2026-05-14"),
+        until = as.Date("2026-05-21"),
+        dimension = "events"
+      ),
+      "cannot be"
+    )
+  })
+
+  it("aborts before making a request when dimension is not a valid field name", {
+    local_mocked_bindings(
+      cf_graphql = function(...) cli::cli_abort("should not be called")
+    )
+    expect_error(
+      cf_firewall_events_top(
+        "zone-1",
+        since = as.Date("2026-05-14"),
+        until = as.Date("2026-05-21"),
+        dimension = "clientCountryName } avg { sampleInterval"
+      ),
+      "field name"
+    )
+  })
 })

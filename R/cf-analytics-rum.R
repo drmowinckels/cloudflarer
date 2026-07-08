@@ -85,13 +85,6 @@ cf_rum_page_views <- function(
     .envir = parent.frame()
   )
   groups <- res$data$viewer$accounts[[1]]$rumPageloadEventsAdaptiveGroups
-  if (!length(groups)) {
-    return(as_cf_tibble(data.frame(
-      date = character(0),
-      pageviews = integer(0),
-      stringsAsFactors = FALSE
-    )))
-  }
   as_cf_tibble(data.frame(
     date = vapply(groups, function(g) g$dimensions$date, character(1)),
     pageviews = vapply(groups, function(g) as.integer(g$count), integer(1)),
@@ -109,7 +102,10 @@ cf_rum_page_views <- function(
 #' @param dimension Character. A dimension name supported by
 #'   `rumPageloadEventsAdaptiveGroups`. Common choices:
 #'   `"countryName"`, `"requestPath"`, `"refererHost"`,
-#'   `"userAgentBrowser"`, `"userAgentOS"`, `"deviceType"`.
+#'   `"userAgentBrowser"`, `"userAgentOS"`, `"deviceType"`. Must be
+#'   a single field name (letters, digits, underscores; not
+#'   starting with a digit) and cannot be `"count"`, which names
+#'   the metric column.
 #' @param limit Number of rows to return (default 25).
 #'
 #' @return A data.frame with two columns: the requested
@@ -148,8 +144,10 @@ cf_rum_top <- function(
   email = NULL,
   api_key = NULL
 ) {
+  metric_col <- "count"
   cf_check_id(account_id)
   cf_check_id(site_tag)
+  cf_check_dimension_name(dimension, metric_col)
   query <- sprintf(
     "query Top($accountTag: String!, $siteTag: String!,
               $since: Time!, $until: Time!, $limit: Int!) {
@@ -185,25 +183,15 @@ cf_rum_top <- function(
     .envir = parent.frame()
   )
   groups <- res$data$viewer$accounts[[1]]$rumPageloadEventsAdaptiveGroups
-  if (!length(groups)) {
-    out <- data.frame(
-      .x = character(0),
-      count = integer(0),
-      stringsAsFactors = FALSE
-    )
-    names(out)[1] <- dimension
-    return(as_cf_tibble(out))
-  }
   out <- data.frame(
     .x = vapply(
       groups,
       function(g) as.character(g$dimensions[[dimension]]),
       character(1)
     ),
-    count = vapply(groups, function(g) as.integer(g$count), integer(1)),
+    .y = vapply(groups, function(g) as.integer(g$count), integer(1)),
     stringsAsFactors = FALSE
   )
-  names(out)[1] <- dimension
-  out <- as_cf_tibble(out)
-  out
+  names(out) <- c(dimension, metric_col)
+  as_cf_tibble(out)
 }
