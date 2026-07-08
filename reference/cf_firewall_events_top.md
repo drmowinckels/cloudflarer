@@ -33,7 +33,9 @@ cf_firewall_events_top(
   Character. Dimension name to group by. Common choices: `"action"`
   (block, challenge, ...), `"source"` (WAF, firewall rules, security
   level, ...), `"ruleId"`, `"clientCountryName"`, `"clientRequestPath"`,
-  `"clientRequestHTTPHost"`, `"userAgent"`.
+  `"clientRequestHTTPHost"`, `"userAgent"`. Must be a single field name
+  (letters, digits, underscores; not starting with a digit) and cannot
+  be `"events"`, which names the metric column.
 
 - limit:
 

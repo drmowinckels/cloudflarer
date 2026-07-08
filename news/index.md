@@ -52,6 +52,30 @@
 - Response-envelope access uses `[["result"]]` instead of `$result`,
   avoiding R’s partial name matching against `result_info` on the
   unusual case where an envelope omits `result`.
+- The legacy Global API Key auth path (`X-Auth-Email`/ `X-Auth-Key`) now
+  redacts both headers via
+  [`httr2::req_headers_redacted()`](https://httr2.r-lib.org/reference/req_headers.html),
+  matching the protection `cf_req_auth()` already gave bearer tokens.
+  Previously, printing or dry-running a request built with email + key
+  credentials leaked the Global API Key in plain text.
+- [`cf_firewall_events_top()`](http://drmowinckels.io/cloudflarer/reference/cf_firewall_events_top.md)
+  and
+  [`cf_rum_top()`](http://drmowinckels.io/cloudflarer/reference/cf_rum_top.md)
+  validate `dimension` through the new internal
+  `cf_check_dimension_name()` helper before splicing it into the
+  underlying GraphQL query. `dimension` must be a single GraphQL field
+  name and cannot collide with the fixed metric column
+  (`events`/`count`); previously an unvalidated `dimension` was
+  interpolated verbatim into the query text, so a caller-controlled
+  value (for example one forwarded from a Shiny input by code built on
+  top of this package) could break out of the intended selection set and
+  request additional fields.
+- **Breaking:**
+  [`cf_zone_overview()`](http://drmowinckels.io/cloudflarer/reference/cf_zone_overview.md)
+  now returns `zone_id`, `since`, and `until` as ordinary list elements
+  instead of object attributes, so they’re accessed the same way as
+  every other component (`ov$zone_id` rather than
+  `attr(ov, "zone_id")`).
 
 ### Core
 

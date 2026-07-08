@@ -60,6 +60,11 @@
 <li>
 <code>format_graphql_error()</code> escapes braces after assembling the full message, so a brace appearing in the GraphQL <code>path</code> segment can no longer confuse <code>cli</code>’s interpolation.</li>
 <li>Response-envelope access uses <code>[["result"]]</code> instead of <code>$result</code>, avoiding R’s partial name matching against <code>result_info</code> on the unusual case where an envelope omits <code>result</code>.</li>
+<li>The legacy Global API Key auth path (<code>X-Auth-Email</code>/ <code>X-Auth-Key</code>) now redacts both headers via <code><a href="https://httr2.r-lib.org/reference/req_headers.html" class="external-link">httr2::req_headers_redacted()</a></code>, matching the protection <code>cf_req_auth()</code> already gave bearer tokens. Previously, printing or dry-running a request built with email + key credentials leaked the Global API Key in plain text.</li>
+<li>
+<code><a href="../reference/cf_firewall_events_top.html">cf_firewall_events_top()</a></code> and <code><a href="../reference/cf_rum_top.html">cf_rum_top()</a></code> validate <code>dimension</code> through the new internal <code>cf_check_dimension_name()</code> helper before splicing it into the underlying GraphQL query. <code>dimension</code> must be a single GraphQL field name and cannot collide with the fixed metric column (<code>events</code>/<code>count</code>); previously an unvalidated <code>dimension</code> was interpolated verbatim into the query text, so a caller-controlled value (for example one forwarded from a Shiny input by code built on top of this package) could break out of the intended selection set and request additional fields.</li>
+<li>
+<strong>Breaking:</strong> <code><a href="../reference/cf_zone_overview.html">cf_zone_overview()</a></code> now returns <code>zone_id</code>, <code>since</code>, and <code>until</code> as ordinary list elements instead of object attributes, so they’re accessed the same way as every other component (<code>ov$zone_id</code> rather than <code>attr(ov, "zone_id")</code>).</li>
 </ul></div>
 <div class="section level3">
 <h3 id="core-0-0-0-9000">Core<a class="anchor" aria-label="anchor" href="#core-0-0-0-9000"></a></h3>
@@ -170,7 +175,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

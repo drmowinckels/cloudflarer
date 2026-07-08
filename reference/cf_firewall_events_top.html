@@ -79,7 +79,10 @@ and returns the top entries by count.</p>
 choices: <code>"action"</code> (block, challenge, ...), <code>"source"</code> (WAF,
 firewall rules, security level, ...), <code>"ruleId"</code>,
 <code>"clientCountryName"</code>, <code>"clientRequestPath"</code>,
-<code>"clientRequestHTTPHost"</code>, <code>"userAgent"</code>.</p></dd>
+<code>"clientRequestHTTPHost"</code>, <code>"userAgent"</code>. Must be a single
+field name (letters, digits, underscores; not starting with a
+digit) and cannot be <code>"events"</code>, which names the metric
+column.</p></dd>
 
 
 <dt id="arg-limit">limit<a class="anchor" aria-label="anchor" href="#arg-limit"></a></dt>
@@ -148,7 +151,7 @@ variable.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

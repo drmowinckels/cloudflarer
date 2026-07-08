@@ -41,7 +41,9 @@ cf_rum_top(
   Character. A dimension name supported by
   `rumPageloadEventsAdaptiveGroups`. Common choices: `"countryName"`,
   `"requestPath"`, `"refererHost"`, `"userAgentBrowser"`,
-  `"userAgentOS"`, `"deviceType"`.
+  `"userAgentOS"`, `"deviceType"`. Must be a single field name (letters,
+  digits, underscores; not starting with a digit) and cannot be
+  `"count"`, which names the metric column.
 
 - limit:
 

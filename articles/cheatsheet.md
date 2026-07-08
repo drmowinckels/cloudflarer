@@ -54,7 +54,7 @@ account_id <- zones$account[[1]]$id
 cf_zone_overview(zone_id, account_id = account_id)
 #> 
 #> ── Zone overview ───────────────────────────────────────────────────────────────
-#> ℹ Window: "2026-06-30" to "2026-07-07"
+#> ℹ Window: "2026-07-01" to "2026-07-08"
 #> 
 #> → Requests:        "1,000"
 #> → Page views:      "500"

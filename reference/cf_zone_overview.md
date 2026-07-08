@@ -78,6 +78,9 @@ A named list with class `cloudflarer_overview`:
 
 - `summary` – a one-row data.frame with the period totals.
 
+- `zone_id`, `since`, `until` – the call's own arguments, echoed back
+  for reference.
+
 ## Details
 
 Each underlying call is wrapped in
@@ -113,7 +116,7 @@ ov$summary
 #> # A tibble: 1 × 11
 #>   since      until      requests bytes pageviews uniques threats cache_hit_ratio
 #>   <chr>      <chr>         <int> <dbl>     <int>   <int>   <int>           <dbl>
-#> 1 2026-06-30 2026-07-07     1000   2e6       500     300      10             0.8
+#> 1 2026-07-01 2026-07-08     1000   2e6       500     300      10             0.8
 #> # ℹ 3 more variables: bandwidth_hit_ratio <dbl>, dns_queries <int>,
 #> #   firewall_events <int>
 ```

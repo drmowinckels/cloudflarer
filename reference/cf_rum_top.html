@@ -88,7 +88,10 @@ character strings). Half-open <code>[since, until)</code> interval.</p></dd>
 <dd><p>Character. A dimension name supported by
 <code>rumPageloadEventsAdaptiveGroups</code>. Common choices:
 <code>"countryName"</code>, <code>"requestPath"</code>, <code>"refererHost"</code>,
-<code>"userAgentBrowser"</code>, <code>"userAgentOS"</code>, <code>"deviceType"</code>.</p></dd>
+<code>"userAgentBrowser"</code>, <code>"userAgentOS"</code>, <code>"deviceType"</code>. Must be
+a single field name (letters, digits, underscores; not
+starting with a digit) and cannot be <code>"count"</code>, which names
+the metric column.</p></dd>
 
 
 <dt id="arg-limit">limit<a class="anchor" aria-label="anchor" href="#arg-limit"></a></dt>
@@ -158,7 +161,7 @@ variable.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>
