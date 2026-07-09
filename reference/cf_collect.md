@@ -10,7 +10,7 @@ on each request.
 ## Usage
 
 ``` r
-cf_collect(req, per_page = 50, max_pages = Inf, ...)
+cf_collect(req, per_page = 50, max_pages = Inf, progress = FALSE, ...)
 ```
 
 ## Arguments
@@ -31,10 +31,14 @@ cf_collect(req, per_page = 50, max_pages = Inf, ...)
   exploratory calls against large accounts. `Inf` (the default) collects
   everything.
 
+- progress:
+
+  Whether to show a progress bar while paging.
+
 - ...:
 
   Additional arguments passed to
-  [`httr2::req_perform()`](https://httr2.r-lib.org/reference/req_perform.html).
+  [`httr2::req_perform_iterative()`](https://httr2.r-lib.org/reference/req_perform_iterative.html).
 
 ## Value
 

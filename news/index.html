@@ -85,6 +85,8 @@
 <li>Authentication helpers: <code><a href="../reference/cf_token.html">cf_token()</a></code>, <code><a href="../reference/cf_email.html">cf_email()</a></code>, <code><a href="../reference/cf_api_key.html">cf_api_key()</a></code>, <code><a href="../reference/cf_has_auth.html">cf_has_auth()</a></code>, <code><a href="../reference/cf_verify.html">cf_token_verify()</a></code>, <code><a href="../reference/cf_verify.html">cf_verify()</a></code>.</li>
 <li>Diagnostic helper <code><a href="../reference/cf_sitrep.html">cf_sitrep()</a></code> reports the active mode and verifies the configured credentials against the live API.</li>
 <li>All REST API failures that reach the API, whether HTTP-level or envelope-level (<code>success: false</code>), raise a classed <code>cloudflarer_error</code> condition that can be caught with <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code>. Transport-level failures (DNS, connection refused, timeout) surface as the underlying <code>httr2</code> error.</li>
+<li>
+<code><a href="../reference/cf_collect.html">cf_collect()</a></code> now walks pages with <code><a href="https://httr2.r-lib.org/reference/req_perform_iterative.html" class="external-link">httr2::req_perform_iterative()</a></code> instead of a hand-rolled loop, gaining a <code>progress</code> argument (<code>FALSE</code> by default) to show a progress bar across pages. Requires <code>httr2 &gt;= 1.0.4</code>.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="data-frame-defaults-0-0-0-9000">Data frame defaults<a class="anchor" aria-label="anchor" href="#data-frame-defaults-0-0-0-9000"></a></h3>

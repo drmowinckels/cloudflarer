@@ -154,6 +154,12 @@
   [`tryCatch()`](https://rdrr.io/r/base/conditions.html).
   Transport-level failures (DNS, connection refused, timeout) surface as
   the underlying `httr2` error.
+- [`cf_collect()`](http://drmowinckels.io/cloudflarer/reference/cf_collect.md)
+  now walks pages with
+  [`httr2::req_perform_iterative()`](https://httr2.r-lib.org/reference/req_perform_iterative.html)
+  instead of a hand-rolled loop, gaining a `progress` argument (`FALSE`
+  by default) to show a progress bar across pages. Requires
+  `httr2 >= 1.0.4`.
 
 ### Data frame defaults
 

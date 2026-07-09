@@ -57,7 +57,7 @@ request.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cf_collect</span><span class="op">(</span><span class="va">req</span>, per_page <span class="op">=</span> <span class="fl">50</span>, max_pages <span class="op">=</span> <span class="cn">Inf</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cf_collect</span><span class="op">(</span><span class="va">req</span>, per_page <span class="op">=</span> <span class="fl">50</span>, max_pages <span class="op">=</span> <span class="cn">Inf</span>, progress <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -79,8 +79,13 @@ many pages. Useful for exploratory calls against large
 accounts. <code>Inf</code> (the default) collects everything.</p></dd>
 
 
+<dt id="arg-progress">progress<a class="anchor" aria-label="anchor" href="#arg-progress"></a></dt>
+<dd><p>Whether to show a progress bar while paging.</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional arguments passed to <code><a href="https://httr2.r-lib.org/reference/req_perform.html" class="external-link">httr2::req_perform()</a></code>.</p></dd>
+<dd><p>Additional arguments passed to
+<code><a href="https://httr2.r-lib.org/reference/req_perform_iterative.html" class="external-link">httr2::req_perform_iterative()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
