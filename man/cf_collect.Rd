@@ -4,7 +4,7 @@
 \alias{cf_collect}
 \title{Collect every page of a paginated endpoint}
 \usage{
-cf_collect(req, per_page = 50, max_pages = Inf, ...)
+cf_collect(req, per_page = 50, max_pages = Inf, progress = FALSE, ...)
 }
 \arguments{
 \item{req}{An \code{httr2_request} from \code{\link[=cf_request]{cf_request()}}.}
@@ -16,7 +16,10 @@ at 50; some allow up to 1000.}
 many pages. Useful for exploratory calls against large
 accounts. \code{Inf} (the default) collects everything.}
 
-\item{...}{Additional arguments passed to \code{\link[httr2:req_perform]{httr2::req_perform()}}.}
+\item{progress}{Whether to show a progress bar while paging.}
+
+\item{...}{Additional arguments passed to
+\code{\link[httr2:req_perform_iterative]{httr2::req_perform_iterative()}}.}
 }
 \value{
 A list of records.

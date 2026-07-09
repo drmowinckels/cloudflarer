@@ -202,7 +202,9 @@ cf_resp <- function(resp) {
 #' @param max_pages Optional integer. Stop after collecting this
 #'   many pages. Useful for exploratory calls against large
 #'   accounts. `Inf` (the default) collects everything.
-#' @param ... Additional arguments passed to [httr2::req_perform()].
+#' @param progress Whether to show a progress bar while paging.
+#' @param ... Additional arguments passed to
+#'   [httr2::req_perform_iterative()].
 #'
 #' @return A list of records.
 #' @export
@@ -216,24 +218,39 @@ cf_resp <- function(resp) {
 #' }
 #' cf_request("zones") |> cf_collect(per_page = 50)
 #' \dontshow{vcr::eject_cassette()}
-cf_collect <- function(req, per_page = 50, max_pages = Inf, ...) {
+cf_collect <- function(
+  req,
+  per_page = 50,
+  max_pages = Inf,
+  progress = FALSE,
+  ...
+) {
+  req <- httr2::req_url_query(req, per_page = per_page, page = 1)
+  resps <- httr2::req_perform_iterative(
+    req,
+    next_req = httr2::iterate_with_offset(
+      "page",
+      resp_pages = function(resp) cf_result_info(resp)$total_pages %||% 1L,
+      resp_complete = function(resp) {
+        info <- cf_result_info(resp)
+        (info$page %||% 1L) >= (info$total_pages %||% 1L)
+      }
+    ),
+    max_reqs = max_pages,
+    progress = progress,
+    ...
+  )
   results <- list()
-  page <- 1L
-  repeat {
-    env <- req |>
-      httr2::req_url_query(per_page = per_page, page = page) |>
-      httr2::req_perform(...) |>
-      cf_resp_envelope()
-    if (!is.null(env[["result"]])) {
-      results <- c(results, env[["result"]])
-    }
-    total_pages <- env$result_info$total_pages %||% 1L
-    if (page >= total_pages || page >= max_pages) {
-      break
-    }
-    page <- page + 1L
+  for (resp in resps) {
+    results <- c(results, cf_resp_envelope(resp)[["result"]])
   }
   results
+}
+
+#' @keywords internal
+#' @noRd
+cf_result_info <- function(resp) {
+  cf_resp_envelope(resp)[["result_info"]]
 }
 
 #' Parse the standard Cloudflare envelope

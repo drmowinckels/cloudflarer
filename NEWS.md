@@ -115,6 +115,10 @@
   `cloudflarer_error` condition that can be caught with
   `tryCatch()`. Transport-level failures (DNS, connection refused,
   timeout) surface as the underlying `httr2` error.
+- `cf_collect()` now walks pages with `httr2::req_perform_iterative()`
+  instead of a hand-rolled loop, gaining a `progress` argument
+  (`FALSE` by default) to show a progress bar across pages. Requires
+  `httr2 >= 1.0.4`.
 
 ## Data frame defaults
 
